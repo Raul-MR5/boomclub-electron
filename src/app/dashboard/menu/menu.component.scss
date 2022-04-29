@@ -1,0 +1,37 @@
+.mi-menu {
+    float: left;
+}
+
+.nav-link.active,
+.show > .nav-link {
+    background-color: #ab6c6c;
+}
+
+.div-pointer {
+    cursor: pointer
+}
+
+.mi-sidebar {
+    height: 80vh;
+    width: 20vw;
+}
+
+.icon-center {
+    padding: 0;
+}
+
+.padding-opt {
+    margin-top: 20px;
+}
+
+@media screen and (max-width: 850px) {
+    .sidebar-complete {
+        display: none;
+    }
+}
+
+@media screen and (min-width: 851px) {
+    .sidebar-icon {
+        display: none;
+    }
+}

@@ -1,0 +1,40 @@
+.main-content-boomclub {
+    height: 80vh;
+    overflow: scroll;
+    overflow-x: auto;
+    overflow-y: auto;
+}
+
+.main-content-boomclub::-webkit-scrollbar {
+    -webkit-appearance: none;
+}
+
+.main-content-boomclub::-webkit-scrollbar:vertical {
+    width:10px;
+}
+
+.main-content-boomclub::-webkit-scrollbar-button:increment,.main-content-boomclub::-webkit-scrollbar-button {
+    display: none;
+} 
+
+.main-content-boomclub::-webkit-scrollbar:horizontal {
+    height: 10px;
+}
+
+.main-content-boomclub::-webkit-scrollbar-thumb {
+    background-color: #ab6c6c;
+    border-radius: 20px;
+    // border: 2px solid #f1f2f3;
+}
+
+.main-content-boomclub::-webkit-scrollbar-track {
+    border-radius: 10px;  
+}
+
+.bg-boomclub {
+    background-color: rgb(45, 50, 54);
+}
+// .bg-boomclub {
+//     background-image: url('https://firebasestorage.googleapis.com/v0/b/boomclub-tfg.appspot.com/o/backOG3.png?alt=media&token=07ca8e3a-0ce0-49a8-95d6-4a8c2add230d');
+//     background-size: 200px;
+// }
