@@ -64,7 +64,7 @@ export class LoginComponent implements OnInit {
       })
       
     } catch (e: any) {      
-      alert(e.message)
+      // alert(e.message)
     }
   }
 
@@ -82,7 +82,11 @@ export class LoginComponent implements OnInit {
     } catch (e: any) {
       console.log("hola");
       
-      alert(e.message)
+      // alert(e.message)
     }
+  }
+
+  goTo(url: string) {
+    this.router.navigate([url]);
   }
 }

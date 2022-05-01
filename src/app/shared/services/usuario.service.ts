@@ -1,81 +1,61 @@
-// import { Injectable } from '@angular/core';
-// import { Usuario } from '../../shared/models/usuario.model';
-// import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-// import { Observable, throwError } from 'rxjs';
+import { Injectable } from '@angular/core';
+import { Usuario } from '../../shared/models/usuario.model';
+import { Observable, throwError } from 'rxjs';
 
-// import { environment } from 'src/environments/environment';
-// import { Page } from 'src/app/shared/models/page';
-// import { catchError, map } from 'rxjs/operators';
-// import { RequestFilter } from 'src/app/shared/models/request-filter';
-// import { AccountService } from './account.service';
+import { catchError, map } from 'rxjs/operators';
+import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/compat/firestore';
 
-// @Injectable({
-//   providedIn: 'root'
-// })
-// export class UsuarioService {
+@Injectable({
+    providedIn: 'root'
+})
+export class UsuarioService {
 
-//   private auth_token: string | undefined;
-//   private headers;
+    usuarios: Observable<Usuario[]>;
 
-//   constructor(private http: HttpClient, private accountService: AccountService) {
-//     // if (localStorage.getItem('usuario')) {
-      
-//     // }
-//   }
+    constructor(private firestore: AngularFirestore) {
+    }
 
-//   getToken(){
-//     this.auth_token = this.accountService.getToken();
-//     this.headers = new HttpHeaders({
-//       'Content-Type': 'application/json',
-//       'Authorization': `Bearer ${this.auth_token}`
-//     })
-//   }
+    getAll(): Observable<Usuario[]> {
+        return this.firestore.collection<Usuario>('usuario').valueChanges({ idField: 'id' });
+    }
 
-//   getAll(requestFilter: RequestFilter): Observable<Page<Usuario>> {
-//     this.getToken();
+    getOne(id: string): Observable<Usuario> {
+        return this.firestore.collection<Usuario>('usuario').doc(id).valueChanges({ idField: 'id' });
+    }
 
-//     var params: HttpParams = new HttpParams();
-//     params = params.append('page', requestFilter.page.toString());
-//     params = params.append('size', requestFilter.size.toString());
+    async create(payload: Usuario): Promise<any> {
+        try {
+            // const id = this.firestore.createId();
+            // const data = {id, ...payload};
 
-//     requestFilter.sort.forEach(sort => {
-//       params = params.append('sort', sort.field + ',' + sort.order);
-//     });
+            console.log(payload);
+            
 
-//     requestFilter.filter.forEach(f => {
-//       params = params.append(f.field, f.value);
-//     });
+            // const res = await this.firestore.collection('usuario').add({ ...payload });
+            const res = await this.firestore.collection('usuario').doc(payload.id).set(payload);
+            return res;
+        } catch (err) {
+            return err;
+        }
+    }
 
-//     return this.http.get<Page<Usuario>>(`${environment.apiUrl}/usuarios`, { params: params, headers: this.headers });
-//   }
+    async update(usuario: Usuario) {
+        try {
+            const res = await this.firestore.collection('usuario').doc(usuario.id).update({ ...usuario });
 
-//   getOne(id: number): Observable<Usuario> {
-//     return this.http.get<Usuario>(`${environment.apiUrl}/usuarios/${id}`).pipe(
-//       catchError(e => {
-//         if (e.statys != 401 && e.error.mensaje) {
-//           // this.router.navigate(['/usuarios']);
-//           console.log(e.error.mensaje);
-//         }
-//         return throwError(e);
-//       })
-//     );
-//   }
+            return res;
+        } catch (err) {
+            return err;
+        }
+    }
 
-//   create(payload: Usuario): Observable<Usuario> {
-//     return this.http.post<Usuario>(`${environment.apiUrl}/usuarios/create`, payload);
-//   }
+    async delete(id: string) {
+        try {
+            const res = await this.firestore.collection('usuario').doc(id).delete();
 
-//   update(usuario: Usuario): Observable<Usuario> {
-//     return this.http.put<Usuario>(`${environment.apiUrl}/usuarios/${usuario.id}`, usuario);
-//   }
-
-//   delete(payload: number) {
-//     console.table(payload);
-//     return this.http.delete(`${environment.apiUrl}/usuarios/${payload}`);
-//   }
-
-//   count(): Observable<number> {
-//     return this.http.get<any>(`${environment.apiUrl}/usuarios/count`).pipe(map(result => result.count));
-//   }
-
-// }
+            return res;
+        } catch (err) {
+            return err;
+        }
+    }
+}

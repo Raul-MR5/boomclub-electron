@@ -12,6 +12,7 @@ import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
 import { AngularFireModule } from '@angular/fire/compat';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { entityConfig } from './entity-metadata';
 import { environment } from 'src/environments/environment';
 // import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
@@ -42,7 +43,7 @@ import { environment } from 'src/environments/environment';
     // provideFirestore(() => getFirestore()), 
     // provideStorage(() => getStorage())
   ],
-  providers: [],
+  providers: [AngularFirestore],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

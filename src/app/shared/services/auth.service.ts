@@ -4,9 +4,9 @@ import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
-import { Usuario } from '../models/usuario.model';
+// import { Usuario } from '../models/usuario.model';
 import * as jwt_decode from 'jwt-decode';
-import { Permiso } from '../models/permiso.model';
+// import { Permiso } from '../models/permiso.model';
 
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import firebase from 'firebase/compat/app';
@@ -16,7 +16,7 @@ import firebase from 'firebase/compat/app';
 })
 export class AuthService {
 
-  public usuario: Observable<Usuario>;
+  // public usuario: Observable<Usuario>;
 
   constructor(
     private http: HttpClient,

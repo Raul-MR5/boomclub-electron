@@ -8,7 +8,7 @@
 
             <div class="col-sm-12">
                 <label for="user" class="form-label">Usuario</label>
-                <input formControlName="user" type="text" class="form-control" id="user" placeholder="" value="">
+                <input formControlName="user" type="text" class="form-control" id="user" >
 
                 <p class="invalid-error"
                     *ngIf="form.get('user').invalid && (form.get('user').dirty || form.get('user').touched)">
@@ -34,7 +34,7 @@
         </div>
         <button class="w-100 btn btn-lg btn-back" (click)="submit()">Inicar sesión</button>
         <div>
-            <p class="mt-4 mb-3 form-img">¿No tienes una cuenta? <a href="register" class="text-pink">Regístrate</a></p>
+            <p class="mt-4 mb-3 form-img">¿No tienes una cuenta? <span (click)="goTo('register')" class="text-pink link-pointer">Regístrate</span></p>
         </div>
 
         <div class="form-img">

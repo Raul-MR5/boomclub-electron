@@ -7,11 +7,11 @@ let mainWindow
 
 function createWindow() {
     mainWindow = new BrowserWindow({
-        width: 1600, //1100
-        height: 900, //720
+        width: 1100, //1100  /  1600
+        height: 720, //720  /   900
         resizable: false,
         title: 'BoomClub',
-        icon: 'https://firebasestorage.googleapis.com/v0/b/boomclub-tfg.appspot.com/o/boomclub.png?alt=media&token=14ede50f-dcfc-41e3-8bea-03b90978e28a',
+        icon: './src/favicon.ico',
         webPreferences: {
             nodeIntegration: true
         }

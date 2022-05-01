@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { Usuario } from 'src/app/shared/models/usuario.model';
 // import { AccountService } from 'src/app/shared/services/account.service';
 import { AuthService } from 'src/app/shared/services/auth.service';
-// import { UsuarioService } from 'src/app/shared/services/usuario.service';
+import { UsuarioService } from 'src/app/shared/services/usuario.service';
 
 @Component({
   selector: 'app-register',
@@ -19,7 +19,7 @@ export class RegisterComponent implements OnInit {
     private formBuilder: FormBuilder,
     // private accountSrv: AccountService,
     private authSrv: AuthService,
-    // private usuarioSrv: UsuarioService,
+    private usuarioSrv: UsuarioService,
     private router: Router
   ) { }
 
@@ -29,18 +29,12 @@ export class RegisterComponent implements OnInit {
     }
 
     this.form = this.formBuilder.group({
-      id: [''],
       username: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]],
       email: ['', [Validators.required, Validators.pattern("^([a-zA-Z0-9_\\-\\.]+)@([a-zA-Z0-9_\\-\\.]+)\\.([a-zA-Z]{2,5})$")]],
-      // nombre: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]],
-      // apellidos: ['', [Validators.minLength(3), Validators.maxLength(50)]],
-      activo: [''],
+      nombre: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]],
+      apellidos: ['', [Validators.minLength(3), Validators.maxLength(50)]],
       password: ['', [Validators.required, Validators.minLength(6)]],
-      repeat_password: ['', Validators.required],
-      fecAltaShow: [{ value: '' }],
-      fecAlta: [''],
-      fecBaja: [''],
-      rol: ['']
+      repeat_password: ['', Validators.required]
     });
   }
 
@@ -87,6 +81,19 @@ export class RegisterComponent implements OnInit {
             displayName: this.form.value.username
           })
 
+          let usuario: Usuario = {
+            id: user.user.uid,
+            username: this.form.value.username,
+            nombre: this.form.value.nombre,
+            apellidos: this.form.value.apellidos,
+            email: this.form.value.email,
+            password: this.form.value.password
+          }
+
+          let h = this.usuarioSrv.create(usuario);
+          console.log("re: ");
+          console.log(h);
+          
           this.authSrv.emailVerified();
           this.authSrv.logout();
 
@@ -94,7 +101,11 @@ export class RegisterComponent implements OnInit {
         }
       })
     } catch (e: any) {
-      alert(e.message)
+      // alert(e.message)
     }
+  }
+
+  goTo(url: string) {
+    this.router.navigate([url]);
   }
 }
