@@ -29,7 +29,7 @@ export class HeaderComponent implements OnInit {
       
 
       if (!this.photo) {
-        this.photo = "../assets/img/user-photo.png"
+        this.photo = "https://firebasestorage.googleapis.com/v0/b/boomclub-tfg.appspot.com/o/user-photo.png?alt=media&token=c9588aa9-1450-4932-86cd-d480853474d1"
       }    
     });
     

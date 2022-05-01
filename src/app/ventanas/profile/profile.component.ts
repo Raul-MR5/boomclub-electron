@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/shared/services/auth.service';
+import { StorageService } from 'src/app/shared/services/storage.service';
 
 @Component({
   selector: 'app-profile',
@@ -14,6 +15,7 @@ export class ProfileComponent implements OnInit {
 
   constructor(
     private authSrv: AuthService,
+    private storageSrv: StorageService,
     private router: Router
   ) { }
 
@@ -47,7 +49,17 @@ export class ProfileComponent implements OnInit {
     this.router.navigate(['/login']);
   }
 
-  edit(){
+  follow(){
     
+  }
+
+  onUpload(event) {
+    let music = event.target.files;
+
+    console.log(music);
+    
+    this.storageSrv.upload(this.name, music).then(url => {
+      console.log(url);
+    });
   }
 }
