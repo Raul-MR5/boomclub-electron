@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { StorageService } from 'src/app/shared/services/storage.service';
+import { UsuarioService } from 'src/app/shared/services/usuario.service';
 
 @Component({
   selector: 'app-profile',
@@ -12,15 +13,19 @@ export class ProfileComponent implements OnInit {
   user;
   name;
   photo;
+  foto;
 
   constructor(
     private authSrv: AuthService,
+    private usuarioSrv: UsuarioService,
     private storageSrv: StorageService,
     private router: Router
   ) { }
 
   ngOnInit(): void {
     // this.user = this.authSrv.usuarioValue.username;
+
+    this.foto = this.usuarioSrv.getUsuario().foto;
 
     this.user = this.authSrv.getUsuario()
     this.user.subscribe(user => {

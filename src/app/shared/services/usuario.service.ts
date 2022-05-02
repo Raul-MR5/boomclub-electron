@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Usuario } from '../../shared/models/usuario.model';
-import { Observable, throwError } from 'rxjs';
+import { BehaviorSubject, Observable, throwError } from 'rxjs';
 
 import { catchError, map } from 'rxjs/operators';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/compat/firestore';
@@ -13,8 +13,10 @@ export class UsuarioService {
     usuario: Usuario;
 
     constructor(private firestore: AngularFirestore) {
+        
     }
 
+      
     getAll(): Observable<Usuario[]> {
         return this.firestore.collection<Usuario>('usuario').valueChanges({ idField: 'id' });
     }
@@ -26,7 +28,7 @@ export class UsuarioService {
     setUsuario(payload: Usuario) {
         this.usuario = payload;
         console.log(this.usuario);
-        
+
     }
 
     getUsuario(): Usuario {
@@ -39,7 +41,7 @@ export class UsuarioService {
             // const data = {id, ...payload};
 
             console.log(payload);
-            
+
 
             // const res = await this.firestore.collection('usuario').add({ ...payload });
             const res = await this.firestore.collection('usuario').doc(payload.id).set(payload);

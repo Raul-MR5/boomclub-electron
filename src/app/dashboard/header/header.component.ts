@@ -21,17 +21,21 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit(): void {
     // this.user = this.authSrv.usuarioValue.username;
-
+    this.authSrv.usuario.subscribe((usuario)=>{
+      this.photo = usuario.foto
+    })
     this.user = this.authSrv.getUsuario()
     this.user.subscribe(user => {
       this.name = user.displayName;      
-      this.photo = user.photo
+      console.log(this.usuarioSrv.getUsuario());
+      
+      // this.photo = this.usuarioSrv.getUsuario().foto
 
-      if (!user.photo) {
+      if (!this.photo) {
         this.photo = "https://firebasestorage.googleapis.com/v0/b/boomclub-tfg.appspot.com/o/user-photo.png?alt=media&token=c9588aa9-1450-4932-86cd-d480853474d1"
       } else {
-        this.usuarioSrv.getUsuario().foto = user.photo
-        this.photo = this.usuarioSrv.getUsuario().foto
+        // this.usuarioSrv.getUsuario().foto = user.photo
+        // this.photo = this.usuarioSrv.getUsuario().foto
       }
       
       console.log(this.photo);

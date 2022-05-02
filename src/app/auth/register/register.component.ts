@@ -19,6 +19,7 @@ export class RegisterComponent implements OnInit {
   name: string;
 
   imagenes: any[] = [];
+  avatar: any;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -34,8 +35,8 @@ export class RegisterComponent implements OnInit {
       this.router.navigate(['/']);
     }
 
-    this.user = this.usuarioSrv.getUsuario()
-    this.name = this.user.nombre;
+    // this.user = this.usuarioSrv.getUsuario()
+    // this.name = this.user.nombre;
 
     this.form = this.formBuilder.group({
       username: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]],
@@ -88,16 +89,17 @@ export class RegisterComponent implements OnInit {
       reader.readAsDataURL(archivos[0]);
       reader.onloadend = () => {
         console.log(reader.result);
-        this.imagenes.push(reader.result);
-        this.storageSrv.uploadImg(this.name, reader.result).then(urlImagen => {
-          // let usuario = {
-          //   name: "jonathan",
-          //   nickName: "yonykikok",
-          //   password: "401325",
-          //   imgProfile: urlImagen
-          // }
-          console.log(urlImagen);
-        });
+        this.avatar = reader.result;
+        // this.imagenes.push(reader.result);
+        // this.storageSrv.uploadImg(this.name, reader.result).then(urlImagen => {
+        //   // let usuario = {
+        //   //   name: "jonathan",
+        //   //   nickName: "yonykikok",
+        //   //   password: "401325",
+        //   //   imgProfile: urlImagen
+        //   // }
+        //   console.log(urlImagen);
+        // });
       }
     }
   }
@@ -114,23 +116,29 @@ export class RegisterComponent implements OnInit {
             displayName: this.form.value.username
           })
 
-          let usuario: Usuario = {
-            id: user.user.uid,
-            username: this.form.value.username,
-            nombre: this.form.value.nombre,
-            apellidos: this.form.value.apellidos,
-            email: this.form.value.email,
-            password: this.form.value.password
-          }
+          this.storageSrv.uploadImg(user.user.displayName, this.avatar).then(async urlImagen => {
 
-          let h = await this.usuarioSrv.create(usuario);
-          console.log("re: ");
-          console.log(h);
-          
-          this.authSrv.emailVerified();
-          this.authSrv.logout();
+            let usuario: Usuario = {
+              id: user.user.uid,
+              username: this.form.value.username,
+              nombre: this.form.value.nombre,
+              apellidos: this.form.value.apellidos,
+              email: this.form.value.email,
+              password: this.form.value.password,
+              foto: urlImagen
+            }
 
-          this.router.navigate(['/login']);
+            console.log(urlImagen);
+
+            let h = await this.usuarioSrv.create(usuario);
+            console.log("re: ");
+            console.log(h);
+
+            this.authSrv.emailVerified();
+            this.authSrv.logout();
+  
+            this.router.navigate(['/login']);
+          });
         }
       })
     } catch (e: any) {
