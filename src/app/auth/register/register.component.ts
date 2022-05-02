@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { Usuario } from 'src/app/shared/models/usuario.model';
 // import { AccountService } from 'src/app/shared/services/account.service';
 import { AuthService } from 'src/app/shared/services/auth.service';
+import { StorageService } from 'src/app/shared/services/storage.service';
 import { UsuarioService } from 'src/app/shared/services/usuario.service';
 
 @Component({
@@ -14,12 +15,17 @@ import { UsuarioService } from 'src/app/shared/services/usuario.service';
 export class RegisterComponent implements OnInit {
 
   form: FormGroup;
+  user: Usuario;
+  name: string;
+
+  imagenes: any[] = [];
 
   constructor(
     private formBuilder: FormBuilder,
     // private accountSrv: AccountService,
     private authSrv: AuthService,
     private usuarioSrv: UsuarioService,
+    private storageSrv: StorageService,
     private router: Router
   ) { }
 
@@ -27,6 +33,9 @@ export class RegisterComponent implements OnInit {
     if (localStorage.getItem('usuario')) {
       this.router.navigate(['/']);
     }
+
+    this.user = this.usuarioSrv.getUsuario()
+    this.name = this.user.nombre;
 
     this.form = this.formBuilder.group({
       username: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]],
@@ -69,13 +78,37 @@ export class RegisterComponent implements OnInit {
   //   //   );
   // }
 
+  onUpload(event) {
+    let archivos = event.target.files;
+    let nombre = "jonathan";
+
+    for (let i = 0; i < archivos.length; i++) {
+
+      let reader = new FileReader();
+      reader.readAsDataURL(archivos[0]);
+      reader.onloadend = () => {
+        console.log(reader.result);
+        this.imagenes.push(reader.result);
+        this.storageSrv.uploadImg(this.name, reader.result).then(urlImagen => {
+          // let usuario = {
+          //   name: "jonathan",
+          //   nickName: "yonykikok",
+          //   password: "401325",
+          //   imgProfile: urlImagen
+          // }
+          console.log(urlImagen);
+        });
+      }
+    }
+  }
+
   async submit() {
     //this.firebase.collection('Usuarios').get();
 
     try {
       console.log(this.form.value.email, this.form.value.password);
 
-      await this.authSrv.register(this.form.value.email, this.form.value.password).then(user => {
+      await this.authSrv.register(this.form.value.email, this.form.value.password).then(async user => {
         if (user) {
           user.user.updateProfile({
             displayName: this.form.value.username
@@ -90,7 +123,7 @@ export class RegisterComponent implements OnInit {
             password: this.form.value.password
           }
 
-          let h = this.usuarioSrv.create(usuario);
+          let h = await this.usuarioSrv.create(usuario);
           console.log("re: ");
           console.log(h);
           

@@ -7,6 +7,10 @@
             <h1 class="h3 mb-3 fw-normal">Registro</h1>
 
             <div class="col-sm-6">
+                <input type="file" accept=".png, .jpg" class="form-control" id="inputGroupFile01" (change)="onUpload($event)">
+            </div>
+
+            <div class="col-sm-6">
                 <label for="firstName" class="form-label">Nombre</label>
                 <input formControlName="nombre" type="text" class="form-control" id="firstName" placeholder="" value="">
                 

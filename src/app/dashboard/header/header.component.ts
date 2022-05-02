@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/shared/services/auth.service';
+import { UsuarioService } from 'src/app/shared/services/usuario.service';
 
 @Component({
   selector: 'app-header',
@@ -14,6 +15,7 @@ export class HeaderComponent implements OnInit {
 
   constructor(
     private authSrv: AuthService,
+    private usuarioSrv: UsuarioService,
     private router: Router
   ) { }
 
@@ -22,15 +24,17 @@ export class HeaderComponent implements OnInit {
 
     this.user = this.authSrv.getUsuario()
     this.user.subscribe(user => {
-      this.name = user.displayName;
-      this.photo = user.photoURL
+      this.name = user.displayName;      
+      this.photo = user.photo
 
-      console.log(this.photo);
-      
-
-      if (!this.photo) {
+      if (!user.photo) {
         this.photo = "https://firebasestorage.googleapis.com/v0/b/boomclub-tfg.appspot.com/o/user-photo.png?alt=media&token=c9588aa9-1450-4932-86cd-d480853474d1"
-      }    
+      } else {
+        this.usuarioSrv.getUsuario().foto = user.photo
+        this.photo = this.usuarioSrv.getUsuario().foto
+      }
+      
+      console.log(this.photo);
     });
     
   }

@@ -10,7 +10,7 @@ import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/comp
 })
 export class UsuarioService {
 
-    usuarios: Observable<Usuario[]>;
+    usuario: Usuario;
 
     constructor(private firestore: AngularFirestore) {
     }
@@ -21,6 +21,16 @@ export class UsuarioService {
 
     getOne(id: string): Observable<Usuario> {
         return this.firestore.collection<Usuario>('usuario').doc(id).valueChanges({ idField: 'id' });
+    }
+
+    setUsuario(payload: Usuario) {
+        this.usuario = payload;
+        console.log(this.usuario);
+        
+    }
+
+    getUsuario(): Usuario {
+        return this.usuario;
     }
 
     async create(payload: Usuario): Promise<any> {

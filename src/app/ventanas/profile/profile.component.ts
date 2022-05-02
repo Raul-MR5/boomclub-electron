@@ -54,11 +54,11 @@ export class ProfileComponent implements OnInit {
   }
 
   onUpload(event) {
-    let music = event.target.files;
+    let music = event.target.files[0];
 
     console.log(music);
     
-    this.storageSrv.upload(this.name, music).then(url => {
+    this.storageSrv.uploadMusic(this.name, music).then(url => {
       console.log(url);
     });
   }

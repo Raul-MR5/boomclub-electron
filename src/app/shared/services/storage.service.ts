@@ -14,10 +14,25 @@ export class StorageService {
 
   constructor() { }
 
-  async upload(nombre: string, file: any) {
+  async uploadImg(nombre: string, imgBase64: any) {
+    console.log(imgBase64);
 
     try {
-      let respuesta = await this.storareRef.child("users/" + nombre).putString(file, 'data_url');
+      let respuesta = await this.storareRef.child("users/" + nombre + ".png").putString(imgBase64, 'data_url');
+      console.log(respuesta);
+      return await respuesta.ref.getDownloadURL();
+    } catch (err) {
+      console.log(err);
+      return null;
+    }
+
+  }
+
+  async uploadMusic(nombre: string, file: any) {
+    console.log(file);
+
+    try {
+      let respuesta = await this.storareRef.child("users/" + nombre + ".mp3").put(file);
       console.log(respuesta);
       return await respuesta.ref.getDownloadURL();
     } catch (err) {
