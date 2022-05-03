@@ -5,11 +5,11 @@ import { StorageService } from 'src/app/shared/services/storage.service';
 import { UsuarioService } from 'src/app/shared/services/usuario.service';
 
 @Component({
-  selector: 'app-cancion',
-  templateUrl: './cancion.component.html',
-  styleUrls: ['./cancion.component.scss']
+  selector: 'app-nueva-cancion',
+  templateUrl: './nueva-cancion.component.html',
+  styleUrls: ['./nueva-cancion.component.scss']
 })
-export class CancionComponent implements OnInit {
+export class NuevaCancionComponent implements OnInit {
   user;
   name;
   photo;

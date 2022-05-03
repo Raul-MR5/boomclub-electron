@@ -82,17 +82,16 @@
         <div class="">
             <ul class="nav nav-tabs">
                 <li class="nav-item div-pointer">
-                    <a class="nav-link color-link active" id="canciones" aria-current="page"
+                    <a class="nav-link color-link" id="canciones" aria-current="page"
                         (click)="goTo('')">Canciones</a>
                 </li>
                 <li class="nav-item div-pointer">
                     <a class="nav-link color-link" id="albums" (click)="goTo('artistas')">Albums</a>
                 </li>
             </ul>
-            <div class="py-md-5 input-group mb-3 mt-5">
-                <!-- <label class="input-group-text" for="inputGroupFile01">Upload</label> -->
+            <!-- <div class="py-md-5 input-group mb-3 mt-5">
                 <input type="file" accept=".mp3, .wav" class="form-control" id="inputGroupFile01" (change)="onUpload($event)">
-            </div>
+            </div> -->
             <router-outlet></router-outlet>
         </div>
     </main>
