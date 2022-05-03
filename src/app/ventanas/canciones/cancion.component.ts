@@ -5,14 +5,13 @@ import { StorageService } from 'src/app/shared/services/storage.service';
 import { UsuarioService } from 'src/app/shared/services/usuario.service';
 
 @Component({
-  selector: 'app-profile',
-  templateUrl: './profile.component.html',
-  styleUrls: ['./profile.component.scss']
+  selector: 'app-cancion',
+  templateUrl: './cancion.component.html',
+  styleUrls: ['./cancion.component.scss']
 })
-export class ProfileComponent implements OnInit {
+export class CancionComponent implements OnInit {
   user;
   name;
-  nombre;
   photo;
   foto;
 
@@ -27,7 +26,6 @@ export class ProfileComponent implements OnInit {
     // this.user = this.authSrv.usuarioValue.username;
 
     this.foto = this.usuarioSrv.getUsuario().foto;
-    this.nombre = this.usuarioSrv.getUsuario().nombre;
 
     this.user = this.authSrv.getUsuario()
     this.user.subscribe(user => {
@@ -45,7 +43,7 @@ export class ProfileComponent implements OnInit {
   }
 
   goTo(url: string) {
-    this.router.navigate(['/profile/' + url]);
+    this.router.navigate([url]);
   }
 
   async logout() {
