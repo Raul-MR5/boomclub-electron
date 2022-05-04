@@ -28,7 +28,7 @@ export class NuevaCancionComponent implements OnInit {
     // this.user = this.authSrv.usuarioValue.username;
     console.log("hola");
     
-    document.getElementById("canciones").className += " active"
+    // document.getElementById("canciones").className += " active"
 
     this.foto = this.usuarioSrv.getUsuario().foto;
 
@@ -52,7 +52,7 @@ export class NuevaCancionComponent implements OnInit {
   }
 
   ngOnDestroy(): void {
-    document.getElementById("canciones").classList.remove("active")
+    // document.getElementById("canciones").classList.remove("active")
   }
 
 

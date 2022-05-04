@@ -118,13 +118,16 @@ export class RegisterComponent implements OnInit {
 
           this.storageSrv.uploadImg(user.user.displayName, this.avatar).then(async urlImagen => {
 
+            if (!urlImagen) {
+              urlImagen = "https://firebasestorage.googleapis.com/v0/b/boomclub-tfg.appspot.com/o/user-photo.png?alt=media&token=c9588aa9-1450-4932-86cd-d480853474d1"
+            }
+
             let usuario: Usuario = {
               id: user.user.uid,
               username: this.form.value.username,
               nombre: this.form.value.nombre,
               apellidos: this.form.value.apellidos,
               email: this.form.value.email,
-              password: this.form.value.password,
               foto: urlImagen
             }
 

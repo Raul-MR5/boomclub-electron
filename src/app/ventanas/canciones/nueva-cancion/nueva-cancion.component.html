@@ -1,20 +1,61 @@
-<div class="col-lg-10 mx-auto p-3 py-md-5">
+<div class="form-back">
     <main>
-        <div class="py-4">
-            <div class="py-2 row row-cols-1 row-cols-sm-2 row-cols-md-4 g-3">
+        <div>
+            <div class="col-lg-10 mx-auto p-3 py-md-5">
+                <h3 class="text-pink"><b>Subir canción</b></h3>
+                <div class="test mt-3 d-flex align-items-center row row-cols-1 row-cols-sm-2 row-cols-md-3 g-1">
 
-                <div class="col" *ngFor="p of prueba">
-                    <div class="shadow-sm song-selector">
-                        <div class="card-body card-back">
-                            <img class="music-cover me-2"
-                                src="https://firebasestorage.googleapis.com/v0/b/boomclub-tfg.appspot.com/o/boomclub.png?alt=media&token=14ede50f-dcfc-41e3-8bea-03b90978e28a"
-                                width="100%" height="100%">
-
-                            <h6 class="text-pink">Canciones para</h6>
+                    <div class="col">
+                        <div class="d-flex align-items-center">
+                            <img src="{{foto}}" width="150px" height="150px">
                         </div>
                     </div>
+
+                    <div class="col-2">
+                        <table>
+                            <!-- <th><strong class="text-pink">Titulo</strong></th>
+                            <tr><strong class="text-pink">Subir archivo</strong></tr> -->
+                            <tr>
+                                <div class="col-sm-12">
+                                    <label for="firstName" class="form-label">Nombre</label>
+                                    <input formControlName="nombre" type="text" class="form-control" id="firstName"
+                                        placeholder="" value="">
+
+                                    <!-- <p class="invalid-error"
+                                    *ngIf="form.get('nombre').invalid && (form.get('nombre').dirty || form.get('nombre').touched)">
+                                    Introduzca un nombre
+                                </p> -->
+                                </div>
+                            </tr>
+                            <tr>
+                                <div class="col-sm-12">
+                                    <input type="file" accept=".mp3, .wav" class="form-control" id="inputGroupFile01"
+                                        (change)="onUpload($event)">
+                                </div>
+                            </tr>
+                        </table>
+                        <!-- <div class="col">
+                            
+                        </div>
+                        <div class="col">
+                            
+                        </div> -->
+                    </div>
+
                 </div>
 
+                <div class="mx-auto mt-3">
+                    <label for="textarea" class="text-pink mb-2 title-new-song"><b>Lyrics</b></label>
+                    <textarea class="form-control" rows="5" placeholder="Introduzca la letra de su canción"
+                        id="textarea"></textarea>
+                </div>
+
+                <div class="d-flex align-items-center row row-cols-1 row-cols-sm-1 row-cols-md-4 g-3">
+                    <div class="col"></div>
+                    <div class="col-2">
+                        <button class="btn btn-back text-white arreglo" (click)="follow()">Publicar</button>
+                    </div>
+                </div>
             </div>
         </div>
     </main>
