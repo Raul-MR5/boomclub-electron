@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, Input, OnInit } from '@angular/core';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { StorageService } from 'src/app/shared/services/storage.service';
 import { UsuarioService } from 'src/app/shared/services/usuario.service';
@@ -15,16 +15,19 @@ export class CancionComponent implements OnInit {
   photo;
   foto;
 
-  prueba = []
+  // @Input() 
+  canciones = []
 
   constructor(
     private authSrv: AuthService,
     private usuarioSrv: UsuarioService,
     private storageSrv: StorageService,
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute
   ) { }
 
   ngOnInit(): void {
+    // this.route.params.subscribe((params: Params) => this.canciones = params['caller']);
     // this.user = this.authSrv.usuarioValue.username;
     console.log("hola");
     
@@ -46,7 +49,7 @@ export class CancionComponent implements OnInit {
     });
 
     for (let i = 1; i <= 20; i++) {
-      this.prueba.push(i)
+      this.canciones.push(i)
     }
     
   }

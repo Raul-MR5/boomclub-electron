@@ -19,6 +19,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http'
 import { FooterComponent } from './footer/footer.component';
 
+import {ToastModule} from 'primeng/toast';
+import { MessageService } from 'primeng/api';
+
 const routes: Routes = [
   {
     path: '',
@@ -54,8 +57,14 @@ const routes: Routes = [
     AngularFirestoreModule,
     AngularFireAuthModule,
 
-    HttpClientModule
+    HttpClientModule,
+    ToastModule
   ],
-  exports: [RouterModule]
+  exports: [
+    RouterModule
+  ],
+  providers: [
+    MessageService
+  ]
 })
 export class DashboardModule { }

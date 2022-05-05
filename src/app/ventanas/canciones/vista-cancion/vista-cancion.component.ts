@@ -5,16 +5,17 @@ import { StorageService } from 'src/app/shared/services/storage.service';
 import { UsuarioService } from 'src/app/shared/services/usuario.service';
 
 @Component({
-  selector: 'app-profile',
-  templateUrl: './profile.component.html',
-  styleUrls: ['./profile.component.scss']
+  selector: 'app-vista-cancion',
+  templateUrl: './vista-cancion.component.html',
+  styleUrls: ['./vista-cancion.component.scss']
 })
-export class ProfileComponent implements OnInit {
+export class VistaCancionComponent implements OnInit {
   user;
   name;
-  nombre;
   photo;
   foto;
+
+  prueba = []
 
   constructor(
     private authSrv: AuthService,
@@ -25,9 +26,11 @@ export class ProfileComponent implements OnInit {
 
   ngOnInit(): void {
     // this.user = this.authSrv.usuarioValue.username;
+    console.log("hola");
+    
+    // document.getElementById("canciones").className += " active"
 
     this.foto = this.usuarioSrv.getUsuario().foto;
-    this.nombre = this.usuarioSrv.getUsuario().nombre;
 
     this.user = this.authSrv.getUsuario()
     this.user.subscribe(user => {
@@ -41,17 +44,20 @@ export class ProfileComponent implements OnInit {
         this.photo = "../assets/img/user-photo.png"
       }    
     });
+
+    for (let i = 1; i <= 20; i++) {
+      this.prueba.push(i)
+    }
     
   }
 
-  goTo(url: string) {
-    // let canciones = [];
-    // for (let i = 1; i <= 20; i++) {
-    //   canciones.push(i)
-    // }
+  ngOnDestroy(): void {
+    // document.getElementById("canciones").classList.remove("active")
+  }
 
-    // this.router.navigate(['/profile/' + url],{ queryParams: { canciones: canciones }});
-    this.router.navigate(['/profile/' + url]);
+
+  goTo(url: string) {
+    this.router.navigate([url]);
   }
 
   async logout() {

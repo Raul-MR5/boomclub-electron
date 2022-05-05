@@ -5,6 +5,8 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 // import { AccountService } from 'src/app/shared/services/account.service';
 import { AuthService } from 'src/app/shared/services/auth.service';
+import { MessageService } from 'primeng/api';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-login',
@@ -21,7 +23,8 @@ export class LoginComponent implements OnInit {
     private router: Router,
     // private accountSrv: AccountService,
     public authSrv: AuthService,
-    private firebase: AngularFirestore
+    private firebase: AngularFirestore,
+    private messageService: MessageService
   ) { }
 
   ngOnInit(): void {// Validacion de si existe en local storage 'usuasio', si existe redireccion a /
@@ -47,8 +50,8 @@ export class LoginComponent implements OnInit {
 
     try {
       console.log(this.form.value.user, this.form.value.password);
-      
-      
+
+
 
       await this.authSrv.login(this.form.value.user, this.form.value.password).then(user => {
         if (user) {
@@ -56,32 +59,50 @@ export class LoginComponent implements OnInit {
             if (user.emailVerified) {
               this.router.navigate(['/']);
             } else {
-              alert("Verifique su email");
+              // alert("Verifique su email");
               this.authSrv.logout();
             }
           })
         }
       })
+
+    } catch (e: any) {
+      console.log(e.message);
+
+      // this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Message Content' });
+
+      if (e.message == 'Firebase: The password is invalid or the user does not have a password. (auth/wrong-password).') {
+        Swal.fire({
+          icon: 'error',
+          title: 'Contraseña incorrecta'
+        })
+      } else{
+        Swal.fire({
+          icon: 'error',
+          title: 'Correo incorrecto'
+        })
+      }
       
-    } catch (e: any) {      
+
+      // document.getElementById("toast").setAttribute('data-bs-autohide', "false")
       // alert(e.message)
     }
   }
 
-  async google(){
+  async google() {
     try {
       console.log(this.form.value.user, this.form.value.password);
-      
+
       await this.authSrv.googleAuth().then(user => {
         if (user) {
           console.log("entras");
           this.router.navigate(['/']);
         }
       })
-      
+
     } catch (e: any) {
       console.log("hola");
-      
+
       // alert(e.message)
     }
   }
