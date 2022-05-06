@@ -12,7 +12,7 @@ const routes: Routes = [
     component: ProfileComponent,
     canActivate: [AuthGuard],
     children: [
-      { path: '', loadChildren: () => import('src/app/ventanas/canciones/cancion.module').then(m => m.CancionModule), canActivate: [AuthGuard], pathMatch: "full"},
+      { path: '', loadChildren: () => import('src/app/ventanas/canciones/cancion.module').then(m => m.CancionModule), canActivate: [AuthGuard]},
       { path: 'artistas',  loadChildren: () => import('src/app/ventanas/biblioteca/artistas/artistas.module').then(m => m.ArtistasModule), canActivate: [AuthGuard]}
     ]
   }

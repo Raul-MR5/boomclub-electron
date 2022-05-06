@@ -4,8 +4,12 @@
     margin-left: 5%;
 }
 
-.title-new-song {
-    font-size: 125%;
+.title-song {
+    font-size: 250%;
+}
+
+.bg-size {
+    min-height: 100%;
 }
 
 .test {
@@ -13,8 +17,7 @@
 }
 
 .arreglo {
-    margin-top: 25px;
-    width: 100%;
+    padding: 25px;
 }
 
 .btn-back {
@@ -38,9 +41,12 @@
     cursor: pointer
 }
 
-.bg-profile {
-    background-image: url('https://firebasestorage.googleapis.com/v0/b/boomclub-tfg.appspot.com/o/backOG3.png?alt=media&token=07ca8e3a-0ce0-49a8-95d6-4a8c2add230d');
-    background-size: cover;
+.margin-option {
+    margin-right: 10px;
+}
+
+small {
+    font-size: 100%;
 }
 
 @media screen and (max-width: 767px) {

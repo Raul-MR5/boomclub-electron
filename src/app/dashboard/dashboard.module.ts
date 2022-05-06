@@ -21,6 +21,7 @@ import { FooterComponent } from './footer/footer.component';
 
 import {ToastModule} from 'primeng/toast';
 import { MessageService } from 'primeng/api';
+import { VistaCancionComponent } from '../ventanas/canciones/vista-cancion/vista-cancion.component';
 
 const routes: Routes = [
   {
@@ -32,6 +33,7 @@ const routes: Routes = [
       { path: 'biblioteca',  loadChildren: () => import('src/app/ventanas/biblioteca/biblioteca.module').then(m => m.BibliotecaModule), canActivate: [AuthGuard]},
       { path: 'profile',  loadChildren: () => import('src/app/ventanas/profile/profile.module').then(m => m.ProfileModule), canActivate: [AuthGuard]},
       { path: 'new-song',  loadChildren: () => import('src/app/ventanas/canciones/nueva-cancion/nueva-cancion.module').then(m => m.NuevaCancionModule), canActivate: [AuthGuard]},
+      { path: 'cancion/:id/:url', component: VistaCancionComponent, canActivate: [AuthGuard] }
     ]
   },
   { path: 'login', component: LoginComponent },
@@ -45,7 +47,8 @@ const routes: Routes = [
     MenuComponent,
     FooterComponent,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    VistaCancionComponent
   ],
   imports: [
     CommonModule,

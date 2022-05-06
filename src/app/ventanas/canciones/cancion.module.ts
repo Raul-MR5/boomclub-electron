@@ -4,10 +4,11 @@ import { CancionComponent } from './cancion.component';
 import { RouterModule, Routes } from '@angular/router';
 
 import { AuthGuard } from '../../auth/auth.guard';
+import { VistaCancionComponent } from './vista-cancion/vista-cancion.component';
 
 
 const routes: Routes = [
-  { path: '', component: CancionComponent, canActivate: [AuthGuard], pathMatch: "full" }
+  { path: '', component: CancionComponent, canActivate: [AuthGuard] }
 ];
 
 @NgModule({
