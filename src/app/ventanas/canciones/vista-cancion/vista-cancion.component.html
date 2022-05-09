@@ -84,85 +84,49 @@
                 </ul>
 
                 <div class="mt-4" *ngIf="opt">
-                    <textarea class="form-control" rows="6" placeholder="Introduzca la letra de su canción"
-                        id="textarea"></textarea>
+                    <div class="d-flex align-items-center">
+                        <img class="rounded-circle me-2" src="{{foto}}" width="32px" height="32px">
+                        <textarea class="form-control me-2" rows="1" placeholder="Escriba un comentario..."
+                            id="textarea"></textarea>
+                        <button class="btn btn-back text-white">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16px" height="16px" fill="#ffffff"
+                                class="bi bi-send send-btn" viewBox="0 0 16 16">
+                                <path
+                                    d="M15.854.146a.5.5 0 0 1 .11.54l-5.819 14.547a.75.75 0 0 1-1.329.124l-3.178-4.995L.643 7.184a.75.75 0 0 1 .124-1.33L15.314.037a.5.5 0 0 1 .54.11ZM6.636 10.07l2.761 4.338L14.13 2.576 6.636 10.07Zm6.787-8.201L1.591 6.602l4.339 2.76 7.494-7.493Z" />
+                            </svg>
+                        </button>
+                    </div>
+                    <div class="mt-4 mb-3 row">
+                        <div class="col-lg-1">
+                            <img class="rounded-circle me-2" src="{{foto}}" width="32px" height="32px">
+                        </div>
+                        <div class="col-lg-11 bg-light bg-icon">
+                            <p class="text-pink mt-2">
+                                Pero llamó la amiga diciendo pa' hangear, eh
+                                Tiene un culito ahí que lo acabó de testear, eh
+                                Pero en bajita, ella no es de frentear
+                                Ella es callaita'
+                                Pero pal' sexo es atrevida, yo sé
+                                Marihuana y bebida
+                                Gozándose la vida, como es
+                                Ella es callaita'
+                                Pero pal' sexo es atrevida, yo sé
+                                Marihuana y bebida
+                                Gozándose la vida, como es
+                                Ella no era así, ella no era así
+                                No sé quién la dañó
+                                Ella no era así, ella no era así
+                                No sé quién la dañó, pero
+                                Ahora enrola
+                                Y lo prende
+                            </p>
+                        </div>
+                    </div>
                 </div>
 
-                <div class="mt-4" *ngIf="!opt">
-                    <p>
-                        Se acostó temprano mañana hay que estudiar, eh
-                        Pero llamó la amiga diciendo pa' hangear, eh
-                        Tiene un culito ahí que lo acabó de testear, eh
-                        Pero en bajita, ella no es de frentear
-                        Ella es callaita'
-                        Pero pal' sexo es atrevida, yo sé
-                        Marihuana y bebida
-                        Gozándose la vida, como es
-                        Ella es callaita'
-                        Pero pal' sexo es atrevida, yo sé
-                        Marihuana y bebida
-                        Gozándose la vida, como es
-                        Ella no era así, ella no era así
-                        No sé quién la dañó
-                        Ella no era así, ella no era así
-                        No sé quién la dañó, pero
-                        Ahora enrola
-                        Y lo prende
-                        Es panita
-                        Del que vende, ey
-                        Nena mala de repente
-                        No sé si me miente, pero
-                        Sé que tiene más de veinte
-                        Los shots de tequila ni los siente
-                        Ahora ve la vida diferente
-                        Buena, pero le gusta un delincuente
-                        La baby llega y se siente la presión
-                        Ella ni trata y llama la atención, ey
-                        El perreo es su profesión
-                        Siempre puesta pa' la misión
-                        La baby llega y se siente la presión
-                        Ella ni trata y llama la atención, ey
-                        El perreo es su profesión
-                        Siempre puesta pa' la misión
-                        Ella es callaita
-                        Pero pal' sexo es atrevida, yo sé
-                        Marihuana y bebida
-                        Gozándose la vida, como es
-                        Ella es callaita
-                        Pero pal' sexo es atrevida, yo sé
-                        Marihuana y bebida
-                        Gozándose la vida, como es
-                        Se dejó hace poco y tiene vida nueva
-                        Anda con una amiga que es como su jeva
-                        Que les trajo cinco doce pa' que se las beba
-                        Ella es callaita no es que no se atreva
-                        Si hay sol hay playa
-                        Si hay playa hay alcohol
-                        Si hay alcohol hay sexo
-                        Si es contigo mejor
-                        Si hay sol hay playa
-                        Si hay playa hay alcohol
-                        Si hay alcohol hay sexo
-                        Si es contigo mejor
-                        Quítate la ropa que hace calor
-                        Días de playa, noches de terror
-                        En la gaveta dejo el temor
-                        Pa' las envidiosas paz y amor
-                        Yeah, yeah, yeah, yeah, yeah
-                        Tainy, Tainy, ey
-                        Bad Bunny baby, bebe
-                        Ella es callaita
-                        Pero pal' sexo es atrevida, yo sé
-                        Marihuana y bebida
-                        Gozándose la vida, como es
-                        Ella es callaita
-                        Pero pal' sexo es atrevida, yo sé
-                        Marihuana y bebida
-                        Gozándose la vida, como es
-                        Ella no era así, ella no era así
-                        No sé quién la dañó
-                        Ella no era así, ella no era así
-                        No sé quién la dañó, pero
+                <div class="mt-4 bg-dark" *ngIf="!opt">
+                    <p class="p-3 text-pink" id="p-lyrics">
+                        <span *ngFor="let l of letra">{{l}}<br></span>
                     </p>
                 </div>
             </div>
