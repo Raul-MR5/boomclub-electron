@@ -3,6 +3,8 @@ import { Usuario } from './usuario.model';
 export interface Cancion {
     id?: string;
     usuario: Usuario;
-    duracion: number;
-    foto?: any;
+    titulo: string;
+    lyrics: string;
+    foto?: string;
+    cancion: string;
 }

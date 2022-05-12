@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { NuevaCancionComponent } from './nueva-cancion.component';
 import { RouterModule, Routes } from '@angular/router';
 
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
 import { AuthGuard } from '../../../auth/auth.guard';
 
 
@@ -16,6 +18,10 @@ const routes: Routes = [
   ],
   imports: [
     CommonModule,
+
+    FormsModule, 
+    ReactiveFormsModule,
+
     RouterModule.forChild(routes)
 
   ],

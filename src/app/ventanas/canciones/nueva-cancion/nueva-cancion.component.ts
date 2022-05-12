@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Cancion } from 'src/app/shared/models/cancion.model';
 import { Usuario } from 'src/app/shared/models/usuario.model';
 import { AuthService } from 'src/app/shared/services/auth.service';
+import { CancionService } from 'src/app/shared/services/cancion.service';
 import { StorageService } from 'src/app/shared/services/storage.service';
 import { UsuarioService } from 'src/app/shared/services/usuario.service';
 
@@ -27,6 +29,7 @@ export class NuevaCancionComponent implements OnInit {
     private formBuilder: FormBuilder,
     private authSrv: AuthService,
     private usuarioSrv: UsuarioService,
+    private cancionSrv: CancionService,
     private storageSrv: StorageService,
     private router: Router
   ) { }
@@ -108,7 +111,7 @@ export class NuevaCancionComponent implements OnInit {
 
   async submit() {
     try {
-      console.log();
+      console.log(this.form.value);
 
       let user: Usuario = this.usuarioSrv.getUsuario();
 
@@ -119,13 +122,24 @@ export class NuevaCancionComponent implements OnInit {
 
         console.log(urlImagen);
 
-        this.storageSrv.uploadMusic(user.email, this.form.value.titulo, this.music).then(url => {
-            console.log(url);
-            console.log(urlImagen);
+        this.storageSrv.uploadMusic(user.email, this.form.value.titulo, this.music).then(async url => {
+          console.log(url);
+          console.log(urlImagen);
 
+          let cancion: Cancion = {
+            usuario: user,
+            titulo: this.form.value.titulo,
+            lyrics: this.form.value.lyrics,
+            cancion: url,
+            foto: urlImagen
+          }
 
-            this.router.navigate(['/profile']);
-          });
+          let h = await this.cancionSrv.create(cancion);
+          console.log("re: ");
+          console.log(h);
+
+          this.router.navigate(['/profile']);
+        });
 
         // let h = await this.usuarioSrv.create(usuario);
         // console.log("re: ");

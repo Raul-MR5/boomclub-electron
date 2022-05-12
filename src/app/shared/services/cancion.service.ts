@@ -4,6 +4,7 @@ import { Observable, throwError } from 'rxjs';
 
 import { catchError, map } from 'rxjs/operators';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/compat/firestore';
+import { Usuario } from '../models/usuario.model';
 
 @Injectable({
     providedIn: 'root'
@@ -17,6 +18,10 @@ export class CancionService {
 
     getAll(): Observable<Cancion[]> {
         return this.firestore.collection<Cancion>('cancion').valueChanges({ idField: 'id' });
+    }
+
+    getUserMusic(user: Usuario): Observable<Cancion[]> {
+        return this.firestore.collection<Cancion>('cancion', ref => ref.where('usuario', '==', user)).valueChanges();
     }
 
     getOne(id: string): Observable<Cancion> {

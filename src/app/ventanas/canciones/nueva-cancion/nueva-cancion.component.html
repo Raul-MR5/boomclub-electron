@@ -8,7 +8,7 @@
                     <div class="test mt-3 d-flex align-items-center row row-cols-1 row-cols-sm-2 row-cols-md-3 g-1">
 
                         <div class="col-lg-4">
-                            <input type="file" accept=".png, .jpg,.jpeg" multiple (change)="onUploadImg($event)"
+                            <input formControlName="foto" type="file" accept=".png, .jpg,.jpeg" multiple (change)="onUploadImg($event)"
                                 id="inputFile">
 
                             <label for="inputFile" class="labelInputFile">
@@ -22,8 +22,8 @@
                             <tr><strong class="text-pink">Subir archivo</strong></tr> -->
                             <div>
 
-                                <label for="firstName" class="form-label text-pink title-new-song"><b>Nombre</b></label>
-                                <input formControlName="nombre" type="text" class="form-control" id="firstName"
+                                <label for="firstName" class="form-label text-pink title-new-song"><b>Título</b></label>
+                                <input formControlName="titulo" type="text" class="form-control" id="firstName"
                                     placeholder="" value="">
 
                                 <!-- <p class="invalid-error"
@@ -34,7 +34,7 @@
                             <div class="mt-2">
                                 <label for="inputSong"
                                     class="form-label text-pink title-new-song"><b>Archivo</b></label>
-                                <input type="file" accept=".mp3, .wav" class="form-control" id="inputSong"
+                                <input formControlName="cancion" type="file" accept=".mp3, .wav" class="form-control" id="inputSong"
                                     (change)="onUploadMusic($event)">
                             </div>
                             <!-- </div> -->
@@ -50,7 +50,7 @@
 
                     <div class="mx-auto mt-4">
                         <label for="textarea" class="text-pink mb-2 title-new-song"><b>Lyrics</b></label>
-                        <textarea class="form-control" rows="6" placeholder="Introduzca la letra de su canción"
+                        <textarea formControlName="lyrics" class="form-control" rows="6" placeholder="Introduzca la letra de su canción"
                             id="textarea"></textarea>
                     </div>
 

@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Cancion } from 'src/app/shared/models/cancion.model';
+import { Usuario } from 'src/app/shared/models/usuario.model';
 import { AuthService } from 'src/app/shared/services/auth.service';
+import { CancionService } from 'src/app/shared/services/cancion.service';
 import { StorageService } from 'src/app/shared/services/storage.service';
 import { UsuarioService } from 'src/app/shared/services/usuario.service';
 
@@ -10,37 +13,38 @@ import { UsuarioService } from 'src/app/shared/services/usuario.service';
   styleUrls: ['./profile.component.scss']
 })
 export class ProfileComponent implements OnInit {
-  user;
-  name;
-  nombre;
-  photo;
-  foto;
+  user: Usuario;
+
+  nombre: string;
+  foto: string;
+
+  music: Cancion[]
 
   constructor(
     private authSrv: AuthService,
     private usuarioSrv: UsuarioService,
+    private cancionSrv: CancionService,
     private storageSrv: StorageService,
     private router: Router
   ) { }
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
     // this.user = this.authSrv.usuarioValue.username;
+    this.user = this.usuarioSrv.getUsuario();
 
-    this.foto = this.usuarioSrv.getUsuario().foto;
-    this.nombre = this.usuarioSrv.getUsuario().username;
+    this.foto = this.user.foto;
+    this.nombre = this.user.username;
 
-    this.user = this.authSrv.getUsuario()
-    this.user.subscribe(user => {
-      this.name = user.displayName;
-      this.photo = user.photoURL
+    // console.log("this.cancionSrv.getAll()");
+    // console.log(await this.cancionSrv.getAll());
+    // console.log("this.cancionSrv.getUserMusic()");
+    // console.log(await this.cancionSrv.getUserMusic(this.user));
 
-      console.log(this.photo);
-      
-
-      if (!this.photo) {
-        this.photo = "../assets/img/user-photo.png"
-      }    
-    });
+    this.cancionSrv.getUserMusic(this.user).subscribe((music)=>{
+      console.log(music);
+      this.music = music;
+    })
+    
     
   }
 

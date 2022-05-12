@@ -1,6 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
+import { Cancion } from 'src/app/shared/models/cancion.model';
 import { AuthService } from 'src/app/shared/services/auth.service';
+import { CancionService } from 'src/app/shared/services/cancion.service';
 import { StorageService } from 'src/app/shared/services/storage.service';
 import { UsuarioService } from 'src/app/shared/services/usuario.service';
 
@@ -16,11 +18,13 @@ export class CancionComponent implements OnInit {
   foto;
 
   // @Input() 
-  canciones = []
+  canciones: Cancion[] = []
+  bool: boolean = false;
 
   constructor(
     private authSrv: AuthService,
     private usuarioSrv: UsuarioService,
+    private cancionSrv: CancionService,
     private storageSrv: StorageService,
     private router: Router,
     private route: ActivatedRoute
@@ -33,24 +37,20 @@ export class CancionComponent implements OnInit {
     
     document.getElementById("canciones").className += " active"
 
-    this.foto = this.usuarioSrv.getUsuario().foto;
+    this.user = this.usuarioSrv.getUsuario();
 
-    this.user = this.authSrv.getUsuario()
-    this.user.subscribe(user => {
-      this.name = user.displayName;
-      this.photo = user.photoURL
+    this.foto = this.user.foto;
 
-      console.log(this.photo);
-      
+    this.cancionSrv.getUserMusic(this.user).subscribe((music)=>{
+      console.log(music);
+      this.canciones = music;
 
-      if (!this.photo) {
-        this.photo = "../assets/img/user-photo.png"
-      }    
-    });
-
-    for (let i = 1; i <= 20; i++) {
-      this.canciones.push(i)
-    }
+      if (this.canciones.length == 0) {
+        this.bool = true;
+        console.log(this.bool);
+        
+      }
+    })
     
   }
 

@@ -42,6 +42,14 @@
     cursor: pointer
 }
 
+.no-music {
+    filter: invert(40%) sepia(7%) saturate(2086%) hue-rotate(314deg) brightness(117%) contrast(90%);
+}
+
+.fh-no-music {
+    height: 100%;
+}
+
 .bg-profile {
     background-image: url('https://firebasestorage.googleapis.com/v0/b/boomclub-tfg.appspot.com/o/backOG3.png?alt=media&token=07ca8e3a-0ce0-49a8-95d6-4a8c2add230d');
     background-size: cover;
