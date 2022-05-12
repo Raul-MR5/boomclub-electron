@@ -85,7 +85,7 @@
 
                 <div class="mt-4" *ngIf="opt">
                     <div class="d-flex align-items-center">
-                        <img class="rounded-circle me-2" src="{{foto}}" width="32px" height="32px">
+                        <img class="rounded-circle me-3" src="{{foto}}" width="32px" height="32px">
                         <textarea class="form-control me-2" rows="1" placeholder="Escriba un comentario..."
                             id="textarea"></textarea>
                         <button class="btn btn-back text-white">
@@ -96,35 +96,38 @@
                             </svg>
                         </button>
                     </div>
-                    <div class="mt-4 mb-3 row">
-                        <div class="col-lg-1">
-                            <img class="rounded-circle me-2" src="{{foto}}" width="32px" height="32px">
-                        </div>
-                        <div class="col-lg-11 bg-light bg-icon">
-                            <p class="text-pink mt-2">
-                                Pero llamó la amiga diciendo pa' hangear, eh
-                                Tiene un culito ahí que lo acabó de testear, eh
-                                Pero en bajita, ella no es de frentear
-                                Ella es callaita'
-                                Pero pal' sexo es atrevida, yo sé
-                                Marihuana y bebida
-                                Gozándose la vida, como es
-                                Ella es callaita'
-                                Pero pal' sexo es atrevida, yo sé
-                                Marihuana y bebida
-                                Gozándose la vida, como es
-                                Ella no era así, ella no era así
-                                No sé quién la dañó
-                                Ella no era así, ella no era así
-                                No sé quién la dañó, pero
-                                Ahora enrola
-                                Y lo prende
-                            </p>
+                    <div>
+                        <div *ngFor="let p of prueba" class="mt-4 mb-3 row">
+                            <div class="col-lg-1">
+                                <img class="rounded-circle me-2" src="{{foto}}" width="32px" height="32px">
+                            </div>
+                            <div class="col-lg-11 bg-light bg-icon">
+                                <p class="text-pink mt-2">
+                                    {{p}} - 
+                                    Pero llamó la amiga diciendo pa' hangear, eh
+                                    Tiene un culito ahí que lo acabó de testear, eh
+                                    Pero en bajita, ella no es de frentear
+                                    Ella es callaita'
+                                    Pero pal' sexo es atrevida, yo sé
+                                    Marihuana y bebida
+                                    Gozándose la vida, como es
+                                    Ella es callaita'
+                                    Pero pal' sexo es atrevida, yo sé
+                                    Marihuana y bebida
+                                    Gozándose la vida, como es
+                                    Ella no era así, ella no era así
+                                    No sé quién la dañó
+                                    Ella no era así, ella no era así
+                                    No sé quién la dañó, pero
+                                    Ahora enrola
+                                    Y lo prende
+                                </p>
+                            </div>
                         </div>
                     </div>
                 </div>
 
-                <div class="mt-4 bg-dark" *ngIf="!opt">
+                <div class="mt-4 bg-light bg-icon" *ngIf="!opt">
                     <p class="p-3 text-pink" id="p-lyrics">
                         <span *ngFor="let l of letra">{{l}}<br></span>
                     </p>

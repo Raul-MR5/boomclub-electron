@@ -14,11 +14,11 @@ export class StorageService {
 
   constructor() { }
 
-  async uploadImg(nombre: string, imgBase64: any) {
+  async uploadImg(carpeta: string, nombre: string, imgBase64: any) {
     console.log(imgBase64);
 
     try {
-      let respuesta = await this.storareRef.child("users/" + nombre + ".png").putString(imgBase64, 'data_url');
+      let respuesta = await this.storareRef.child(carpeta + "/" + nombre + ".png").putString(imgBase64, 'data_url');
       console.log(respuesta);
       return await respuesta.ref.getDownloadURL();
     } catch (err) {
@@ -28,11 +28,11 @@ export class StorageService {
 
   }
 
-  async uploadMusic(nombre: string, file: any) {
+  async uploadMusic(user: string, nombre: string, file: any) {
     console.log(file);
 
     try {
-      let respuesta = await this.storareRef.child("users/" + nombre + ".mp3").put(file);
+      let respuesta = await this.storareRef.child("canciones/" + user + "/" + nombre + ".mp3").put(file);
       console.log(respuesta);
       return await respuesta.ref.getDownloadURL();
     } catch (err) {

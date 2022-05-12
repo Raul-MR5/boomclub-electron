@@ -80,7 +80,7 @@ export class CancionComponent implements OnInit {
 
     console.log(music);
     
-    this.storageSrv.uploadMusic(this.name, music).then(url => {
+    this.storageSrv.uploadMusic(this.name, this.name, music).then(url => {
       console.log(url);
     });
   }

@@ -81,7 +81,6 @@ export class RegisterComponent implements OnInit {
 
   onUpload(event) {
     let archivos = event.target.files;
-    let nombre = "jonathan";
 
     for (let i = 0; i < archivos.length; i++) {
 
@@ -116,7 +115,10 @@ export class RegisterComponent implements OnInit {
             displayName: this.form.value.username
           })
 
-          this.storageSrv.uploadImg(user.user.displayName, this.avatar).then(async urlImagen => {
+          console.log(user.user.displayName);
+
+          this.storageSrv.uploadImg("avatar", this.form.value.email, this.avatar).then(async urlImagen => {
+            console.log(this.form.value.username);
 
             if (!urlImagen) {
               urlImagen = "https://firebasestorage.googleapis.com/v0/b/boomclub-tfg.appspot.com/o/user-photo.png?alt=media&token=c9588aa9-1450-4932-86cd-d480853474d1"
@@ -139,7 +141,7 @@ export class RegisterComponent implements OnInit {
 
             this.authSrv.emailVerified();
             this.authSrv.logout();
-  
+
             this.router.navigate(['/login']);
           });
         }

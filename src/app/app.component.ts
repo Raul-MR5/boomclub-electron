@@ -11,20 +11,8 @@ import { UsuarioService } from './shared/services/usuario.service';
 export class AppComponent implements OnInit {
   title = 'boomclub';
 
-  constructor(
-    private authSrv: AuthService,
-    private usuarioSrv: UsuarioService
-  ) { }
+  constructor() { }
 
   ngOnInit(): void {
-    this.authSrv.authenticated().subscribe(bool => {
-      if (bool) {
-        this.authSrv.getUsuario().subscribe(user => {
-          this.usuarioSrv.getOne(user.uid).subscribe(usuario => {
-            this.usuarioSrv.setUsuario(usuario);
-          })
-        });
-      }
-    })
   }
 }

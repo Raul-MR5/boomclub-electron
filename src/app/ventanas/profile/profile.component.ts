@@ -27,7 +27,7 @@ export class ProfileComponent implements OnInit {
     // this.user = this.authSrv.usuarioValue.username;
 
     this.foto = this.usuarioSrv.getUsuario().foto;
-    this.nombre = this.usuarioSrv.getUsuario().nombre;
+    this.nombre = this.usuarioSrv.getUsuario().username;
 
     this.user = this.authSrv.getUsuario()
     this.user.subscribe(user => {
@@ -66,13 +66,13 @@ export class ProfileComponent implements OnInit {
     
   }
 
-  onUpload(event) {
-    let music = event.target.files[0];
+  // onUpload(event) {
+  //   let music = event.target.files[0];
 
-    console.log(music);
+  //   console.log(music);
     
-    this.storageSrv.uploadMusic(this.name, music).then(url => {
-      console.log(url);
-    });
-  }
+  //   this.storageSrv.uploadMusic(this.name, music).then(url => {
+  //     console.log(url);
+  //   });
+  // }
 }

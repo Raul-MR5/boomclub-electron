@@ -147,7 +147,7 @@ No sé quién la dañó, pero`
       
     }
 
-    for (let i = 1; i <= 20; i++) {
+    for (let i = 1; i <= 5; i++) {
       this.prueba.push(i)
     }
 
@@ -197,13 +197,13 @@ No sé quién la dañó, pero`
     this.opt = op;
   }
 
-  onUpload(event) {
-    let music = event.target.files[0];
+  // onUpload(event) {
+  //   let music = event.target.files[0];
 
-    console.log(music);
+  //   console.log(music);
 
-    this.storageSrv.uploadMusic(this.name, music).then(url => {
-      console.log(url);
-    });
-  }
+  //   this.storageSrv.uploadMusic(this.name, music).then(url => {
+  //     console.log(url);
+  //   });
+  // }
 }
