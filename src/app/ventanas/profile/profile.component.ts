@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Cancion } from 'src/app/shared/models/cancion.model';
 import { Usuario } from 'src/app/shared/models/usuario.model';
 import { AuthService } from 'src/app/shared/services/auth.service';
@@ -13,7 +13,11 @@ import { UsuarioService } from 'src/app/shared/services/usuario.service';
   styleUrls: ['./profile.component.scss']
 })
 export class ProfileComponent implements OnInit {
+
+  userLogged: Usuario;
+
   user: Usuario;
+  id: string;
 
   nombre: string;
   foto: string;
@@ -25,56 +29,60 @@ export class ProfileComponent implements OnInit {
     private usuarioSrv: UsuarioService,
     private cancionSrv: CancionService,
     private storageSrv: StorageService,
-    private router: Router
+    private router: Router,
+    private activatedRoute: ActivatedRoute
   ) { }
 
   async ngOnInit(): Promise<void> {
+    this.activatedRoute.params.subscribe((params: Params) => { this.id = params['id']; console.log(this.id) });
+
     // this.user = this.authSrv.usuarioValue.username;
-    this.user = this.usuarioSrv.getUsuario();
+    this.userLogged = this.usuarioSrv.getUsuario();
 
-    this.foto = this.user.foto;
-    this.nombre = this.user.username;
+    this.usuarioSrv.getOne(this.id).subscribe(usuario => {
+      this.user = usuario;
 
-    // console.log("this.cancionSrv.getAll()");
-    // console.log(await this.cancionSrv.getAll());
-    // console.log("this.cancionSrv.getUserMusic()");
-    // console.log(await this.cancionSrv.getUserMusic(this.user));
+      this.foto = this.user.foto;
+      this.nombre = this.user.username;
 
-    this.cancionSrv.getUserMusic(this.user).subscribe((music)=>{
-      console.log(music);
-      this.music = music;
-    })
-    
-    
+      this.cancionSrv.getUserMusic(this.user).subscribe((music) => {
+        this.music = music;
+      })
+    });
   }
 
   goTo(url: string) {
-    // let canciones = [];
-    // for (let i = 1; i <= 20; i++) {
-    //   canciones.push(i)
-    // }
-
-    // this.router.navigate(['/profile/' + url],{ queryParams: { canciones: canciones }});
+    console.log(url);
+    
     this.router.navigate(['/profile/' + url]);
   }
 
   async logout() {
-    await this.authSrv.logout().then( ()=>{
-      console.log( this.authSrv.getUsuario());
+    await this.authSrv.logout().then(() => {
+      console.log(this.authSrv.getUsuario());
     }
     );
     this.router.navigate(['/login']);
   }
 
-  follow(){
+  follow() {
+
+  }
+
+  logged(): boolean {
     
+    if (this.user.id == this.userLogged.id) {
+      return false;
+    } else {
+      return true;
+    }
   }
 
   // onUpload(event) {
   //   let music = event.target.files[0];
 
   //   console.log(music);
-    
+
   //   this.storageSrv.uploadMusic(this.name, music).then(url => {
   //     console.log(url);
   //   });

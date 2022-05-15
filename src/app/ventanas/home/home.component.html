@@ -79,13 +79,13 @@
 
       <div class="py-2 row row-cols-1 row-cols-sm-2 row-cols-md-4 g-3">
 
-        <div (click)="titulo()" class="col" *ngFor="p of prueba">
+        <div (click)="goTo('/cancion/' + c.id + '/-')" class="col" *ngFor="let c of canciones">
           <div class="shadow-sm song-selector">
             <div class="card-body bg-dark">
-              <img class="music-cover" src="https://firebasestorage.googleapis.com/v0/b/boomclub-tfg.appspot.com/o/boomclub.png?alt=media&token=14ede50f-dcfc-41e3-8bea-03b90978e28a" width="100%" height="auto">
-              <h5 class="text-pink">{{title}}</h5>
+              <img class="music-cover" src="{{c.foto}}" width="100%" height="auto">
+              <h5 class="text-pink no-salir">{{c.titulo}}</h5>
               <div class="d-flex justify-content-between align-items-center">
-                <span class="card-text text-muted">Raúl</span>
+                <span class="card-text text-muted">{{c.usuario.username}}</span>
                 <small class="text-muted">9m</small>
               </div>
             </div>

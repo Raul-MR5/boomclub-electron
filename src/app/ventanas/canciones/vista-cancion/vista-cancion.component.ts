@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
+import { Cancion } from 'src/app/shared/models/cancion.model';
+import { Usuario } from 'src/app/shared/models/usuario.model';
 import { AuthService } from 'src/app/shared/services/auth.service';
+import { CancionService } from 'src/app/shared/services/cancion.service';
 import { StorageService } from 'src/app/shared/services/storage.service';
 import { UsuarioService } from 'src/app/shared/services/usuario.service';
 
@@ -10,15 +13,16 @@ import { UsuarioService } from 'src/app/shared/services/usuario.service';
   styleUrls: ['./vista-cancion.component.scss']
 })
 export class VistaCancionComponent implements OnInit {
-  user;
+  user: Usuario;
   name;
   photo;
   foto;
 
   prueba = []
 
-  id: number;
+  id: string;
   url: string;
+  song: Cancion;
 
   like: boolean = false;
   opt: boolean = true;
@@ -29,6 +33,7 @@ export class VistaCancionComponent implements OnInit {
   constructor(
     private authSrv: AuthService,
     private usuarioSrv: UsuarioService,
+    private cancionSrv: CancionService,
     private storageSrv: StorageService,
     private router: Router,
     private activatedRoute: ActivatedRoute
@@ -38,114 +43,45 @@ export class VistaCancionComponent implements OnInit {
     this.activatedRoute.params.subscribe((params: Params) => { this.id = params['id']; console.log(this.id) });
     this.activatedRoute.params.subscribe((params: Params) => { this.url = params['url']; console.log(this.url) });
 
-    this.foto = this.usuarioSrv.getUsuario().foto;
+    // this.foto = this.usuarioSrv.getUsuario().foto;
+    this.user = this.usuarioSrv.getUsuario();
 
-    this.lyrics = `Se acostó temprano mañana hay que estudiar, eh
-Pero llamó la amiga diciendo pa' hangear, eh
-Tiene un culito ahí que lo acabó de testear, eh
-Pero en bajita, ella no es de frentear
-Ella es callaita'
-Pero pal' sexo es atrevida, yo sé
-Marihuana y bebida
-Gozándose la vida, como es
-Ella es callaita'
-Pero pal' sexo es atrevida, yo sé
-Marihuana y bebida
-Gozándose la vida, como es
-Ella no era así, ella no era así
-No sé quién la dañó
-Ella no era así, ella no era así
-No sé quién la dañó, pero
-Ahora enrola
-Y lo prende
-Es panita
-Del que vende, ey
-Nena mala de repente
-No sé si me miente, pero
-Sé que tiene más de veinte
-Los shots de tequila ni los siente
-Ahora ve la vida diferente
-Buena, pero le gusta un delincuente
-La baby llega y se siente la presión
-Ella ni trata y llama la atención, ey
-El perreo es su profesión
-Siempre puesta pa' la misión
-La baby llega y se siente la presión
-Ella ni trata y llama la atención, ey
-El perreo es su profesión
-Siempre puesta pa' la misión
-Ella es callaita
-Pero pal' sexo es atrevida, yo sé
-Marihuana y bebida
-Gozándose la vida, como es
-Ella es callaita
-Pero pal' sexo es atrevida, yo sé
-Marihuana y bebida
-Gozándose la vida, como es
-Se dejó hace poco y tiene vida nueva
-Anda con una amiga que es como su jeva
-Que les trajo cinco doce pa' que se las beba
-Ella es callaita no es que no se atreva
-Si hay sol hay playa
-Si hay playa hay alcohol
-Si hay alcohol hay sexo
-Si es contigo mejor
-Si hay sol hay playa
-Si hay playa hay alcohol
-Si hay alcohol hay sexo
-Si es contigo mejor
-Quítate la ropa que hace calor
-Días de playa, noches de terror
-En la gaveta dejo el temor
-Pa' las envidiosas paz y amor
-Yeah, yeah, yeah, yeah, yeah
-Tainy, Tainy, ey
-Bad Bunny baby, bebe
-Ella es callaita
-Pero pal' sexo es atrevida, yo sé
-Marihuana y bebida
-Gozándose la vida, como es
-Ella es callaita
-Pero pal' sexo es atrevida, yo sé
-Marihuana y bebida
-Gozándose la vida, como es
-Ella no era así, ella no era así
-No sé quién la dañó
-Ella no era así, ella no era así
-No sé quién la dañó, pero`
+    this.cancionSrv.getOne(this.id).subscribe(cancion => {
+      this.song = cancion;
 
-    let pepe = `hola`
-    // console.log(this.lyrics.length);
-    // console.log(pepe.length);
-    
+      console.log(this.song);
 
-    // document.getElementById("p-lyrics").innerHTML = this.lyrics;
+      this.foto = this.song.foto;
+      this.lyrics = this.song.lyrics;
 
-    let cont = 0;
-    let aux = -1;
+      console.log(this.lyrics);
 
-    for (let i = 0; i < this.lyrics.length; i++) {
-      let c = this.lyrics.charAt(i);
+      let cont = 0;
+      let aux = -1;
 
-      if (c.charCodeAt(0) == 10) {
-        cont++;
-        // console.log(cont);
-        
-      } else {
-        if (aux != cont) {
-          aux = cont;
-          this.letra.push(c);
-          // console.log(this.letra);
-          
+      for (let i = 0; i < this.lyrics.length; i++) {
+        let c = this.lyrics.charAt(i);
+
+        if (c.charCodeAt(0) == 10) {
+          cont++;
+          // console.log(cont);
+
         } else {
-          this.letra[aux] += c;
-          // console.log(this.letra);
-          
+          if (aux != cont) {
+            aux = cont;
+            this.letra.push(c);
+            // console.log(this.letra);
+
+          } else {
+            this.letra[aux] += c;
+            // console.log(this.letra);
+
+          }
+
         }
-        
+
       }
-      
-    }
+    });
 
     for (let i = 1; i <= 5; i++) {
       this.prueba.push(i)

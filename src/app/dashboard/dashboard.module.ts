@@ -31,7 +31,7 @@ const routes: Routes = [
     children: [
       { path: '', loadChildren: () => import('src/app/ventanas/home/home.module').then(m => m.HomeModule), canActivate: [AuthGuard], pathMatch: "full"},
       { path: 'biblioteca',  loadChildren: () => import('src/app/ventanas/biblioteca/biblioteca.module').then(m => m.BibliotecaModule), canActivate: [AuthGuard]},
-      { path: 'profile',  loadChildren: () => import('src/app/ventanas/profile/profile.module').then(m => m.ProfileModule), canActivate: [AuthGuard]},
+      { path: 'profile/:id',  loadChildren: () => import('src/app/ventanas/profile/profile.module').then(m => m.ProfileModule), canActivate: [AuthGuard]},
       { path: 'new-song',  loadChildren: () => import('src/app/ventanas/canciones/nueva-cancion/nueva-cancion.module').then(m => m.NuevaCancionModule), canActivate: [AuthGuard]},
       { path: 'cancion/:id/:url', component: VistaCancionComponent, canActivate: [AuthGuard] }
     ]

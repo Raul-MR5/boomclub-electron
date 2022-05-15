@@ -20,6 +20,10 @@ export class CancionService {
         return this.firestore.collection<Cancion>('cancion').valueChanges({ idField: 'id' });
     }
 
+    getNewsMusic(): Observable<Cancion[]> {
+        return this.firestore.collection<Cancion>('cancion', ref => ref.orderBy('fecha', 'desc').limit(4)).valueChanges();
+    }
+
     getUserMusic(user: Usuario): Observable<Cancion[]> {
         return this.firestore.collection<Cancion>('cancion', ref => ref.where('usuario', '==', user)).valueChanges();
     }

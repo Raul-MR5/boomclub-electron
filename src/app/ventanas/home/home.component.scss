@@ -6,3 +6,9 @@
     margin-left: 5px;
     
 }
+
+.no-salir {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}

@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { Cancion } from 'src/app/shared/models/cancion.model';
 import { AuthService } from 'src/app/shared/services/auth.service';
+import { CancionService } from 'src/app/shared/services/cancion.service';
 
 @Component({
   selector: 'app-home',
@@ -13,14 +16,24 @@ export class HomeComponent implements OnInit {
   photo;
   title: string = 'BoomClub';
 
-  constructor(private authSrv: AuthService,) { }
+  canciones: Cancion[];
+
+  constructor(
+    private cancionSrv: CancionService,
+    private router: Router,
+  ) { }
 
   ngOnInit(): void {    
     document.getElementById("sidebarhome").className += " active"
-    this.user = this.authSrv.getUsuario()
-    this.user.subscribe(user => {
-      this.photo = user.photoURL
-    })
+
+    this.cancionSrv.getNewsMusic().subscribe(music => {
+      this.canciones = music;
+    });
+
+    // this.user = this.authSrv.getUsuario()
+    // this.user.subscribe(user => {
+    //   this.photo = user.photoURL
+    // })
   }
 
   ngOnDestroy(): void {
@@ -29,5 +42,9 @@ export class HomeComponent implements OnInit {
 
   titulo() {
     this.title = 'Hola'
+  }
+
+  goTo(url: string) {
+    this.router.navigate([url]);
   }
 }

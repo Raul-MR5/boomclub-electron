@@ -17,6 +17,8 @@ export class CancionComponent implements OnInit {
   photo;
   foto;
 
+  id: string;
+
   // @Input() 
   canciones: Cancion[] = []
   bool: boolean = false;
@@ -27,31 +29,39 @@ export class CancionComponent implements OnInit {
     private cancionSrv: CancionService,
     private storageSrv: StorageService,
     private router: Router,
-    private route: ActivatedRoute
+    private activatedRoute: ActivatedRoute
   ) { }
 
   ngOnInit(): void {
+    // console.log("hola");
+    
+    // this.activatedRoute.params.subscribe((params: Params) => { this.id = params['id']; console.log(this.id) });
     // this.route.params.subscribe((params: Params) => this.canciones = params['caller']);
     // this.user = this.authSrv.usuarioValue.username;
-    console.log("hola");
-    
+    // console.log("hola");
+
     document.getElementById("canciones").className += " active"
 
     this.user = this.usuarioSrv.getUsuario();
 
     this.foto = this.user.foto;
 
-    this.cancionSrv.getUserMusic(this.user).subscribe((music)=>{
-      console.log(music);
-      this.canciones = music;
-
-      if (this.canciones.length == 0) {
-        this.bool = true;
-        console.log(this.bool);
-        
-      }
+    this.usuarioSrv.getOne(this.id).subscribe(usuario => {
+      this.cancionSrv.getUserMusic(usuario).subscribe((music) => {
+        // console.log(music);
+        this.canciones = music;
+        // console.log(this.canciones[0]);
+  
+  
+        if (this.canciones.length == 0) {
+          this.bool = true;
+          // console.log(this.bool);
+  
+        }
+      })
     })
     
+
   }
 
   ngOnDestroy(): void {
@@ -64,22 +74,22 @@ export class CancionComponent implements OnInit {
   }
 
   async logout() {
-    await this.authSrv.logout().then( ()=>{
-      console.log( this.authSrv.getUsuario());
+    await this.authSrv.logout().then(() => {
+      console.log(this.authSrv.getUsuario());
     }
     );
     this.router.navigate(['/login']);
   }
 
-  follow(){
-    
+  follow() {
+
   }
 
   onUpload(event) {
     let music = event.target.files[0];
 
     console.log(music);
-    
+
     this.storageSrv.uploadMusic(this.name, this.name, music).then(url => {
       console.log(url);
     });

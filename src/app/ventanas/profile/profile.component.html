@@ -61,7 +61,7 @@
                         </div>
                     </div>
 
-                    <div class="col info py-md-5 row row-cols-1 row-cols-sm-3 row-cols-md-3">
+                    <div class="col info py-md-5 row row-cols-1 row-cols-sm-3 row-cols-md-3 mh-div">
                         <div class="col d-flex align-items-center">
                             <strong class="text-pink">0 canciones</strong>
                         </div>
@@ -71,7 +71,7 @@
                         <div class="col d-flex align-items-center">
                             <strong class="text-pink">0 seguidos</strong>
                         </div>
-                        <button class="btn btn-back text-white arreglo" (click)="follow()">Seguir</button>
+                        <button *ngIf="logged()" class="btn btn-back text-white arreglo" (click)="follow()">Seguir</button>
                     </div>
 
                 </div>

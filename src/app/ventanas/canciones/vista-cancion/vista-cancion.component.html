@@ -23,10 +23,10 @@
                         <!-- <th><strong class="text-pink">Titulo</strong></th>
                             <tr><strong class="text-pink">Subir archivo</strong></tr> -->
                         <div>
-                            <strong class="text-pink title-song">Nombre</strong>
+                            <strong class="text-pink title-song">{{song.titulo}}</strong>
                         </div>
                         <div>
-                            <small class="text-muted">Artista</small>
+                            <small class="text-muted song-selector" (click)="goTo('/profile/' +song.usuario.id)">{{song.usuario.username}}</small>
                         </div>
                         <div class="mt-4 d-flex align-items-center">
                             <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="#ab6c6c"
@@ -85,7 +85,7 @@
 
                 <div class="mt-4" *ngIf="opt">
                     <div class="d-flex align-items-center">
-                        <img class="rounded-circle me-3" src="{{foto}}" width="32px" height="32px">
+                        <img class="rounded-circle me-3" src="{{user.foto}}" width="32px" height="32px">
                         <textarea class="form-control me-2" rows="1" placeholder="Escriba un comentario..."
                             id="textarea"></textarea>
                         <button class="btn btn-back text-white">
@@ -130,6 +130,7 @@
                 <div class="mt-4 bg-light bg-icon" *ngIf="!opt">
                     <p class="p-3 text-pink" id="p-lyrics">
                         <span *ngFor="let l of letra">{{l}}<br></span>
+                        <!-- <span>{{lyrics}}<br></span> -->
                     </p>
                 </div>
             </div>

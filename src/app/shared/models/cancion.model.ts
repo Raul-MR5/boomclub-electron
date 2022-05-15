@@ -7,4 +7,6 @@ export interface Cancion {
     lyrics: string;
     foto?: string;
     cancion: string;
+    likes?: number;
+    fecha?: Date;
 }
