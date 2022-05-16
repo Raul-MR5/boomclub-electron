@@ -6,5 +6,5 @@ export interface Reviews {
     usuario: Usuario;
     cancion: Cancion;
     texto: string;
-    like: boolean;
+    // like: boolean;
 }

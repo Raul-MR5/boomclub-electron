@@ -23,6 +23,8 @@ export class ProfileComponent implements OnInit {
   foto: string;
 
   music: Cancion[]
+  bool: boolean = false;
+  opt: boolean = true;
 
   constructor(
     private authSrv: AuthService,
@@ -47,6 +49,12 @@ export class ProfileComponent implements OnInit {
 
       this.cancionSrv.getUserMusic(this.user).subscribe((music) => {
         this.music = music;
+
+        if (this.music.length == 0) {
+          this.bool = true;
+          // console.log(this.bool);
+  
+        }
       })
     });
   }
@@ -54,7 +62,7 @@ export class ProfileComponent implements OnInit {
   goTo(url: string) {
     console.log(url);
     
-    this.router.navigate(['/profile/' + url]);
+    this.router.navigate([url]);
   }
 
   async logout() {
@@ -76,6 +84,18 @@ export class ProfileComponent implements OnInit {
     } else {
       return true;
     }
+  }
+
+  menu(op: boolean) {
+    if (op) {
+      document.getElementById("canciones").className += " active";
+      document.getElementById("albums").classList.remove("active");
+    } else {
+      document.getElementById("albums").className += " active";
+      document.getElementById("canciones").classList.remove("active");
+    }
+
+    this.opt = op;
   }
 
   // onUpload(event) {

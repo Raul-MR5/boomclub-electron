@@ -1,11 +1,14 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Cancion } from 'src/app/shared/models/cancion.model';
+import { Reviews } from 'src/app/shared/models/reviews.model';
 import { Usuario } from 'src/app/shared/models/usuario.model';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { CancionService } from 'src/app/shared/services/cancion.service';
 import { StorageService } from 'src/app/shared/services/storage.service';
 import { UsuarioService } from 'src/app/shared/services/usuario.service';
+import { v4 as uuidv4 } from 'uuid';
 
 @Component({
   selector: 'app-vista-cancion',
@@ -17,8 +20,9 @@ export class VistaCancionComponent implements OnInit {
   name;
   photo;
   foto;
-
-  prueba = []
+  
+  prueba;
+  form: FormGroup;
 
   id: string;
   url: string;
@@ -31,6 +35,7 @@ export class VistaCancionComponent implements OnInit {
   letra: string[] = [];
 
   constructor(
+    private formBuilder: FormBuilder,
     private authSrv: AuthService,
     private usuarioSrv: UsuarioService,
     private cancionSrv: CancionService,
@@ -42,6 +47,10 @@ export class VistaCancionComponent implements OnInit {
   ngOnInit(): void {
     this.activatedRoute.params.subscribe((params: Params) => { this.id = params['id']; console.log(this.id) });
     this.activatedRoute.params.subscribe((params: Params) => { this.url = params['url']; console.log(this.url) });
+
+    this.form = this.formBuilder.group({
+      texto: ['']
+    });
 
     // this.foto = this.usuarioSrv.getUsuario().foto;
     this.user = this.usuarioSrv.getUsuario();
@@ -83,9 +92,9 @@ export class VistaCancionComponent implements OnInit {
       }
     });
 
-    for (let i = 1; i <= 5; i++) {
-      this.prueba.push(i)
-    }
+    // for (let i = 1; i <= 5; i++) {
+    //   this.prueba.push(i)
+    // }
 
   }
 
@@ -113,8 +122,23 @@ export class VistaCancionComponent implements OnInit {
     this.router.navigate(['/' + ur]);
   }
 
-  follow() {
+  play() {
 
+  }
+
+  sendComment() {
+    let myuuid = uuidv4();
+    console.log("heyo");
+    
+    let comentario: Reviews = {
+      id: myuuid,
+      usuario: this.user,
+      cancion: this.song,
+      texto: this.form.value.texto
+    }
+
+    console.log(comentario);
+    
   }
 
   liked(mg: boolean) {
