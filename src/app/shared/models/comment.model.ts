@@ -1,7 +1,7 @@
 import { Usuario } from './usuario.model';
 import { Cancion } from './cancion.model';
 
-export interface Reviews {
+export interface Comment {
     id?: string;
     usuario: Usuario;
     cancion: Cancion;

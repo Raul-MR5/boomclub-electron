@@ -101,14 +101,14 @@
                         </div>
                     </form>
                     <div>
-                        <div *ngFor="let p of prueba" class="mt-4 mb-3 row">
+                        <div *ngFor="let p of comentarios" class="mt-4 mb-3 row">
                             <div class="col-lg-1">
-                                <img class="rounded-circle me-2" src="{{foto}}" width="32px" height="32px">
+                                <img class="rounded-circle me-2" src="{{p.usuario.foto}}" width="32px" height="32px">
                             </div>
                             <div class="col-lg-11 bg-light bg-icon">
                                 <p class="text-pink mt-2">
-                                    {{p}} -
-                                    Pero llamó la amiga diciendo pa' hangear, eh
+                                    {{p.texto}}
+                                    <!-- Pero llamó la amiga diciendo pa' hangear, eh
                                     Tiene un culito ahí que lo acabó de testear, eh
                                     Pero en bajita, ella no es de frentear
                                     Ella es callaita'
@@ -124,7 +124,7 @@
                                     Ella no era así, ella no era así
                                     No sé quién la dañó, pero
                                     Ahora enrola
-                                    Y lo prende
+                                    Y lo prende -->
                                 </p>
                             </div>
                         </div>

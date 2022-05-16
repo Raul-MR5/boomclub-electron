@@ -2,10 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Cancion } from 'src/app/shared/models/cancion.model';
-import { Reviews } from 'src/app/shared/models/reviews.model';
+import { Comment } from 'src/app/shared/models/comment.model';
 import { Usuario } from 'src/app/shared/models/usuario.model';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { CancionService } from 'src/app/shared/services/cancion.service';
+import { CommentService } from 'src/app/shared/services/comment.service';
 import { StorageService } from 'src/app/shared/services/storage.service';
 import { UsuarioService } from 'src/app/shared/services/usuario.service';
 import { v4 as uuidv4 } from 'uuid';
@@ -31,6 +32,8 @@ export class VistaCancionComponent implements OnInit {
   like: boolean = false;
   opt: boolean = true;
 
+  comentarios: Comment[] = [];
+
   lyrics: string;
   letra: string[] = [];
 
@@ -39,7 +42,7 @@ export class VistaCancionComponent implements OnInit {
     private authSrv: AuthService,
     private usuarioSrv: UsuarioService,
     private cancionSrv: CancionService,
-    private storageSrv: StorageService,
+    private commentSrv: CommentService,
     private router: Router,
     private activatedRoute: ActivatedRoute
   ) { }
@@ -57,6 +60,15 @@ export class VistaCancionComponent implements OnInit {
 
     this.cancionSrv.getOne(this.id).subscribe(cancion => {
       this.song = cancion;
+
+      this.commentSrv.getSongComments(this.song.id).subscribe(comments => {
+        this.comentarios = comments;
+        console.log(this.song.id);
+        
+
+        console.log(this.comentarios);
+        
+      })
 
       console.log(this.song);
 
@@ -123,14 +135,14 @@ export class VistaCancionComponent implements OnInit {
   }
 
   play() {
-
+    this.cancionSrv.setSong(this.song);
   }
 
   sendComment() {
     let myuuid = uuidv4();
     console.log("heyo");
     
-    let comentario: Reviews = {
+    let comentario: Comment = {
       id: myuuid,
       usuario: this.user,
       cancion: this.song,
@@ -139,6 +151,8 @@ export class VistaCancionComponent implements OnInit {
 
     console.log(comentario);
     
+    this.commentSrv.create(comentario);
+    this.form.reset();
   }
 
   liked(mg: boolean) {

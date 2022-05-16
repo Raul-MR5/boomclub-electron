@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Cancion } from 'src/app/shared/models/cancion.model';
 import { AuthService } from 'src/app/shared/services/auth.service';
+import { CancionService } from 'src/app/shared/services/cancion.service';
 
 @Component({
   selector: 'app-footer',
@@ -11,29 +13,31 @@ export class FooterComponent implements OnInit {
   user;
   name;
   photo;
-  song;
+  song: Cancion | null;
 
   constructor(
     private authSrv: AuthService,
+    private cancionSrv: CancionService,
     private router: Router
   ) {
     // this.song = "https://firebasestorage.googleapis.com/v0/b/boomclub-tfg.appspot.com/o/canciones%2FADVANCED%20WARFARE%20VS%20DESTINY%20VS%20TITAN%20FALL.mp3?alt=media&amp;token=b6aa69d3-9831-4706-a874-59b7b67c954c"
   }
 
   ngOnInit(): void {
-    // this.user = this.authSrv.usuarioValue.username;
+    
+    this.cancionSrv.cancionActual.subscribe(cancion => {
+      this.song = null;
+      this.song = cancion;
 
-    this.user = this.authSrv.getUsuario()
-    this.user.subscribe(user => {
-      this.name = user.displayName;
-      this.photo = user.photoURL
+      let audio: HTMLAudioElement = new Audio(cancion.cancion)
+      console.log(audio.currentTime);
+      
+      audio.play();
 
-      console.log(this.photo);
-
-
-      if (!this.photo) {
-        this.photo = "https://firebasestorage.googleapis.com/v0/b/boomclub-tfg.appspot.com/o/user-photo.png?alt=media&token=c9588aa9-1450-4932-86cd-d480853474d1"
-      }
+      console.log("hola");
+      
+      console.log(this.song);
+      
     });
 
   }

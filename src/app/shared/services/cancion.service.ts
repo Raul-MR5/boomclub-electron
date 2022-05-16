@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Cancion } from '../../shared/models/cancion.model';
-import { Observable, throwError } from 'rxjs';
+import { BehaviorSubject, Observable, throwError } from 'rxjs';
 
 import { catchError, map } from 'rxjs/operators';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/compat/firestore';
@@ -12,6 +12,9 @@ import { Usuario } from '../models/usuario.model';
 export class CancionService {
 
     canciones: Observable<Cancion[]>;
+    private cancionSubject: BehaviorSubject<Cancion> = new BehaviorSubject(null);
+    public readonly cancionActual: Observable<Cancion> = this.cancionSubject.asObservable();
+
 
     constructor(private firestore: AngularFirestore) {
     }
@@ -30,6 +33,10 @@ export class CancionService {
 
     getOne(id: string): Observable<Cancion> {
         return this.firestore.collection<Cancion>('cancion').doc(id).valueChanges({ idField: 'id' });
+    }
+
+    setSong(cancionActual: Cancion): void{
+        this.cancionSubject.next(cancionActual);
     }
 
     async create(payload: Cancion): Promise<any> {
