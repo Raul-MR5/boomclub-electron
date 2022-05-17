@@ -15,6 +15,7 @@ export class CancionService {
     private cancionSubject: BehaviorSubject<Cancion> = new BehaviorSubject(null);
     public readonly cancionActual: Observable<Cancion> = this.cancionSubject.asObservable();
 
+    audio: HTMLAudioElement;
 
     constructor(private firestore: AngularFirestore) {
     }
@@ -37,6 +38,23 @@ export class CancionService {
 
     setSong(cancionActual: Cancion): void{
         this.cancionSubject.next(cancionActual);
+    }
+
+    playSong(audio: HTMLAudioElement) {
+        this.audio = audio;
+
+        console.log(this.audio);
+        
+
+        this.audio.play();
+    }
+
+    pauseSong() {
+        if (this.audio) {
+            console.log(this.audio);
+            
+            this.audio.pause();
+        }
     }
 
     async create(payload: Cancion): Promise<any> {

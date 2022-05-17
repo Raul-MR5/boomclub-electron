@@ -14,6 +14,9 @@ export class FooterComponent implements OnInit {
   name;
   photo;
   song: Cancion | null;
+  audio: HTMLAudioElement;
+
+  playB: boolean = false;
 
   constructor(
     private authSrv: AuthService,
@@ -29,10 +32,14 @@ export class FooterComponent implements OnInit {
       this.song = null;
       this.song = cancion;
 
-      let audio: HTMLAudioElement = new Audio(cancion.cancion)
-      console.log(audio.currentTime);
+      this.cancionSrv.pauseSong();
+
+      this.audio = new Audio(cancion.cancion)
+      console.log(this.audio.currentTime);
+      console.log(this.audio.duration);
       
-      audio.play();
+      this.cancionSrv.playSong(this.audio);
+      this.playB = true;
 
       console.log("hola");
       
@@ -42,11 +49,15 @@ export class FooterComponent implements OnInit {
 
   }
 
-  async logout() {
-    await this.authSrv.logout().then(() => {
-      console.log(this.authSrv.getUsuario());
-    }
-    );
-    this.router.navigate(['/login']);
+  play() {
+    this.playB = true;
+
+    this.cancionSrv.playSong(this.audio);
+  }
+
+  pause() {
+    this.playB = false;
+
+    this.cancionSrv.pauseSong();
   }
 }

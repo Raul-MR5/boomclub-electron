@@ -47,4 +47,9 @@ export class HomeComponent implements OnInit {
   goTo(url: string) {
     this.router.navigate([url]);
   }
+
+  getMin(cancion) {
+    let audio = new Audio(cancion.cancion)
+    return audio.duration;
+  }
 }
