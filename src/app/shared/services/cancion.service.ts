@@ -57,6 +57,11 @@ export class CancionService {
         }
     }
 
+    resetSong() {
+        this.cancionSubject = new BehaviorSubject(null);
+        this.audio = null;
+    }
+
     async create(payload: Cancion): Promise<any> {
         try {
             // const id = this.firestore.createId();

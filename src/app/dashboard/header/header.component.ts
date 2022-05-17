@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/shared/services/auth.service';
+import { CancionService } from 'src/app/shared/services/cancion.service';
 import { UsuarioService } from 'src/app/shared/services/usuario.service';
 
 @Component({
@@ -16,6 +17,7 @@ export class HeaderComponent implements OnInit {
   constructor(
     private authSrv: AuthService,
     private usuarioSrv: UsuarioService,
+    private cancionSrv: CancionService,
     private router: Router
   ) { }
 
@@ -78,6 +80,10 @@ export class HeaderComponent implements OnInit {
     await this.authSrv.logout().then( ()=>{
     }
     );
+
+    this.cancionSrv.pauseSong();
+    this.cancionSrv.resetSong();
+
     this.router.navigate(['/login']);
   }
 }
