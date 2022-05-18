@@ -1,18 +1,20 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { Cancion } from 'src/app/shared/models/cancion.model';
 import { Usuario } from 'src/app/shared/models/usuario.model';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { CancionService } from 'src/app/shared/services/cancion.service';
 import { StorageService } from 'src/app/shared/services/storage.service';
 import { UsuarioService } from 'src/app/shared/services/usuario.service';
+import * as internal from 'stream';
 
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.scss']
 })
-export class ProfileComponent implements OnInit {
+export class ProfileComponent implements OnInit, OnDestroy {
 
   userLogged: Usuario;
 
@@ -22,9 +24,15 @@ export class ProfileComponent implements OnInit {
   nombre: string;
   foto: string;
 
-  music: Cancion[]
+  music: Cancion[];
+  totalMusic: number;
+
   bool: boolean = false;
   opt: boolean = true;
+
+  followed: boolean = false;
+
+  suscriptions: Subscription[] = [];
 
   constructor(
     private authSrv: AuthService,
@@ -35,33 +43,59 @@ export class ProfileComponent implements OnInit {
     private activatedRoute: ActivatedRoute
   ) { }
 
-  async ngOnInit(): Promise<void> {
-    this.activatedRoute.params.subscribe((params: Params) => { this.id = params['id']; console.log(this.id) });
+  ngOnInit(): void {
+    const paramsSubscription: Subscription = this.activatedRoute.params.subscribe((params: Params) => { this.id = params['id']; console.log(this.id, "hola"); /* let p = this.prueba(); console.log(p) */ });
+
+    // console.log(this.id);
+
+
+    this.suscriptions.push(paramsSubscription);
+
 
     // this.user = this.authSrv.usuarioValue.username;
     this.userLogged = this.usuarioSrv.getUsuario();
 
+    // console.log("pepe");
+    // console.log(this.id);
+
+
     this.usuarioSrv.getOne(this.id).subscribe(usuario => {
       this.user = usuario;
+
+      // console.log(this.user);
+
 
       this.foto = this.user.foto;
       this.nombre = this.user.username;
 
+      this.followed = this.usuarioSrv.followed(this.user);
+
       this.cancionSrv.getUserMusic(this.user).subscribe((music) => {
         this.music = music;
+
+        // console.log(music);
+        
+        // console.log("-");
+        
 
         if (this.music.length == 0) {
           this.bool = true;
           // console.log(this.bool);
-  
+
         }
+
+        this.totalMusic = this.music.length;
       })
     });
   }
 
+  ngOnDestroy(): void {
+    this.suscriptions.forEach(item => item.unsubscribe())
+  }
+
   goTo(url: string) {
     console.log(url);
-    
+
     this.router.navigate([url]);
   }
 
@@ -73,12 +107,57 @@ export class ProfileComponent implements OnInit {
     this.router.navigate(['/login']);
   }
 
-  follow() {
+  getFollowers() {
 
   }
 
+  getFollows() {
+    if (this.user.seguidos) {
+      return this.user.seguidos.length;
+    } else {
+      return 0;
+    }
+  }
+
+  seguido() {
+    if (this.userLogged.id != this.user.id) {
+      if (this.userLogged.seguidos) {
+        console.log("entra");
+
+        for (let i = 0; i < this.userLogged.seguidos.length; i++) {
+          console.log(this.userLogged.seguidos[i], this.user.id);
+
+          if (this.userLogged.seguidos[i] == this.user.id) {
+            this.followed = true;
+          } else {
+            this.followed = false;
+          }
+
+          console.log(this.followed);
+
+        }
+      }
+    }
+  }
+
+  follow() {
+    this.usuarioSrv.newFollow(this.userLogged.id, this.user).then(() => {
+      this.followed = true;
+    })
+  }
+
+  unfollow() {
+    this.usuarioSrv.removeFollow(this.userLogged.id, this.user).then(() => {
+      this.followed = false;
+    })
+  }
+
+  prueba() {
+    return "pepe"
+  }
+
   logged(): boolean {
-    
+
     if (this.user.id == this.userLogged.id) {
       return false;
     } else {

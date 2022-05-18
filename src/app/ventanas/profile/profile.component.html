@@ -62,16 +62,21 @@
 
                     <div class="col info py-md-5 row row-cols-1 row-cols-sm-3 row-cols-md-3 mh-div">
                         <div class="col d-flex align-items-center">
-                            <strong class="text-pink">0 canciones</strong>
+                            <strong class="text-pink">{{totalMusic}} canciones</strong>
                         </div>
                         <div class="col d-flex align-items-center">
                             <strong class="text-pink">0 seguidores</strong>
                         </div>
                         <div class="col d-flex align-items-center">
-                            <strong class="text-pink">0 seguidos</strong>
+                            <strong class="text-pink">{{getFollows()}} seguidos</strong>
                         </div>
-                        <button *ngIf="logged()" class="btn btn-back text-white arreglo"
-                            (click)="follow()">Seguir</button>
+                        <div *ngIf="logged()" class="arreglo">
+                            <button *ngIf="!followed" class="btn btn-back text-white btn-lg-100"
+                                (click)="follow()">Seguir</button>
+                            <button *ngIf="followed" class="btn btn-gray text-black btn-lg-100"
+                                (click)="unfollow()">Siguiendo</button>
+                        </div>
+
                     </div>
 
                 </div>
@@ -82,7 +87,8 @@
         <div class="">
             <ul class="nav nav-tabs">
                 <li class="nav-item div-pointer">
-                    <a class="nav-link color-link active" id="canciones" aria-current="page" (click)="menu(true)">Canciones</a>
+                    <a class="nav-link color-link active" id="canciones" aria-current="page"
+                        (click)="menu(true)">Canciones</a>
                 </li>
                 <li class="nav-item div-pointer">
                     <a class="nav-link color-link" id="albums" (click)="menu(false)">Albums</a>

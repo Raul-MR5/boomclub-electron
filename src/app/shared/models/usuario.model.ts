@@ -6,4 +6,5 @@ export interface Usuario {
     apellidos: string;
     email: string;
     foto?: any;
+    seguidos?: string[];
 }

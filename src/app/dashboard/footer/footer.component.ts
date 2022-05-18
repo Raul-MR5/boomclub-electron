@@ -16,6 +16,7 @@ export class FooterComponent implements OnInit {
   song: Cancion | null;
   audio: HTMLAudioElement;
 
+  time;
   playB: boolean = false;
 
   constructor(
@@ -35,15 +36,14 @@ export class FooterComponent implements OnInit {
       this.cancionSrv.pauseSong();
 
       this.audio = new Audio(cancion.cancion)
-      console.log(this.audio.currentTime);
-      console.log(this.audio.duration);
+      // console.log(this.audio.currentTime);
+      // console.log(this.audio.duration);
       
-      this.cancionSrv.playSong(this.audio);
-      this.playB = true;
+      this.play();
 
-      console.log("hola");
+      // console.log("hola");
       
-      console.log(this.song);
+      // console.log(this.song);
       
     });
 
@@ -52,6 +52,12 @@ export class FooterComponent implements OnInit {
   play() {
     this.playB = true;
 
+    this.audio.addEventListener("timeupdate", ()=>{
+      this.time = (this.audio.currentTime / this.audio.duration)*100;
+      // console.log(this.audio.duration);
+      // console.log(this.time);
+    })
+
     this.cancionSrv.playSong(this.audio);
   }
 
@@ -59,5 +65,43 @@ export class FooterComponent implements OnInit {
     this.playB = false;
 
     this.cancionSrv.pauseSong();
+  }
+
+  before() {
+    this.audio.volume = 0
+  }
+
+  after() {
+    this.audio.volume = 0.5
+  }
+
+  parseTime(time){
+    if (time){
+      // var hour = Math.floor(time / 3600);
+      // hour = (hour < 10)? '0' + hour : hour;
+      var minute = Math.floor((time / 60) % 60);
+      // minute = (minute < 10)? '0' + minute : minute;
+      var second = Math.floor(time % 60);
+      // second = (second < 10)? '0' + second : second;
+      // return hour + ':' + minute + ':' + second;
+
+      // let min = Math.floor(time/60)
+
+      // console.log(hour + ':' + minute + ':' + second);
+      // console.log(minute + ':' + second);
+      
+      if (second < 10) {
+        return (minute + ':0' + second);
+      } else {
+        return (minute + ':' + second);
+      }
+      
+    }else{
+      return '0:00'
+    }
+  }
+  
+  goTo(url: string) {
+    this.router.navigate([url]);
   }
 }

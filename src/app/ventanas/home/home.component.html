@@ -1,54 +1,3 @@
-<!-- CASA -->
-<!-- <div class="col-lg-10 mx-auto p-3 py-md-5">
-  <main>
-    <div class="py-4">
-      <h3 class="fs-4 text-pink">Actividad de tus amigos</h3>
-      <hr class="text-pink">
-
-      <div class="py-2 row row-cols-1 row-cols-sm-2 row-cols-md-5 g-3">
-
-        <div (click)="titulo()" class="col" *ngFor="p of prueba">
-          <div class="shadow-sm song-selector">
-            <div class="card-body card-back">
-              <img class="music-cover" src="https://firebasestorage.googleapis.com/v0/b/boomclub-tfg.appspot.com/o/boomclub.png?alt=media&token=14ede50f-dcfc-41e3-8bea-03b90978e28a" width="100%" height="215px">
-              <h5 class="text-pink">{{title}}</h5>
-              <div class="d-flex justify-content-between align-items-center">
-                <span class="card-text text-muted title">Raúl</span>
-                <small class="text-muted">9 mins</small>
-              </div>
-            </div>
-          </div>
-        </div>
-
-      </div>
-    </div>
-
-    <div class="py-4">
-      <h3 class="fs-4 text-pink">Novedades</h3>
-      <hr class="text-pink">
-
-      <div class="py-2 row row-cols-1 row-cols-sm-2 row-cols-md-5 g-3">
-
-        <div (click)="titulo()" class="col" *ngFor="p of prueba">
-          <div class="shadow-sm song-selector">
-            <div class="card-body bg-dark">
-              <img class="music-cover" src="https://firebasestorage.googleapis.com/v0/b/boomclub-tfg.appspot.com/o/boomclub.png?alt=media&token=14ede50f-dcfc-41e3-8bea-03b90978e28a" width="100%" height="215px">
-              <h5 class="text-pink">{{title}}</h5>
-              <div class="d-flex justify-content-between align-items-center">
-                <span class="card-text text-muted title">Raúl</span>
-                <small class="text-muted">9 mins</small>
-              </div>
-            </div>
-          </div>
-        </div>
-
-      </div>
-    </div>
-  </main>
-</div> -->
-
-
-<!-- ODEC -->
 <div class="col-lg-10 mx-auto p-3 py-md-5">
   <main>
     <div class="py-4">
@@ -57,7 +6,7 @@
 
       <div class="py-2 row row-cols-1 row-cols-sm-2 row-cols-md-4 g-3">
 
-        <div (click)="titulo()" class="col" *ngFor="p of prueba">
+        <div (click)="titulo()" class="col" *ngFor="c of friendSongs">
           <div class="shadow-sm song-selector">
             <div class="card-body card-back">
               <img class="music-cover" src="https://firebasestorage.googleapis.com/v0/b/boomclub-tfg.appspot.com/o/boomclub.png?alt=media&token=14ede50f-dcfc-41e3-8bea-03b90978e28a" width="100%" height="auto">
@@ -79,7 +28,7 @@
 
       <div class="py-2 row row-cols-1 row-cols-sm-2 row-cols-md-4 g-3">
 
-        <div (click)="goTo('/cancion/' + c.id + '/-')" class="col" *ngFor="let c of canciones">
+        <div (click)="goTo('/cancion/' + c.id + '/-')" class="col" *ngFor="let c of newSongs">
           <div class="shadow-sm song-selector">
             <div class="card-body bg-dark">
               <img class="music-cover" src="{{c.foto}}" width="128.5px" height="128.5px">
