@@ -22,6 +22,7 @@ export class HomeComponent implements OnInit {
   newSongs: Cancion[] = [];
 
   constructor(
+    private authSrv: AuthService,
     private usuarioSrv: UsuarioService,
     private cancionSrv: CancionService,
     private router: Router,
@@ -31,69 +32,79 @@ export class HomeComponent implements OnInit {
     document.getElementById("sidebarhome").className += " active"
 
     this.user = this.usuarioSrv.getUsuario()
+    this.authSrv.authenticated().subscribe(bool => {
+      if (bool) {
+        this.authSrv.getUsuario().subscribe(user => {
+          this.usuarioSrv.getOne(user.uid).subscribe(usuario => {
 
-    this.cancionSrv.getAllByDate().subscribe(music => {
-      console.log(music);
+            this.user = usuario;
 
-      for (let i = 0; i < music.length; i++) {
-        // console.log(music[i]);
-        // console.log(music[i].usuario.id, this.user.seguidos[i]);
+            this.cancionSrv.getAllByDate().subscribe(music => {
+              console.log(music);
 
-        // if (music[i].usuario.id == this.user.seguidos[i]) {
-        //   console.log('antes');
+              for (let i = 0; i < music.length; i++) {
 
-        //   if (this.friendSongs.length < 4) {
-        //     console.log('despues');
-        //     this.friendSongs.push(music[i]);
-        //   }
-        // } else {
-        //   if (music[i].usuario.id != this.user.id) {
-        //     console.log('antes');
-        //     if (this.newSongs.length < 4) {
-        //       console.log('despues');
-        //       this.newSongs.push(music[i]);
-        //     }
-        //   }
-        // }
+                console.log(music[i]);
+                console.log(music[i].usuario);
+                console.log(music[i].usuario.id);
+                console.log('user id');
+                console.log(this.user.id);
 
-        console.log(music[i]);
-        console.log(music[i].usuario);
-        console.log(music[i].usuario.id);
-        
 
-        if (music[i].usuario.id != this.user.id) {
-          console.log('1');
-          
-          if (this.user.seguidos) {
-            console.log('2a');
-            if (music[i].usuario.id == this.user.seguidos[i]) {
-              console.log('3a');
-              if (this.friendSongs.length < 4) {
-                console.log('4a');
-                this.friendSongs.push(music[i]);
+                if (music[i].usuario.id != this.user.id) {
+                  console.log('1');
+
+                  if (this.user.seguidos) {
+                    console.log('2a');
+                    console.log(this.user);
+                    console.log(this.user.seguidos.length);
+
+                    if (this.user.seguidos.length > 0) {
+                      for (let j = 0; j < this.user.seguidos.length; j++) {
+                        if (music[i].usuario.id == this.user.seguidos[j]) {
+                          console.log('3a');
+                          if (this.friendSongs.length < 4) {
+                            console.log('4a');
+                            this.friendSongs.push(music[i]);
+                          }
+                        } else {
+                          console.log('3b');
+                          if (this.newSongs.length < 4) {
+                            console.log('4b');
+                            this.newSongs.push(music[i]);
+                          }
+                        }
+                      }   
+                    } else {
+                      if (this.newSongs.length < 4) {
+                        console.log('4b');
+                        this.newSongs.push(music[i]);
+                      }
+                    }
+
+                                     
+                  } else {
+                    console.log('2b');
+                    if (this.newSongs.length < 4) {
+                      console.log('3c');
+                      console.log('despues');
+                      this.newSongs.push(music[i]);
+                    }
+                  }
+                }
               }
-            } else {
-              console.log('3b');
-              if (this.newSongs.length < 4) {
-                console.log('4b');
-                this.newSongs.push(music[i]);
-              }
-            }
-          } else {
-            console.log('2b');
-            if (this.newSongs.length < 4) {
-              console.log('3c');
-              console.log('despues');
-              this.newSongs.push(music[i]);
-            }
-          }
-        }
+
+              console.log(this.friendSongs);
+              console.log(this.newSongs);
+
+            })
+
+          })
+        });
       }
-
-      console.log(this.friendSongs);
-      console.log(this.newSongs);
-
     })
+
+
 
     // this.cancionSrv.getFriendsMusic().subscribe(music => {
     //   console.log("hola");

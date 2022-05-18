@@ -49,6 +49,10 @@ export class HeaderComponent implements OnInit {
       }
     })
 
+    // this.user = this.usuarioSrv.getUsuario();
+    // this.photo = this.user.foto;
+    // this.name = this.user.username;
+
     // this.user = this.authSrv.getUsuario()
     // this.user.subscribe(user => {
     //   this.name = user.displayName;   

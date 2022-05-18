@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Usuario } from 'src/app/shared/models/usuario.model';
+import { UsuarioService } from 'src/app/shared/services/usuario.service';
 
 @Component({
   selector: 'app-artistas',
@@ -8,17 +10,24 @@ import { Router } from '@angular/router';
 })
 export class ArtistasComponent implements OnInit {
 
-  prueba = []
+  usuario: Usuario;
+  artistas: Usuario[] = []
 
   constructor(
-    private router: Router
+    private router: Router,
+    private usuarioSrv: UsuarioService,
   ) { }
 
   ngOnInit(): void {    
     document.getElementById("artistas").className += " active"
     
-    for (let i = 1; i <= 20; i++) {
-      this.prueba.push(i)
+    this.usuario = this.usuarioSrv.getUsuario();
+
+    for (let i = 0; i < this.usuario.seguidos.length; i++) {
+      this.usuarioSrv.getOne(this.usuario.seguidos[i]).subscribe(user => {
+        this.artistas.push(user);
+      })
+      
     }
   }
 
