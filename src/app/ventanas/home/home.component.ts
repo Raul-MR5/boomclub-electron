@@ -42,53 +42,60 @@ export class HomeComponent implements OnInit {
             this.cancionSrv.getAllByDate().subscribe(music => {
               console.log(music);
 
-              for (let i = 0; i < music.length; i++) {
+              for (let j = 0; j < this.user.seguidos.length; j++) {
+                for (let i = 0; i < music.length; i++) {
 
-                console.log(music[i]);
-                console.log(music[i].usuario);
-                console.log(music[i].usuario.id);
-                console.log('user id');
-                console.log(this.user.id);
+                  // console.log(music[i]);
+                  // console.log(music[i].usuario);
+                  // console.log(music[i].usuario.id);
+                  // console.log('user id');
+                  // console.log(this.user.id);
 
 
-                if (music[i].usuario.id != this.user.id) {
-                  console.log('1');
+                  if (music[i].usuario.id != this.user.id) {
+                    // console.log('1');
 
-                  if (this.user.seguidos) {
-                    console.log('2a');
-                    console.log(this.user);
-                    console.log(this.user.seguidos.length);
+                    if (this.user.seguidos) {
+                      // console.log('2a');
+                      // console.log(this.user);
+                      // console.log(this.user.seguidos.length);
 
-                    if (this.user.seguidos.length > 0) {
-                      for (let j = 0; j < this.user.seguidos.length; j++) {
+                      if (this.user.seguidos.length > 0) {
+                        // for (let j = 0; j < this.user.seguidos.length; j++) {
                         if (music[i].usuario.id == this.user.seguidos[j]) {
-                          console.log('3a');
+                          console.log(j);
+
+                          // console.log('3a');
                           if (this.friendSongs.length < 4) {
-                            console.log('4a');
+                            // console.log('4a');
+                            console.log('friend');
                             this.friendSongs.push(music[i]);
                           }
                         } else {
-                          console.log('3b');
+                          // console.log('3b');
                           if (this.newSongs.length < 4) {
-                            console.log('4b');
+                            // console.log('4b');
+                            console.log('1 new');
                             this.newSongs.push(music[i]);
                           }
                         }
-                      }   
+                        // }   
+                      } else {
+                        if (this.newSongs.length < 4) {
+                          // console.log('4b');
+                          console.log('2 new');
+                          this.newSongs.push(music[i]);
+                        }
+                      }
+
+
                     } else {
+                      // console.log('2b');
                       if (this.newSongs.length < 4) {
-                        console.log('4b');
+                        // console.log('3c');
+                        console.log('3 new Song');
                         this.newSongs.push(music[i]);
                       }
-                    }
-
-                                     
-                  } else {
-                    console.log('2b');
-                    if (this.newSongs.length < 4) {
-                      console.log('3c');
-                      console.log('despues');
-                      this.newSongs.push(music[i]);
                     }
                   }
                 }
