@@ -1,0 +1,79 @@
+.name {
+    font-size: 250%;
+    color: #ab6c6c;
+    margin-left: 5%;
+}
+
+.test {
+    max-width: 100%;
+}
+
+.mt-music-panel {
+    margin-top: 5px;
+}
+
+.padding-btw-col {
+    padding: 6px;
+}
+
+.border-music-panel {
+    border-radius: 5px;
+}
+
+.arreglo {
+    margin-top: 20px;
+    width: 100%;
+}
+
+.btn-lg-100 {
+    width: 100%;
+}
+
+.btn-back {
+    background-color: #ab6c6c;    
+    border-radius: 20px;
+}
+
+.btn-gray {
+    background-color: #adb5bd;    
+    border-radius: 20px;
+}
+
+.info {
+    // font-size: 115%; // CASA
+    // padding: 120px; // CASA
+    padding: 30px; // odec
+}
+
+.color-link {
+    color: #ab6c6c;
+}
+
+.div-pointer {
+    text-align: center;
+    width: 50%;
+    cursor: pointer
+}
+
+.mh-div {
+    height: 100px;
+}
+
+.no-music {
+    filter: invert(40%) sepia(7%) saturate(2086%) hue-rotate(314deg) brightness(117%) contrast(90%);
+}
+
+.fh-no-music {
+    height: 285px;
+}
+
+.bg-profile {
+    background-image: url('https://firebasestorage.googleapis.com/v0/b/boomclub-tfg.appspot.com/o/backOG3.png?alt=media&token=07ca8e3a-0ce0-49a8-95d6-4a8c2add230d');
+    background-size: cover;
+}
+
+@media screen and (max-width: 767px) {
+    .ocultar {
+        display: none;
+    }
+}

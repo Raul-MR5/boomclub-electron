@@ -64,12 +64,23 @@
                                         d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z" />
                                 </svg>
                             </div>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="grey"
-                                class="bi bi-three-dots song-selector margin-option" (click)="play()"
-                                viewBox="0 0 16 16">
-                                <path
-                                    d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z" />
-                            </svg>
+
+                            <div class="bi m-2 dropdown ocultar">
+                                <a href="#"
+                                    class="d-flex align-items-center text-white text-decoration-none "
+                                    id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="grey"
+                                        class="bi bi-three-dots song-selector margin-option " viewBox="0 0 16 16">
+                                        <path
+                                            d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z" />
+                                    </svg>
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-dark text-small shadow"
+                                    aria-labelledby="dropdownUser1">
+                                    <li><a class="dropdown-item" (click)="goTo('/profile/' +user.id)">Añadir a lista</a></li>
+                                </ul>
+                            </div>
+
                         </div>
                     </div>
                     <!-- </div> -->
