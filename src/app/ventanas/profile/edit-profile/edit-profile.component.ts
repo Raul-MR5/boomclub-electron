@@ -45,10 +45,10 @@ export class EditProfileComponent implements OnInit {
 
     this.form = this.formBuilder.group({
       foto: [''],
-      username: ['', [Validators.required]],
-      nombre: ['', [Validators.required]],
-      apellidos: [''],
-      email: ['', [Validators.required]]
+      username: [this.user.username, [Validators.required]],
+      nombre: [this.user.nombre, [Validators.required]],
+      apellidos: [this.user.apellidos],
+      email: [this.user.email, [Validators.required]]
     });
 
     // this.foto = "https://firebasestorage.googleapis.com/v0/b/boomclub-tfg.appspot.com/o/portadas%2Fdefault-cover-art.png?alt=media&token=39a74894-86e2-4413-81f0-b8584a500b36";

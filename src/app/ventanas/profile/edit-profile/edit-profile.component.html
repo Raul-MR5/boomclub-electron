@@ -7,7 +7,7 @@
                     <!-- <h3 class="text-pink"><b>Subir canción</b></h3> -->
                     <div class="test mt-3 d-flex align-items-center row row-cols-1 row-cols-sm-2 row-cols-md-3 g-1">
 
-                        <div class="col-lg-12 d-flex align-items-center">
+                        <div class="col-lg-12 d-flex align-items-center justify-content-center pe-4">
                             <input formControlName="foto" type="file" accept=".png, .jpg,.jpeg" multiple
                                 (change)="onUploadImg($event)" id="inputFile">
 
@@ -21,10 +21,9 @@
                             <!-- <th><strong class="text-pink">Titulo</strong></th>
                             <tr><strong class="text-pink">Subir archivo</strong></tr> -->
                             <div class="col-lg-6">
-
                                 <label for="nombre" class="form-label text-pink title-new-song"><b>Nombre</b></label>
                                 <input formControlName="nombre" type="text" class="form-control" id="nombre"
-                                    placeholder="{{user.nombre}}" value="">
+                                    placeholder="" value="">
 
                                 <!-- <p class="invalid-error"
                                     *ngIf="form.get('nombre').invalid && (form.get('nombre').dirty || form.get('nombre').touched)">
@@ -34,7 +33,24 @@
                             <div class="col-lg-6">
                                 <label for="apellidos" class="form-label text-pink title-new-song"><b>Apellidos</b></label>
                                 <input formControlName="apellidos" type="text" class="form-control" id="apellidos"
-                                    placeholder="{{user.apellidos}}" value="">
+                                    placeholder="" value="">
+                            </div>
+
+                            <div class="col-lg-6">
+                                <label for="username" class="form-label text-pink title-new-song"><b>Nombre de usuario</b></label>
+                                <input formControlName="username" type="text" class="form-control" id="username"
+                                    placeholder="" value="">
+                            </div>
+                            
+                            <div class="col-lg-6">
+                                <label for="email" class="form-label text-pink title-new-song"><b>Email</b></label>
+                                <input formControlName="email" type="text" class="form-control" id="email"
+                                    placeholder="" value="">
+
+                                <!-- <p class="invalid-error"
+                                    *ngIf="form.get('nombre').invalid && (form.get('nombre').dirty || form.get('nombre').touched)">
+                                    Introduzca un nombre
+                                </p> -->
                             </div>
                             <!-- </div> -->
                             <!-- <div class="col">
@@ -47,11 +63,11 @@
 
                     </div>
 
-                    <div class="mx-auto mt-4">
+                    <!-- <div class="mx-auto mt-4">
                         <label for="textarea" class="text-pink mb-2 title-new-song"><b>Lyrics</b></label>
                         <textarea formControlName="lyrics" class="form-control" rows="6"
                             placeholder="Introduzca la letra de su canción" id="textarea"></textarea>
-                    </div>
+                    </div> -->
 
                     <div class="d-flex align-items-center row row-cols-1 row-cols-sm-1 row-cols-md-4 g-3">
                         <div class="col-lg-2"></div>
