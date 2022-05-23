@@ -1,101 +1,66 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute, Params, Router } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { Cancion } from 'src/app/shared/models/cancion.model';
 import { Usuario } from 'src/app/shared/models/usuario.model';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { CancionService } from 'src/app/shared/services/cancion.service';
 import { StorageService } from 'src/app/shared/services/storage.service';
 import { UsuarioService } from 'src/app/shared/services/usuario.service';
-import * as internal from 'stream';
+import { v4 as uuidv4 } from 'uuid';
 
 @Component({
   selector: 'app-edit-profile',
   templateUrl: './edit-profile.component.html',
   styleUrls: ['./edit-profile.component.scss']
 })
-export class EditProfileComponent implements OnInit, OnDestroy {
+export class EditProfileComponent implements OnInit {
 
-  userLogged: Usuario;
-
+  form: FormGroup;
   user: Usuario;
-  id: string;
+  name;
+  photo;
+  foto;
 
-  nombre: string;
-  foto: string;
+  music;
 
-  music: Cancion[];
-  totalMusic: number;
-
-  bool: boolean = false;
-  opt: boolean = true;
-
-  followed: boolean = false;
-
-  suscriptions: Subscription[] = [];
+  prueba = []
 
   constructor(
+    private formBuilder: FormBuilder,
     private authSrv: AuthService,
     private usuarioSrv: UsuarioService,
     private cancionSrv: CancionService,
     private storageSrv: StorageService,
-    private router: Router,
-    private activatedRoute: ActivatedRoute
+    private router: Router
   ) { }
 
   ngOnInit(): void {
-    const paramsSubscription: Subscription = this.activatedRoute.params.subscribe((params: Params) => { this.id = params['id']; console.log(this.id, "hola"); /* let p = this.prueba(); console.log(p) */ });
-
-    // console.log(this.id);
-
-
-    this.suscriptions.push(paramsSubscription);
-
-
     // this.user = this.authSrv.usuarioValue.username;
-    this.userLogged = this.usuarioSrv.getUsuario();
+    console.log("hola");
 
-    // console.log("pepe");
-    // console.log(this.id);
+    this.user = this.usuarioSrv.getUsuario();
 
+    // document.getElementById("canciones").className += " active"
 
-    this.usuarioSrv.getOne(this.id).subscribe(usuario => {
-      this.user = usuario;
-
-      // console.log(this.user);
-
-
-      this.foto = this.user.foto;
-      this.nombre = this.user.username;
-
-      this.followed = this.usuarioSrv.followed(this.user);
-
-      this.cancionSrv.getUserMusic(this.user).subscribe((music) => {
-        this.music = music;
-
-        // console.log(music);
-        
-        // console.log("-");
-        
-
-        if (this.music.length == 0) {
-          this.bool = true;
-          // console.log(this.bool);
-
-        }
-
-        this.totalMusic = this.music.length;
-      })
+    this.form = this.formBuilder.group({
+      foto: [''],
+      username: ['', [Validators.required]],
+      nombre: ['', [Validators.required]],
+      apellidos: [''],
+      email: ['', [Validators.required]]
     });
+
+    // this.foto = "https://firebasestorage.googleapis.com/v0/b/boomclub-tfg.appspot.com/o/portadas%2Fdefault-cover-art.png?alt=media&token=39a74894-86e2-4413-81f0-b8584a500b36";
+    this.foto = this.user.foto;
   }
 
   ngOnDestroy(): void {
-    this.suscriptions.forEach(item => item.unsubscribe())
+    // document.getElementById("canciones").classList.remove("active")
   }
 
-  goTo(url: string) {
-    console.log(url);
 
+  goTo(url: string) {
     this.router.navigate([url]);
   }
 
@@ -107,83 +72,109 @@ export class EditProfileComponent implements OnInit, OnDestroy {
     this.router.navigate(['/login']);
   }
 
-  getFollowers() {
-
-  }
-
-  getFollows() {
-    if (this.user.seguidos) {
-      return this.user.seguidos.length;
-    } else {
-      return 0;
-    }
-  }
-
-  seguido() {
-    if (this.userLogged.id != this.user.id) {
-      if (this.userLogged.seguidos) {
-        console.log("entra");
-
-        for (let i = 0; i < this.userLogged.seguidos.length; i++) {
-          console.log(this.userLogged.seguidos[i], this.user.id);
-
-          if (this.userLogged.seguidos[i] == this.user.id) {
-            this.followed = true;
-          } else {
-            this.followed = false;
-          }
-
-          console.log(this.followed);
-
-        }
-      }
-    }
-  }
-
   follow() {
-    this.usuarioSrv.newFollow(this.userLogged.id, this.user).then(() => {
-      this.followed = true;
-    })
+
   }
 
-  unfollow() {
-    this.usuarioSrv.removeFollow(this.userLogged.id, this.user).then(() => {
-      this.followed = false;
-    })
+  onUploadImg(event) {
+
+    let cover = event.target.files[0];
+
+    let reader = new FileReader();
+    reader.readAsDataURL(cover);
+    reader.onloadend = () => {
+      console.log(reader.result);
+      this.foto = reader.result;
+      console.log(this.foto);
+    }
+
+
+    // this.storageSrv.uploadImg(this.name, this.name, cover).then(url => {
+    //   console.log(url);
+    // });
   }
 
-  prueba() {
-    return "pepe"
+  onUploadMusic(event) {
+
+    this.music = event.target.files[0];
+
+    console.log(this.music);
+
+    // let reader = new FileReader();
+    // reader.readAsDataURL(music);
+    //   reader.onloadend = () => {
+    //     console.log(reader.result);
+    //     this.foto = reader.result;
+    //     console.log(this.foto);
+    //   }
+
+
+    // this.storageSrv.uploadMusic(this.name, this.name, music).then(url => {
+    //   console.log(url);
+    // });
   }
 
-  logged(): boolean {
+  async submit() {
+    try {
+      console.log(this.form.value);
 
-    if (this.user.id == this.userLogged.id) {
-      return false;
-    } else {
-      return true;
+      let user: Usuario = this.usuarioSrv.getUsuario();
+
+      console.log(user);
+
+      this.storageSrv.uploadImg("portadas/cancion/" + user.email, this.form.value.titulo, this.foto).then(async urlImagen => {
+        console.log(this.form.value.titulo);
+
+        console.log(this.foto);
+        
+
+        console.log(urlImagen);
+
+        this.storageSrv.uploadMusic(user.email, this.form.value.titulo, this.music).then(async url => {
+          console.log(url);
+          console.log(urlImagen);
+
+          let myuuid = uuidv4();
+
+          console.log('Your UUID is: ' + myuuid);
+          let cancion: Cancion;
+          if (urlImagen) {
+            cancion = {
+              id: myuuid,
+              usuario: user,
+              titulo: this.form.value.titulo,
+              lyrics: this.form.value.lyrics,
+              cancion: url,
+              foto: urlImagen,
+              fecha: new Date()
+            }
+          } else{
+            cancion = {
+              id: myuuid,
+              usuario: user,
+              titulo: this.form.value.titulo,
+              lyrics: this.form.value.lyrics,
+              cancion: url,
+              foto: this.foto,
+              fecha: new Date()
+            }
+          }
+          
+
+          await this.cancionSrv.create(cancion);
+
+          this.router.navigate(['/profile/' + user.id]);
+        });
+
+        // let h = await this.usuarioSrv.create(usuario);
+        // console.log("re: ");
+        // console.log(h);
+
+      });
+
+    } catch (e: any) {
+      // alert(e.message)
     }
   }
 
-  menu(op: boolean) {
-    if (op) {
-      document.getElementById("canciones").className += " active";
-      document.getElementById("albums").classList.remove("active");
-    } else {
-      document.getElementById("albums").className += " active";
-      document.getElementById("canciones").classList.remove("active");
-    }
-
-    this.opt = op;
-  }
-
-  // onUpload(event) {
-  //   let music = event.target.files[0];
-
-  //   console.log(music);
-
-  //   this.storageSrv.uploadMusic(this.name, music).then(url => {
-  //     console.log(url);
-  //   });
-  // }
 }

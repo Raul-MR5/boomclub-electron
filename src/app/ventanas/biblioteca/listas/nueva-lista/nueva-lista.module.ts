@@ -35,9 +35,6 @@ const routes: Routes = [
     FormsModule,
     ReactiveFormsModule,
 
-    AngularFirestoreModule,
-    AngularFireAuthModule,
-
     HttpClientModule
   ],
   exports: [RouterModule]

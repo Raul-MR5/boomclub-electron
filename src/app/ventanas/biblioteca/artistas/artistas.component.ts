@@ -36,6 +36,6 @@ export class ArtistasComponent implements OnInit {
   }
 
   goTo(url: string) {
-    this.router.navigate(['/biblioteca/' + url]);
+    this.router.navigate([url]);
   }
 }

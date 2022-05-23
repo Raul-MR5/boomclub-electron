@@ -5,6 +5,7 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { AuthGuard } from '../../../auth/auth.guard';
 import { CancionComponent } from '../../canciones/cancion.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 const routes: Routes = [
@@ -27,8 +28,11 @@ const routes: Routes = [
   ],
   imports: [
     CommonModule,
-    RouterModule.forChild(routes)
 
+    FormsModule, 
+    ReactiveFormsModule,
+
+    RouterModule.forChild(routes)
   ],
   exports: [RouterModule]
 })

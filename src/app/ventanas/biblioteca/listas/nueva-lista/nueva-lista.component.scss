@@ -1,25 +1,78 @@
+.name {
+    font-size: 450%;
+    color: #ab6c6c;
+    margin-left: 5%;
+}
+
+.title-new-song {
+    font-size: 125%;
+}
+
+.test {
+    max-width: 100%;
+}
+
+.arreglo {
+    margin-top: 25px;
+    width: 100%;
+}
+
+.btn-back {
+    background-color: #ab6c6c;    
+    border-radius: 20px;
+}
+
+.info {
+    // font-size: 115%; // CASA
+    // padding: 120px; // CASA
+    padding: 30px; // odec
+}
+
 .color-link {
     color: #ab6c6c;
 }
 
-.lista-inline {
-    display: inline;
-    margin-left: 10px;
-}
-
-.lista-size {
-    width: 320px;
-    height: 120px;
-}
-
-.song-selector {
-    cursor: pointer;
-}
-
-.align-title-lista {
-    align-items: center;
-}
-
 .div-pointer {
+    text-align: center;
+    width: 50%;
     cursor: pointer
+}
+
+.bg-profile {
+    background-image: url('https://firebasestorage.googleapis.com/v0/b/boomclub-tfg.appspot.com/o/backOG3.png?alt=media&token=07ca8e3a-0ce0-49a8-95d6-4a8c2add230d');
+    background-size: cover;
+}
+
+#inputFile {
+    display: none;
+}
+
+.labelInputFile {
+    width: 200px;
+    height: 200px;
+    // border-radius: 100%;
+    // background-color: lightblue;
+    // position: absolute;
+    padding: 1rem;
+    box-shadow: 0 0 10px -1px gray;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    user-select: none;
+}
+
+.labelInputFile img {
+    width: 200px;
+    height: 200px;
+}
+
+.labelInputFile:active {
+    transform: scale(0.9);
+}
+
+@media screen and (max-width: 767px) {
+    .ocultar {
+        display: none;
+    }
 }
