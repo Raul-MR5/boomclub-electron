@@ -50,7 +50,7 @@ export class EditProfileComponent implements OnInit {
       username: [this.user.username, [Validators.required]],
       nombre: [this.user.nombre, [Validators.required]],
       apellidos: [this.user.apellidos],
-      email: [{value: this.user.email, disabled: true}, [Validators.required]]
+      email: [{ value: this.user.email, disabled: true }, [Validators.required]]
     });
 
     // this.foto = "https://firebasestorage.googleapis.com/v0/b/boomclub-tfg.appspot.com/o/portadas%2Fdefault-cover-art.png?alt=media&token=39a74894-86e2-4413-81f0-b8584a500b36";
@@ -96,77 +96,42 @@ export class EditProfileComponent implements OnInit {
     // });
   }
 
-  onUploadMusic(event) {
-
-    this.music = event.target.files[0];
-
-    console.log(this.music);
-
-    // let reader = new FileReader();
-    // reader.readAsDataURL(music);
-    //   reader.onloadend = () => {
-    //     console.log(reader.result);
-    //     this.foto = reader.result;
-    //     console.log(this.foto);
-    //   }
-
-
-    // this.storageSrv.uploadMusic(this.name, this.name, music).then(url => {
-    //   console.log(url);
-    // });
-  }
-
   async submit() {
     try {
       console.log(this.form.value);
 
-      let user: Usuario = this.usuarioSrv.getUsuario();
 
-      console.log(user);
-
-      this.storageSrv.uploadImg("portadas/cancion/" + user.email, this.form.value.titulo, this.foto).then(async urlImagen => {
-        console.log(this.form.value.titulo);
-
+      this.storageSrv.uploadImg("avatar/", this.user.email, this.foto).then(async urlImagen => {
         console.log(this.foto);
-        
+
 
         console.log(urlImagen);
 
-        this.storageSrv.uploadMusic(user.email, this.form.value.titulo, this.music).then(async url => {
-          console.log(url);
-          console.log(urlImagen);
-
-          let myuuid = uuidv4();
-
-          console.log('Your UUID is: ' + myuuid);
-          let cancion: Cancion;
-          if (urlImagen) {
-            cancion = {
-              id: myuuid,
-              usuario: user,
-              titulo: this.form.value.titulo,
-              lyrics: this.form.value.lyrics,
-              cancion: url,
-              foto: urlImagen,
-              fecha: new Date()
-            }
-          } else{
-            cancion = {
-              id: myuuid,
-              usuario: user,
-              titulo: this.form.value.titulo,
-              lyrics: this.form.value.lyrics,
-              cancion: url,
-              foto: this.foto,
-              fecha: new Date()
-            }
+        let usuario: Usuario;
+        if (urlImagen) {
+          usuario = {
+            id: this.user.id,
+            nombre: this.form.value.nombre,
+            apellidos: this.form.value.apellidos,
+            email: this.user.email,
+            foto: urlImagen,
+            username: this.form.value.username
           }
-          
+        } else{
+          usuario = {
+            id: this.user.id,
+            nombre: this.form.value.nombre,
+            apellidos: this.form.value.apellidos,
+            email: this.user.email,
+            foto: this.foto,
+            username: this.form.value.username
+          }
+        }
 
-          await this.cancionSrv.create(cancion);
 
-          this.router.navigate(['/profile/' + user.id]);
-        });
+        await this.usuarioSrv.update(usuario);
+
+        this.router.navigate(['/profile/' + this.user.id]);
 
         // let h = await this.usuarioSrv.create(usuario);
         // console.log("re: ");
