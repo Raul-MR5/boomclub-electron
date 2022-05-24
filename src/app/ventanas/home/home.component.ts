@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Cancion } from 'src/app/shared/models/cancion.model';
+import { Usuario } from 'src/app/shared/models/usuario.model';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { CancionService } from 'src/app/shared/services/cancion.service';
 import { UsuarioService } from 'src/app/shared/services/usuario.service';
@@ -12,16 +14,23 @@ import { UsuarioService } from 'src/app/shared/services/usuario.service';
 })
 export class HomeComponent implements OnInit {
 
+  form: FormGroup;
+  
   prueba = [1, 2, 3, 4]
   user;
   photo;
   title: string = 'BoomClub';
 
-  canciones: Cancion[];
   friendSongs: Cancion[] = [];
   newSongs: Cancion[] = [];
 
+  canciones: Cancion[];
+  artistas: Usuario[]; 
+
+  busqueda: boolean = false;
+
   constructor(
+    private formBuilder: FormBuilder,
     private authSrv: AuthService,
     private usuarioSrv: UsuarioService,
     private cancionSrv: CancionService,
@@ -30,6 +39,11 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     document.getElementById("sidebarhome").className += " active"
+
+
+    this.form = this.formBuilder.group({
+      search: ['']
+    });
 
     this.user = this.usuarioSrv.getUsuario()
     this.authSrv.authenticated().subscribe(bool => {
@@ -40,107 +54,48 @@ export class HomeComponent implements OnInit {
             this.user = usuario;
 
             this.cancionSrv.getAllByDate().subscribe(music => {
-              console.log(music);
 
               if (this.user.seguidos.length > 0) {
                 for (let j = 0; j < this.user.seguidos.length; j++) {
                   for (let i = 0; i < music.length; i++) {
-
-                    // console.log(music[i]);
-                    // console.log(music[i].usuario);
-                    // console.log(music[i].usuario.id);
-                    // console.log('user id');
-                    // console.log(this.user.id);
-
-
                     if (music[i].usuario.id != this.user.id) {
-                      // console.log('1');
-
                       if (this.user.seguidos) {
-                        // console.log('2a');
-                        // console.log(this.user);
-                        // console.log(this.user.seguidos.length);
 
-                        // if (this.user.seguidos.length > 0) {
-                          // for (let j = 0; j < this.user.seguidos.length; j++) {
                           if (this.user.seguidos.includes(music[i].usuario.id)) {
-                            // console.log(j);
-
-                            // console.log('3a');
                             if (this.friendSongs.length < 4) {
-                              // console.log('4a');
-                              console.log('friend');
                               this.friendSongs.push(music[i]);
                             }
                           } else {
-                            // console.log('3b');
                             if (this.newSongs.length < 4) {
-                              // console.log('4b');
-                              console.log('1 new');
                               this.newSongs.push(music[i]);
                             }
                           }
-                          // }   
-                        // } else {
-                        //   if (this.newSongs.length < 4) {
-                        //     // console.log('4b');
-                        //     console.log('2 new');
-                        //     this.newSongs.push(music[i]);
-                        //   }
-                        // }
-
 
                       } else {
-                        // console.log('2b');
+
                         if (this.newSongs.length < 4) {
-                          // console.log('3c');
-                          console.log('3 new Song');
                           this.newSongs.push(music[i]);
                         }
+
                       }
                     }
                   }
                 }
               } else {
+
                 for (let i = 0; i < music.length; i++) {
                   if (this.newSongs.length < 4) {
                     this.newSongs[i] = music[i]
                   }
                 }
+
               }
-
-              console.log(this.friendSongs);
-              console.log(this.newSongs);
-
             })
 
           })
         });
       }
     })
-
-
-
-    // this.cancionSrv.getFriendsMusic().subscribe(music => {
-    //   console.log("hola");
-
-    //   this.friendSongs = music;
-    //   console.log(music);
-
-    // });
-
-    // this.cancionSrv.getNewsMusic().subscribe(music => {
-    //   console.log("hola");
-
-    //   this.newSongs = music;
-    //   console.log(music);
-
-    // });
-
-    // this.user = this.authSrv.getUsuario()
-    // this.user.subscribe(user => {
-    //   this.photo = user.photoURL
-    // })
   }
 
   ngOnDestroy(): void {
@@ -155,10 +110,22 @@ export class HomeComponent implements OnInit {
     this.router.navigate([url]);
   }
 
+  search() {
+    console.log(this.form.value.search);
+    
+    if (this.form.value.search.length > 0) {
+      this.busqueda = true;
 
+      this.usuarioSrv.getAllMatches(this.form.value.search).subscribe(artistas => {
+        this.artistas = artistas;
+      });
+      
+      this.cancionSrv.getAllMatches(this.form.value.search).subscribe(canciones => {
+        this.canciones = canciones;
+      });
 
-  // getMin(cancion) {
-  //   let audio = new Audio(cancion.cancion)
-  //   return audio.duration;
-  // }
+    } else {
+      this.busqueda = false;
+    }
+  }
 }

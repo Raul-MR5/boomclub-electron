@@ -27,6 +27,10 @@ export class CancionService {
         return this.firestore.collection<Cancion>('cancion').valueChanges({ idField: 'id' });
     }
 
+    getAllMatches(match: string): Observable<Cancion[]> {
+        return this.firestore.collection<Cancion>('cancion', ref => ref.orderBy('titulo').startAt(match).endAt(match + "\uf8ff")).valueChanges({ idField: 'id' });
+    }
+
     getAllByDate(): Observable<Cancion[]> {
         return this.firestore.collection<Cancion>('cancion').valueChanges({ idField: 'id' });
     }

@@ -4,8 +4,9 @@
       <nav class="navbar">
         <div class="container-fluid row">
           <div class="col-lg-1"></div>
-          <form class="col-lg-10 d-flex align-items-center justify-content-center" role="search">
-            <input class="form-control me-2 bg-dark text-light rounded-pill" type="search" placeholder="Search" aria-label="Search">
+          <form class="col-lg-10 d-flex align-items-center justify-content-center" [formGroup]="form" role="search">
+            <input (keyup)="search()" formControlName="search" class="form-control me-2 bg-dark text-light rounded-pill"
+              type="search" placeholder="Search" aria-label="Search">
             <!-- <button class="btn btn-outline-success" type="submit">Search</button> -->
           </form>
           <div class="col-lg-1"></div>
@@ -13,51 +14,112 @@
       </nav>
     </div>
 
-    <div class="py-4">
+    <div *ngIf="!busqueda">
+      <div class="py-4">
 
-      
+        <h3 class="fs-4 text-pink">Actividad de tus amigos</h3>
+        <hr class="text-pink">
 
-      <h3 class="fs-4 text-pink">Actividad de tus amigos</h3>
-      <hr class="text-pink">
+        <div class="py-2 row row-cols-1 row-cols-sm-2 row-cols-md-4 g-3">
 
-      <div class="py-2 row row-cols-1 row-cols-sm-2 row-cols-md-4 g-3">
-
-        <div (click)="goTo('/cancion/' + c.id + '/-')" class="col" *ngFor="let c of friendSongs">
-          <div class="shadow-sm song-selector">
-            <div class="card-body bg-dark">
-              <img class="music-cover" src="{{c.foto}}" width="128.5px" height="128.5px">
-              <h5 class="text-pink no-salir">{{c.titulo}}</h5>
-              <div class="d-flex justify-content-between align-items-center">
-                <span class="card-text text-muted">{{c.usuario.username}}</span>
-                <!-- <small class="text-muted">{{getMin(c.cancion)}} min</small> -->
+          <div (click)="goTo('/cancion/' + c.id + '/-')" class="col" *ngFor="let c of friendSongs">
+            <div class="shadow-sm song-selector">
+              <div class="card-body bg-dark">
+                <img class="music-cover" src="{{c.foto}}" width="128.5px" height="128.5px">
+                <h5 class="text-pink no-salir">{{c.titulo}}</h5>
+                <div class="d-flex justify-content-between align-items-center">
+                  <span class="card-text text-muted">{{c.usuario.username}}</span>
+                  <!-- <small class="text-muted">{{getMin(c.cancion)}} min</small> -->
+                </div>
               </div>
             </div>
           </div>
+
         </div>
-
       </div>
-    </div>
 
-    <div class="py-4">
-      <h3 class="fs-4 text-pink">Novedades</h3>
-      <hr class="text-pink">
+      <div class="py-4">
+        <h3 class="fs-4 text-pink">Novedades</h3>
+        <hr class="text-pink">
 
-      <div class="py-2 row row-cols-1 row-cols-sm-2 row-cols-md-4 g-3">
+        <div class="py-2 row row-cols-1 row-cols-sm-2 row-cols-md-4 g-3">
 
-        <div (click)="goTo('/cancion/' + c.id + '/-')" class="col" *ngFor="let c of newSongs">
-          <div class="shadow-sm song-selector">
-            <div class="card-body bg-dark">
-              <img class="music-cover" src="{{c.foto}}" width="128.5px" height="128.5px">
-              <h5 class="text-pink no-salir">{{c.titulo}}</h5>
-              <div class="d-flex justify-content-between align-items-center">
-                <span class="card-text text-muted">{{c.usuario.username}}</span>
-                <!-- <small class="text-muted">{{getMin(c.cancion)}} min</small> -->
+          <div (click)="goTo('/cancion/' + c.id + '/-')" class="col" *ngFor="let c of newSongs">
+            <div class="shadow-sm song-selector">
+              <div class="card-body bg-dark">
+                <img class="music-cover" src="{{c.foto}}" width="128.5px" height="128.5px">
+                <h5 class="text-pink no-salir">{{c.titulo}}</h5>
+                <div class="d-flex justify-content-between align-items-center">
+                  <span class="card-text text-muted">{{c.usuario.username}}</span>
+                  <!-- <small class="text-muted">{{getMin(c.cancion)}} min</small> -->
+                </div>
               </div>
             </div>
           </div>
-        </div>
 
+        </div>
       </div>
     </div>
+
+    <div *ngIf="busqueda">
+      <div class="py-4">
+
+        <h3 class="fs-4 text-pink">Canciones</h3>
+        <hr class="text-pink">
+
+        <div class="py-2 row row-cols-1 row-cols-sm-2 row-cols-md-4 g-3">
+
+          <div (click)="goTo('/cancion/' + c.id + '/-')" class="col" *ngFor="let c of canciones">
+            <div class="shadow-sm song-selector">
+              <div class="card-body bg-dark">
+                <img class="music-cover" src="{{c.foto}}" width="128.5px" height="128.5px">
+                <h5 class="text-pink no-salir">{{c.titulo}}</h5>
+                <div class="d-flex justify-content-between align-items-center">
+                  <span class="card-text text-muted">{{c.usuario.username}}</span>
+                  <!-- <small class="text-muted">{{getMin(c.cancion)}} min</small> -->
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="py-4">
+        <h3 class="fs-4 text-pink">Artistas</h3>
+        <hr class="text-pink">
+
+        <div class="py-2 row row-cols-1 row-cols-sm-2 row-cols-md-4 g-3">
+
+          <!-- <div (click)="goTo('/cancion/' + c.id + '/-')" class="col" *ngFor="let a of artistas">
+            <div class="shadow-sm song-selector">
+              <div class="card-body bg-dark">
+                <img class="music-cover" src="{{a.foto}}" width="128.5px" height="128.5px">
+                <h5 class="text-pink no-salir">{{a.nombre}}</h5>
+                <div class="d-flex justify-content-between align-items-center">
+                  <span class="card-text text-muted">{{c.usuario.username}}</span>
+                </div>
+              </div>
+            </div>
+          </div> -->
+          <div (click)="goTo('/profile/' +a.id)" class="col" *ngFor="let a of artistas">
+            <div class="shadow-sm song-selector">
+                <div class="card-body card-back">
+                    <div class="d-flex justify-content-center align-items-center">
+                        <img class="mt-2 music-cover rounded-circle"
+                            src="{{a.foto}}"
+                            width="130px" height="130px">
+                    </div>
+                    <div class="mt-3 d-flex justify-content-center align-items-center">
+                        <h5 class="text-pink">{{a.username}}</h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        </div>
+      </div>
+    </div>
+
   </main>
 </div>

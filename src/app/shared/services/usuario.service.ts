@@ -22,6 +22,10 @@ export class UsuarioService {
         return this.firestore.collection<Usuario>('usuario').valueChanges({ idField: 'id' });
     }
 
+    getAllMatches(match: string): Observable<Usuario[]> {
+        return this.firestore.collection<Usuario>('usuario', ref => ref.orderBy('username').startAt(match).endAt(match + "\uf8ff")).valueChanges({ idField: 'id' });
+    }
+
     getOne(id: string): Observable<Usuario> {
         return this.firestore.collection<Usuario>('usuario').doc(id).valueChanges({ idField: 'id' });
     }
