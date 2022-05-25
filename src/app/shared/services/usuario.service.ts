@@ -79,13 +79,6 @@ export class UsuarioService {
 
     async create(payload: Usuario): Promise<any> {
         try {
-            // const id = this.firestore.createId();
-            // const data = {id, ...payload};
-
-            console.log(payload);
-
-
-            // const res = await this.firestore.collection('usuario').add({ ...payload });
             const res = await this.firestore.collection('usuario').doc(payload.id).set(payload);
             return res;
         } catch (err) {
