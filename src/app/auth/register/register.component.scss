@@ -62,3 +62,36 @@
 .link-pointer {
     cursor: pointer
 }
+
+#inputFile {
+    display: none;
+}
+
+.labelInputFile {
+    width: 200px;
+    height: 200px;
+    border-radius: 100%;
+    // background-color: lightblue;
+    // position: absolute;
+    padding: 1rem;
+    box-shadow: 0 0 10px -1px gray;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    user-select: none;
+}
+
+.labelInputFile img {
+    width: 200px;
+    height: 200px;
+    border-radius: 100%;
+}
+
+.labelInputFile:active {
+    transform: scale(0.9);
+}
+
+.ml-na {
+    margin-left: 8px;
+}

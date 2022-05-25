@@ -38,7 +38,10 @@ export class RegisterComponent implements OnInit {
     // this.user = this.usuarioSrv.getUsuario()
     // this.name = this.user.nombre;
 
+    this.avatar = "https://firebasestorage.googleapis.com/v0/b/boomclub-tfg.appspot.com/o/user-photo.png?alt=media&token=c9588aa9-1450-4932-86cd-d480853474d1";
+
     this.form = this.formBuilder.group({
+      foto: '',
       username: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]],
       email: ['', [Validators.required, Validators.pattern("^([a-zA-Z0-9_\\-\\.]+)@([a-zA-Z0-9_\\-\\.]+)\\.([a-zA-Z]{2,5})$")]],
       nombre: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]],
@@ -79,27 +82,14 @@ export class RegisterComponent implements OnInit {
   //   //   );
   // }
 
-  onUpload(event) {
-    let archivos = event.target.files;
+  onUploadImg(event) {
 
-    for (let i = 0; i < archivos.length; i++) {
+    let foto = event.target.files[0];
 
-      let reader = new FileReader();
-      reader.readAsDataURL(archivos[0]);
-      reader.onloadend = () => {
-        console.log(reader.result);
-        this.avatar = reader.result;
-        // this.imagenes.push(reader.result);
-        // this.storageSrv.uploadImg(this.name, reader.result).then(urlImagen => {
-        //   // let usuario = {
-        //   //   name: "jonathan",
-        //   //   nickName: "yonykikok",
-        //   //   password: "401325",
-        //   //   imgProfile: urlImagen
-        //   // }
-        //   console.log(urlImagen);
-        // });
-      }
+    let reader = new FileReader();
+    reader.readAsDataURL(foto);
+    reader.onloadend = () => {
+      this.avatar = reader.result;
     }
   }
 
