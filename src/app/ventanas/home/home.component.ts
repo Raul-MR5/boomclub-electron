@@ -15,7 +15,7 @@ import { UsuarioService } from 'src/app/shared/services/usuario.service';
 export class HomeComponent implements OnInit {
 
   form: FormGroup;
-  
+
   prueba = [1, 2, 3, 4]
   user;
   photo;
@@ -25,7 +25,7 @@ export class HomeComponent implements OnInit {
   newSongs: Cancion[] = [];
 
   canciones: Cancion[];
-  artistas: Usuario[]; 
+  artistas: Usuario[];
 
   busqueda: boolean = false;
 
@@ -54,41 +54,38 @@ export class HomeComponent implements OnInit {
             this.user = usuario;
 
             this.cancionSrv.getAllByDate().subscribe(music => {
+              if (this.user.seguidos) {
+                if (this.user.seguidos.length > 0) {
+                  for (let j = 0; j < this.user.seguidos.length; j++) {
+                    for (let i = 0; i < music.length; i++) {
+                      if (music[i].usuario.id != this.user.id) {
 
-              if (this.user.seguidos.length > 0) {
-                for (let j = 0; j < this.user.seguidos.length; j++) {
-                  for (let i = 0; i < music.length; i++) {
-                    if (music[i].usuario.id != this.user.id) {
-                      if (this.user.seguidos) {
-
-                          if (this.user.seguidos.includes(music[i].usuario.id)) {
-                            if (this.friendSongs.length < 4) {
-                              this.friendSongs.push(music[i]);
-                            }
-                          } else {
-                            if (this.newSongs.length < 4) {
-                              this.newSongs.push(music[i]);
-                            }
+                        if (this.user.seguidos.includes(music[i].usuario.id)) {
+                          if (this.friendSongs.length < 4) {
+                            this.friendSongs.push(music[i]);
                           }
-
-                      } else {
-
-                        if (this.newSongs.length < 4) {
-                          this.newSongs.push(music[i]);
+                        } else {
+                          if (this.newSongs.length < 4) {
+                            this.newSongs.push(music[i]);
+                          }
                         }
 
                       }
                     }
                   }
+                } else {
+                  for (let i = 0; i < music.length; i++) {
+                    if (this.newSongs.length < 4) {
+                      this.newSongs.push(music[i])
+                    }
+                  }
                 }
               } else {
-
                 for (let i = 0; i < music.length; i++) {
                   if (this.newSongs.length < 4) {
                     this.newSongs[i] = music[i]
                   }
                 }
-
               }
             })
 
@@ -112,14 +109,14 @@ export class HomeComponent implements OnInit {
 
   search() {
     console.log(this.form.value.search);
-    
+
     if (this.form.value.search.length > 0) {
       this.busqueda = true;
 
       this.usuarioSrv.getAllMatches(this.form.value.search).subscribe(artistas => {
         this.artistas = artistas;
       });
-      
+
       this.cancionSrv.getAllMatches(this.form.value.search).subscribe(canciones => {
         this.canciones = canciones;
       });

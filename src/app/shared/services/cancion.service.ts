@@ -32,7 +32,7 @@ export class CancionService {
     }
 
     getAllByDate(): Observable<Cancion[]> {
-        return this.firestore.collection<Cancion>('cancion').valueChanges({ idField: 'id' });
+        return this.firestore.collection<Cancion>('cancion', ref => ref.orderBy('fecha', 'desc')).valueChanges({ idField: 'id' });
     }
 
     getFriendsMusic(): Observable<Cancion[]> {
