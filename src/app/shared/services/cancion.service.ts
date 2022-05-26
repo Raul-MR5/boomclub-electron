@@ -6,6 +6,7 @@ import { catchError, map } from 'rxjs/operators';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/compat/firestore';
 import { Usuario } from '../models/usuario.model';
 import { UsuarioService } from './usuario.service';
+import { arrayRemove, arrayUnion } from '@angular/fire/firestore'
 
 @Injectable({
     providedIn: 'root'
@@ -78,12 +79,45 @@ export class CancionService {
         this.cancionSubject.next(cancionActual);
     }
 
+    liked(song: Cancion): boolean {
+        let usuario = this.usuarioSrv.getUsuario()
+            if (song.likes) {
+                console.log("entra");
+
+                for (let i = 0; i < song.likes.length; i++) {
+                    console.log(song.likes[i], song.id);
+
+                    if (song.likes[i] == usuario.id) {
+                        return true;
+                    }
+                }
+            }
+
+        return false;
+    }
+
+    async newLike(id: string, cancion: Cancion) {
+        try {
+            const res = await this.firestore.collection('cancion').doc(id).update({ likes: arrayUnion(cancion.id) });
+
+            return res;
+        } catch (err) {
+            return err;
+        }
+    }
+
+    async removeLike(id: string, cancion: Cancion) {
+        try {
+            const res = await this.firestore.collection('cancion').doc(id).update({ likes: arrayRemove(cancion.id) });
+
+            return res;
+        } catch (err) {
+            return err;
+        }
+    }
+
     playSong(audio: HTMLAudioElement) {
         this.audio = audio;
-
-        console.log(this.audio);
-
-
         this.audio.play();
     }
 
@@ -98,6 +132,14 @@ export class CancionService {
     resetSong() {
         this.cancionSubject = new BehaviorSubject(null);
         this.audio = null;
+    }
+
+    previousSong() {
+        
+    }
+
+    nextSong() {
+
     }
 
     async create(payload: Cancion): Promise<any> {

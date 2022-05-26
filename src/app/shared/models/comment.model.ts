@@ -6,5 +6,4 @@ export interface Comment {
     usuario: Usuario;
     cancion: Cancion;
     texto: string;
-    // like: boolean;
 }

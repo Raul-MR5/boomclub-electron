@@ -43,7 +43,7 @@ export class FooterComponent implements OnInit {
 
       // console.log("hola");
       
-      // console.log(this.song);
+      console.log(this.song);
       
     });
 
@@ -54,8 +54,6 @@ export class FooterComponent implements OnInit {
 
     this.audio.addEventListener("timeupdate", ()=>{
       this.time = (this.audio.currentTime / this.audio.duration)*100;
-      // console.log(this.audio.duration);
-      // console.log(this.time);
     })
 
     this.cancionSrv.playSong(this.audio);
@@ -68,11 +66,15 @@ export class FooterComponent implements OnInit {
   }
 
   before() {
-    this.audio.volume = 0
+    if (this.audio.currentTime > 0) {
+      this.cancionSrv.resetSong();      
+    } else {
+      this.cancionSrv.previousSong();      
+    }
   }
 
   after() {
-    this.audio.volume = 0.5
+    this.cancionSrv.nextSong();
   }
 
   parseTime(time){

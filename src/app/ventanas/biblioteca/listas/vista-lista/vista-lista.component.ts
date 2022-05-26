@@ -16,7 +16,7 @@ import { v4 as uuidv4 } from 'uuid';
   templateUrl: './vista-cancion.component.html',
   styleUrls: ['./vista-cancion.component.scss']
 })
-export class VistaCancionComponent implements OnInit {
+export class VistaListaComponent implements OnInit {
   user: Usuario;
   name;
   photo;
@@ -129,7 +129,10 @@ export class VistaCancionComponent implements OnInit {
   }
 
   back() {
+    console.log(this.url);
     let ur = this.url.replace(/-/g, '/')
+    console.log(ur);
+
     this.router.navigate(['/' + ur]);
   }
 
@@ -139,6 +142,7 @@ export class VistaCancionComponent implements OnInit {
 
   sendComment() {
     let myuuid = uuidv4();
+    console.log("heyo");
     
     let comentario: Comment = {
       id: myuuid,
@@ -146,6 +150,8 @@ export class VistaCancionComponent implements OnInit {
       cancion: this.song,
       texto: this.form.value.texto
     }
+
+    console.log(comentario);
     
     this.commentSrv.create(comentario);
     this.form.reset();

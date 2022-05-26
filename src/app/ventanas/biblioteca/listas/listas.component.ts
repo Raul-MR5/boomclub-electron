@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Lista } from 'src/app/shared/models/lista.model';
+import { Usuario } from 'src/app/shared/models/usuario.model';
+import { ListaService } from 'src/app/shared/services/lista.service';
+import { UsuarioService } from 'src/app/shared/services/usuario.service';
 
 @Component({
   selector: 'app-listas',
@@ -8,18 +12,23 @@ import { Router } from '@angular/router';
 })
 export class ListasComponent implements OnInit {
 
-  prueba = []
+  usuario: Usuario;
+  listas: Lista[] = []
 
   constructor(
-    private router: Router
+    private router: Router,
+    private usuarioSrv: UsuarioService,
+    private listaSrv: ListaService,
   ) { }
 
   ngOnInit(): void {    
     document.getElementById("listas").className += " active"
-
-    for (let i = 1; i <= 20; i++) {
-      this.prueba.push(i)
-    }
+    
+    this.usuario = this.usuarioSrv.getUsuario();
+    
+    this.listaSrv.getUserPlaylist(this.usuario).subscribe(playlist => {
+      this.listas = playlist
+    });
   }
 
   ngOnDestroy(): void {
