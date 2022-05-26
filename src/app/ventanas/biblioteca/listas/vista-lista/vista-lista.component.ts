@@ -3,18 +3,20 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Cancion } from 'src/app/shared/models/cancion.model';
 import { Comment } from 'src/app/shared/models/comment.model';
+import { Lista } from 'src/app/shared/models/lista.model';
 import { Usuario } from 'src/app/shared/models/usuario.model';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { CancionService } from 'src/app/shared/services/cancion.service';
 import { CommentService } from 'src/app/shared/services/comment.service';
+import { ListaService } from 'src/app/shared/services/lista.service';
 import { StorageService } from 'src/app/shared/services/storage.service';
 import { UsuarioService } from 'src/app/shared/services/usuario.service';
 import { v4 as uuidv4 } from 'uuid';
 
 @Component({
-  selector: 'app-vista-cancion',
-  templateUrl: './vista-cancion.component.html',
-  styleUrls: ['./vista-cancion.component.scss']
+  selector: 'app-vista-lista',
+  templateUrl: './vista-lista.component.html',
+  styleUrls: ['./vista-lista.component.scss']
 })
 export class VistaListaComponent implements OnInit {
   user: Usuario;
@@ -26,7 +28,8 @@ export class VistaListaComponent implements OnInit {
   form: FormGroup;
 
   id: string;
-  url: string;
+  lista: Lista;
+
   song: Cancion;
 
   likes: boolean = false;
@@ -42,6 +45,7 @@ export class VistaListaComponent implements OnInit {
     private authSrv: AuthService,
     private usuarioSrv: UsuarioService,
     private cancionSrv: CancionService,
+    private listaSrv: ListaService,
     private commentSrv: CommentService,
     private router: Router,
     private activatedRoute: ActivatedRoute
@@ -49,7 +53,6 @@ export class VistaListaComponent implements OnInit {
 
   ngOnInit(): void {
     this.activatedRoute.params.subscribe((params: Params) => { this.id = params['id']; console.log(this.id) });
-    this.activatedRoute.params.subscribe((params: Params) => { this.url = params['url']; console.log(this.url) });
 
     this.form = this.formBuilder.group({
       texto: ['']
@@ -58,52 +61,12 @@ export class VistaListaComponent implements OnInit {
     // this.foto = this.usuarioSrv.getUsuario().foto;
     this.user = this.usuarioSrv.getUsuario();
 
-    this.cancionSrv.getOne(this.id).subscribe(cancion => {
-      this.song = cancion;
-      
-      this.likes = this.usuarioSrv.followed(this.user);
+    this.listaSrv.getOne(this.id).subscribe(lista => {
+      this.lista = lista;
 
-      this.commentSrv.getSongComments(this.song.id).subscribe(comments => {
-        this.comentarios = comments;
-        console.log(this.song.id);
-        
+      console.log(this.lista);
 
-        console.log(this.comentarios);
-        
-      })
-
-      console.log(this.song);
-
-      this.foto = this.song.foto;
-      this.lyrics = this.song.lyrics;
-
-      console.log(this.lyrics);
-
-      let cont = 0;
-      let aux = -1;
-
-      for (let i = 0; i < this.lyrics.length; i++) {
-        let c = this.lyrics.charAt(i);
-
-        if (c.charCodeAt(0) == 10) {
-          cont++;
-          // console.log(cont);
-
-        } else {
-          if (aux != cont) {
-            aux = cont;
-            this.letra.push(c);
-            // console.log(this.letra);
-
-          } else {
-            this.letra[aux] += c;
-            // console.log(this.letra);
-
-          }
-
-        }
-
-      }
+      this.foto = this.lista.foto;
     });
 
     // for (let i = 1; i <= 5; i++) {
@@ -129,11 +92,11 @@ export class VistaListaComponent implements OnInit {
   }
 
   back() {
-    console.log(this.url);
-    let ur = this.url.replace(/-/g, '/')
-    console.log(ur);
+    // console.log(this.url);
+    // let ur = this.url.replace(/-/g, '/')
+    // console.log(ur);
 
-    this.router.navigate(['/' + ur]);
+    // this.router.navigate(['/' + ur]);
   }
 
   play() {

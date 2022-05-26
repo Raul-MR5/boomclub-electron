@@ -6,6 +6,5 @@ export interface Lista {
     nombre: string;
     usuario: Usuario;
     canciones?: Cancion[];
-    nCanciones?: number;
     foto: any; 
 }

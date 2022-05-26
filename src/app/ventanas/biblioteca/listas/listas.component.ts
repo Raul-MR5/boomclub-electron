@@ -27,6 +27,8 @@ export class ListasComponent implements OnInit {
     this.usuario = this.usuarioSrv.getUsuario();
     
     this.listaSrv.getUserPlaylist(this.usuario).subscribe(playlist => {
+      console.log(playlist);
+      
       this.listas = playlist
     });
   }
@@ -36,6 +38,6 @@ export class ListasComponent implements OnInit {
   }
 
   goTo(url: string) {
-    this.router.navigate(['/biblioteca/' + url]);
+    this.router.navigate([url]);
   }
 }

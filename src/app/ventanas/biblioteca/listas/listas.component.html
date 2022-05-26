@@ -33,7 +33,7 @@
 
             <div class="py-2 row row-cols-1 row-cols-sm-2 row-cols-md-4 g-3">
 
-                <div class="col" *ngFor="let l of listas">
+                <div (click)="goTo('/lista/' +l.id)" class="col" *ngFor="let l of listas">
                     <div class="shadow-sm song-selector">
                         <div class="card-body card-back">
                             <img class="music-cover me-2"
