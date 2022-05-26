@@ -75,15 +75,19 @@ export class HomeComponent implements OnInit {
                   }
                 } else {
                   for (let i = 0; i < music.length; i++) {
-                    if (this.newSongs.length < 4) {
-                      this.newSongs.push(music[i])
+                    if (music[i].usuario.id != this.user.id) {
+                      if (this.newSongs.length < 4) {
+                        this.newSongs.push(music[i])
+                      }
                     }
                   }
                 }
               } else {
                 for (let i = 0; i < music.length; i++) {
-                  if (this.newSongs.length < 4) {
-                    this.newSongs[i] = music[i]
+                  if (music[i].usuario.id != this.user.id) {
+                    if (this.newSongs.length < 4) {
+                      this.newSongs.push(music[i])
+                    }
                   }
                 }
               }

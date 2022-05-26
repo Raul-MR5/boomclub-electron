@@ -39,6 +39,10 @@ export class UsuarioService {
         return this.usuario;
     }
 
+    followers(match: string): Observable<Usuario[]> {
+        return this.firestore.collection<Usuario>('usuario', ref => ref.where('seguidos', 'array-contains', match)).valueChanges({ idField: 'id' });
+    }
+
     followed(user: Usuario): boolean {
         if (this.usuario.id != user.id) {
             if (this.usuario.seguidos) {

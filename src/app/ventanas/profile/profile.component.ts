@@ -21,6 +21,9 @@ export class ProfileComponent implements OnInit, OnDestroy {
   user: Usuario;
   id: string;
 
+  usuarios: Usuario[];
+  followers: number = 0;
+
   nombre: string;
   foto: string;
 
@@ -70,13 +73,15 @@ export class ProfileComponent implements OnInit, OnDestroy {
 
       this.followed = this.usuarioSrv.followed(this.user);
 
+      this.getFollowers();
+
       this.cancionSrv.getUserMusic(this.user).subscribe((music) => {
         this.music = music;
 
         // console.log(music);
-        
+
         // console.log("-");
-        
+
 
         if (this.music.length == 0) {
           this.bool = true;
@@ -107,8 +112,23 @@ export class ProfileComponent implements OnInit, OnDestroy {
     this.router.navigate(['/login']);
   }
 
-  getFollowers() {
+  getFollowers() {   
 
+    this.usuarioSrv.followers(this.user.id).subscribe(users => {
+      this.followers = 0;
+      this.usuarios = users;
+      console.log(this.usuarios);
+
+      for (let i = 0; i < this.usuarios.length; i++) {
+        console.log(this.user.id);
+        
+        if (this.usuarios[i].seguidos.includes(this.user.id)) {
+          this.followers++;
+        }
+      }
+  
+      console.log(this.followers);
+    });
   }
 
   getFollows() {
