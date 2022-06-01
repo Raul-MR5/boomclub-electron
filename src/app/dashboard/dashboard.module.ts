@@ -23,6 +23,7 @@ import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
 import { VistaCancionComponent } from '../ventanas/canciones/vista-cancion/vista-cancion.component';
 import { VistaListaComponent } from '../ventanas/biblioteca/listas/vista-lista/vista-lista.component';
+import { AddSongComponent } from '../ventanas/biblioteca/listas/add-song/add-song.component';
 
 const routes: Routes = [
   {
@@ -37,7 +38,8 @@ const routes: Routes = [
       { path: 'new-song', loadChildren: () => import('src/app/ventanas/canciones/nueva-cancion/nueva-cancion.module').then(m => m.NuevaCancionModule), canActivate: [AuthGuard] },
       { path: 'new-playlist', loadChildren: () => import('src/app/ventanas/biblioteca/listas/nueva-lista/nueva-lista.module').then(m => m.NuevaListaModule), canActivate: [AuthGuard] },
       { path: 'cancion/:id/:url', component: VistaCancionComponent, canActivate: [AuthGuard] },
-      { path: 'lista/:id', component: VistaListaComponent, canActivate: [AuthGuard] }
+      { path: 'lista/:id', component: VistaListaComponent, canActivate: [AuthGuard] },
+      { path: 'addsong/:id', component: AddSongComponent, canActivate: [AuthGuard] }
     ]
   },
   { path: 'login', component: LoginComponent },
@@ -53,7 +55,8 @@ const routes: Routes = [
     LoginComponent,
     RegisterComponent,
     VistaCancionComponent,
-    VistaListaComponent
+    VistaListaComponent,
+    AddSongComponent
   ],
   imports: [
     CommonModule,

@@ -1,0 +1,85 @@
+.name {
+    font-size: 450%;
+    color: #ab6c6c;
+    margin-left: 5%;
+}
+
+.title-song {
+    font-size: 250%;
+}
+
+.bg-size {
+    min-height: 100%;
+}
+
+.test {
+    max-width: 100%;
+}
+
+.arreglo {
+    padding: 25px;
+}
+
+.hr-custom {
+    height: 3px;
+}
+
+.music-cover {
+    margin-bottom: 15px;
+}
+
+.btn-back {
+    background-color: #ab6c6c;    
+    border-radius: 20px;
+    // width: 32px;
+    // height: 32px;
+}
+
+.info {
+    // font-size: 115%; // CASA
+    // padding: 120px; // CASA
+    padding: 30px; // odec
+}
+
+.color-link {
+    color: #ab6c6c;
+}
+
+.div-pointer {
+    text-align: center;
+    width: 50%;
+    cursor: pointer
+}
+
+.margin-option {
+    margin-right: 10px;
+}
+
+small {
+    font-size: 100%;
+}
+
+.send-btn {
+    margin-top: -8px;
+    margin-left: -6px;
+}
+
+.fs-lyrics {
+    font-size: 150%;
+}
+
+.bg-icon {
+    border-radius: 10px;
+}
+
+.no-salir {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+@media screen and (max-width: 767px) {
+    .ocultar {
+        display: none;
+    }
+}

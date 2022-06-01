@@ -14,11 +14,11 @@ import { UsuarioService } from 'src/app/shared/services/usuario.service';
 import { v4 as uuidv4 } from 'uuid';
 
 @Component({
-  selector: 'app-vista-lista',
-  templateUrl: './vista-lista.component.html',
-  styleUrls: ['./vista-lista.component.scss']
+  selector: 'app-add-song',
+  templateUrl: './add-song.component.html',
+  styleUrls: ['./add-song.component.scss']
 })
-export class VistaListaComponent implements OnInit {
+export class AddSongComponent implements OnInit {
   user: Usuario;
   name;
   photo;
@@ -31,6 +31,7 @@ export class VistaListaComponent implements OnInit {
   lista: Lista;
 
   song: Cancion;
+  canciones: Cancion[];
 
   likes: boolean = false;
   opt: boolean = true;
@@ -41,7 +42,7 @@ export class VistaListaComponent implements OnInit {
   letra: string[] = [];
   
   busqueda: boolean = false;
-  canciones: Cancion[];
+  cancionesSearch: Cancion[];
 
   constructor(
     private formBuilder: FormBuilder,
@@ -64,13 +65,10 @@ export class VistaListaComponent implements OnInit {
     // this.foto = this.usuarioSrv.getUsuario().foto;
     this.user = this.usuarioSrv.getUsuario();
 
-    this.listaSrv.getOne(this.id).subscribe(lista => {
-      this.lista = lista;
-
-      console.log(this.lista);
-
-      this.foto = this.lista.foto;
-      this.canciones = this.lista.canciones;
+    this.cancionSrv.getAllByDate().subscribe(canciones => {
+      this.canciones = canciones
+      console.log(this.canciones);
+      
     });
 
     // for (let i = 1; i <= 5; i++) {
@@ -96,11 +94,7 @@ export class VistaListaComponent implements OnInit {
   }
 
   back() {
-    // console.log(this.url);
-    // let ur = this.url.replace(/-/g, '/')
-    // console.log(ur);
-
-    // this.router.navigate(['/' + ur]);
+    this.router.navigate(['/lista/' + this.id]);
   }
 
   play() {
@@ -169,5 +163,27 @@ export class VistaListaComponent implements OnInit {
     })
   }
 
-  
+  search() {
+    console.log(this.form.value.search);
+
+    if (this.form.value.search.length > 0) {
+      this.busqueda = true;
+
+      this.cancionSrv.getAllMatches(this.form.value.search).subscribe(canciones => {
+        this.cancionesSearch = canciones;
+      });
+
+    } else {
+      this.busqueda = false;
+    }
+  }
+
+  add(songId: string) {
+    this.cancionSrv.getOne(songId).subscribe(song => {
+      this.listaSrv.addSong(this.id, song).then(() => {
+        this.router.navigate(['/lista/' + this.id]);
+      })
+    });
+    
+  }
 }

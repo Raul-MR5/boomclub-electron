@@ -104,17 +104,19 @@ export class NuevaListaComponent implements OnInit {
 
         console.log(urlImagen);
 
+        
+        let myuuid = uuidv4();
         let lista: Lista;
         if (urlImagen) {
           lista = {
-            id: this.user.id,
+            id: myuuid,
             nombre: this.form.value.titulo,
             usuario: this.user,
             foto: urlImagen
           }
         } else{
           lista = {
-            id: this.user.id,
+            id: myuuid,
             nombre: this.form.value.titulo,
             usuario: this.user,
             foto: this.foto

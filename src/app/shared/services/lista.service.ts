@@ -5,6 +5,8 @@ import { Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/compat/firestore';
 import { Usuario } from '../models/usuario.model';
+import { Cancion } from '../models/cancion.model';
+import { arrayRemove, arrayUnion } from '@angular/fire/firestore'
 
 @Injectable({
     providedIn: 'root'
@@ -26,6 +28,16 @@ export class ListaService {
 
     getUserPlaylist(user: Usuario): Observable<Lista[]> {
         return this.firestore.collection<Lista>('lista', ref => ref.where('usuario.id', '==', user.id)).valueChanges();
+    }
+
+    async addSong(id: string, cancion: Cancion) {
+        try {
+            const res = await this.firestore.collection('lista').doc(id).update({ canciones: arrayUnion(cancion.id) });
+
+            return res;
+        } catch (err) {
+            return err;
+        }
     }
 
     async create(payload: Lista): Promise<any> {
