@@ -32,7 +32,7 @@ export class ListaService {
 
     async addSong(id: string, cancion: Cancion) {
         try {
-            const res = await this.firestore.collection('lista').doc(id).update({ canciones: arrayUnion(cancion.id) });
+            const res = await this.firestore.collection('lista').doc(id).update({ canciones: arrayUnion(cancion) });
 
             return res;
         } catch (err) {
