@@ -129,7 +129,7 @@ export class VistaCancionComponent implements OnInit {
   }
 
   back() {
-    let ur = this.url.replace(/-/g, '/')
+    let ur = this.url.replace(/%/g, '/')
     this.router.navigate(['/' + ur]);
   }
 

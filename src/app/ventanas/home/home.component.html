@@ -22,7 +22,7 @@
 
         <div class="py-2 row row-cols-1 row-cols-sm-2 row-cols-md-4 g-3">
 
-          <div (click)="goTo('/cancion/' + c.id + '/-')" class="col" *ngFor="let c of friendSongs">
+          <div (click)="goTo('/cancion/' + c.id + '/%')" class="col" *ngFor="let c of friendSongs">
             <div class="shadow-sm song-selector">
               <div class="card-body bg-dark">
                 <img class="music-cover" src="{{c.foto}}" width="128.5px" height="128.5px">
@@ -44,7 +44,7 @@
 
         <div class="py-2 row row-cols-1 row-cols-sm-2 row-cols-md-4 g-3">
 
-          <div (click)="goTo('/cancion/' + c.id + '/-')" class="col" *ngFor="let c of newSongs">
+          <div (click)="goTo('/cancion/' + c.id + '/%')" class="col" *ngFor="let c of newSongs">
             <div class="shadow-sm song-selector">
               <div class="card-body bg-dark">
                 <img class="music-cover" src="{{c.foto}}" width="128.5px" height="128.5px">
@@ -69,7 +69,7 @@
 
         <div class="py-2 row row-cols-1 row-cols-sm-2 row-cols-md-4 g-3">
 
-          <div (click)="goTo('/cancion/' + c.id + '/-')" class="col" *ngFor="let c of canciones">
+          <div (click)="goTo('/cancion/' + c.id + '/%')" class="col" *ngFor="let c of canciones">
             <div class="shadow-sm song-selector">
               <div class="card-body bg-dark">
                 <img class="music-cover" src="{{c.foto}}" width="128.5px" height="128.5px">
@@ -91,7 +91,7 @@
 
         <div class="py-2 row row-cols-1 row-cols-sm-2 row-cols-md-4 g-3">
 
-          <!-- <div (click)="goTo('/cancion/' + c.id + '/-')" class="col" *ngFor="let a of artistas">
+          <!-- <div (click)="goTo('/cancion/' + c.id + '/%')" class="col" *ngFor="let a of artistas">
             <div class="shadow-sm song-selector">
               <div class="card-body bg-dark">
                 <img class="music-cover" src="{{a.foto}}" width="128.5px" height="128.5px">
