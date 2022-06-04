@@ -105,9 +105,9 @@ export class CancionService {
         return false;
     }
 
-    async newLike(id: string, cancion: Cancion) {
+    async newLike(id: string, usuario: Usuario) {
         try {
-            const res = await this.firestore.collection('cancion').doc(id).update({ likes: arrayUnion(cancion.id) });
+            const res = await this.firestore.collection('cancion').doc(id).update({ likes: arrayUnion(usuario.id) });
 
             return res;
         } catch (err) {
@@ -115,9 +115,9 @@ export class CancionService {
         }
     }
 
-    async removeLike(id: string, cancion: Cancion) {
+    async removeLike(id: string, usuario: Usuario) {
         try {
-            const res = await this.firestore.collection('cancion').doc(id).update({ likes: arrayRemove(cancion.id) });
+            const res = await this.firestore.collection('cancion').doc(id).update({ likes: arrayRemove(usuario.id) });
 
             return res;
         } catch (err) {
@@ -164,6 +164,10 @@ export class CancionService {
         } else {
             this.setSong(this.cancion);
         }
+    }
+
+    cleanSong() {
+        this.cancionSubject.next(null);
     }
 
     async create(payload: Cancion): Promise<any> {

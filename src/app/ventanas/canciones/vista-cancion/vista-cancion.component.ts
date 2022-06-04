@@ -21,7 +21,7 @@ export class VistaCancionComponent implements OnInit {
   name;
   photo;
   foto;
-  
+
   prueba;
   form: FormGroup;
 
@@ -60,11 +60,12 @@ export class VistaCancionComponent implements OnInit {
 
     this.cancionSrv.getOne(this.id).subscribe(cancion => {
       this.song = cancion;
-      
-      this.likes = this.usuarioSrv.followed(this.user);
+
+      // this.likes = this.cancionSrv.liked(this.song);
+      this.liked();
 
       this.commentSrv.getSongComments(this.song.id).subscribe(comments => {
-        this.comentarios = comments;        
+        this.comentarios = comments;
       })
 
       this.foto = this.song.foto;
@@ -122,14 +123,14 @@ export class VistaCancionComponent implements OnInit {
 
   sendComment() {
     let myuuid = uuidv4();
-    
+
     let comentario: Comment = {
       id: myuuid,
       usuario: this.user,
       cancion: this.song,
       texto: this.form.value.texto
     }
-    
+
     this.commentSrv.create(comentario);
     this.form.reset();
   }
@@ -147,30 +148,38 @@ export class VistaCancionComponent implements OnInit {
   }
 
   liked() {
-    if (this.song.id != this.user.id) {
-      if (this.song.likes) {
-
-        for (let i = 0; i < this.song.likes.length; i++) {
-
-          if (this.song.likes[i] == this.user.id) {
-            this.likes = true;
-          } else {
-            this.likes = false;
-          }
-
-        }
+    if (this.song.likes) {
+      console.log(this.user.id);
+      console.log(this.song.likes);
+      
+      if (this.song.likes.includes(this.user.id)) {
+        this.likes = true;
+        
+      } else {
+        this.likes = false;
+        
       }
+
+      // for (let i = 0; i < this.song.likes.length; i++) {
+
+      //   if (this.song.likes[i] == this.user.id) {
+      //     this.likes = true;
+      //   } else {
+      //     this.likes = false;
+      //   }
+
+      // }
     }
   }
 
   like() {
-    this.cancionSrv.newLike(this.song.id, this.song).then(() => {
+    this.cancionSrv.newLike(this.song.id, this.user).then(() => {
       this.likes = true;
     })
   }
 
   dislike() {
-    this.cancionSrv.removeLike(this.song.id, this.song).then(() => {
+    this.cancionSrv.removeLike(this.song.id, this.user).then(() => {
       this.likes = false;
     })
   }

@@ -51,8 +51,8 @@ export class HeaderComponent implements OnInit {
     }
     );
 
-    this.cancionSrv.pauseSong();
-    this.cancionSrv.resetSong();
+    // this.cancionSrv.pauseSong();
+    this.cancionSrv.cleanSong();
 
     this.router.navigate(['/login']);
   }
