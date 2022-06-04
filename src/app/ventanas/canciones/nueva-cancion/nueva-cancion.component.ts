@@ -36,11 +36,6 @@ export class NuevaCancionComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    // this.user = this.authSrv.usuarioValue.username;
-    console.log("hola");
-
-    // document.getElementById("canciones").className += " active"
-
     this.form = this.formBuilder.group({
       foto: [''],
       titulo: ['', [Validators.required]],
@@ -79,9 +74,7 @@ export class NuevaCancionComponent implements OnInit {
     let reader = new FileReader();
     reader.readAsDataURL(cover);
     reader.onloadend = () => {
-      console.log(reader.result);
       this.foto = reader.result;
-      console.log(this.foto);
     }
 
 
@@ -93,8 +86,6 @@ export class NuevaCancionComponent implements OnInit {
   onUploadMusic(event) {
 
     this.music = event.target.files[0];
-
-    console.log(this.music);
 
     // let reader = new FileReader();
     // reader.readAsDataURL(music);
@@ -112,27 +103,15 @@ export class NuevaCancionComponent implements OnInit {
 
   async submit() {
     try {
-      console.log(this.form.value);
 
       let user: Usuario = this.usuarioSrv.getUsuario();
 
-      console.log(user);
-
       this.storageSrv.uploadImg("portadas/cancion/" + user.email, this.form.value.titulo, this.foto).then(async urlImagen => {
-        console.log(this.form.value.titulo);
-
-        console.log(this.foto);
-        
-
-        console.log(urlImagen);
 
         this.storageSrv.uploadMusic(user.email, this.form.value.titulo, this.music).then(async url => {
-          console.log(url);
-          console.log(urlImagen);
 
           let myuuid = uuidv4();
 
-          console.log('Your UUID is: ' + myuuid);
           let cancion: Cancion;
           if (urlImagen) {
             cancion = {
@@ -161,10 +140,6 @@ export class NuevaCancionComponent implements OnInit {
 
           this.router.navigate(['/profile/' + user.id]);
         });
-
-        // let h = await this.usuarioSrv.create(usuario);
-        // console.log("re: ");
-        // console.log(h);
 
       });
 

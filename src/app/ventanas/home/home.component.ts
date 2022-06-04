@@ -112,8 +112,6 @@ export class HomeComponent implements OnInit {
   }
 
   search() {
-    console.log(this.form.value.search);
-
     if (this.form.value.search.length > 0) {
       this.busqueda = true;
 

@@ -32,7 +32,6 @@ export class UsuarioService {
 
     setUsuario(payload: Usuario) {
         this.usuario = payload;
-        console.log(this.usuario);
     }
 
     getUsuario(): Usuario {
@@ -47,8 +46,6 @@ export class UsuarioService {
         if (this.usuario.id != user.id) {
             if (this.usuario.seguidos) {
                 for (let i = 0; i < this.usuario.seguidos.length; i++) {
-                    console.log(this.usuario.seguidos[i], user.id);
-
                     if (this.usuario.seguidos[i] == user.id) {
                         return true;
                     }

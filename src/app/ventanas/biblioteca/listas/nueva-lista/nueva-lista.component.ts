@@ -39,12 +39,7 @@ export class NuevaListaComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    // this.user = this.authSrv.usuarioValue.username;
-    console.log("hola");
-
     this.user = this.usuarioSrv.getUsuario();
-
-    // document.getElementById("canciones").className += " active"
 
     this.form = this.formBuilder.group({
       foto: [''],
@@ -55,7 +50,6 @@ export class NuevaListaComponent implements OnInit {
   }
 
   ngOnDestroy(): void {
-    // document.getElementById("canciones").classList.remove("active")
   }
 
 
@@ -82,28 +76,13 @@ export class NuevaListaComponent implements OnInit {
     let reader = new FileReader();
     reader.readAsDataURL(cover);
     reader.onloadend = () => {
-      console.log(reader.result);
       this.foto = reader.result;
-      console.log(this.foto);
     }
-
-
-    // this.storageSrv.uploadImg(this.name, this.name, cover).then(url => {
-    //   console.log(url);
-    // });
   }
 
   async submit() {
     try {
-      console.log(this.form.value);
-
-
       this.storageSrv.uploadImg("portadas/lista/" + this.user.email, this.form.value.titulo, this.foto).then(async urlImagen => {
-        console.log(this.foto);
-
-
-        console.log(urlImagen);
-
         
         let myuuid = uuidv4();
         let lista: Lista;
@@ -127,11 +106,6 @@ export class NuevaListaComponent implements OnInit {
         await this.listaSrv.create(lista);
 
         this.router.navigate(['/profile/' + this.user.id]);
-
-        // let h = await this.usuarioSrv.create(usuario);
-        // console.log("re: ");
-        // console.log(h);
-
       });
 
     } catch (e: any) {

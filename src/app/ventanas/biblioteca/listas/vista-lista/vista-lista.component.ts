@@ -23,7 +23,7 @@ export class VistaListaComponent implements OnInit {
   name;
   photo;
   foto;
-  
+
   prueba;
   form: FormGroup;
 
@@ -39,7 +39,7 @@ export class VistaListaComponent implements OnInit {
 
   lyrics: string;
   letra: string[] = [];
-  
+
   busqueda: boolean = false;
   canciones: Cancion[];
 
@@ -55,7 +55,7 @@ export class VistaListaComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.activatedRoute.params.subscribe((params: Params) => { this.id = params['id']; console.log(this.id) });
+    this.activatedRoute.params.subscribe((params: Params) => { this.id = params['id']; });
 
     this.form = this.formBuilder.group({
       search: ['']
@@ -67,16 +67,9 @@ export class VistaListaComponent implements OnInit {
     this.listaSrv.getOne(this.id).subscribe(lista => {
       this.lista = lista;
 
-      console.log(this.lista);
-
       this.foto = this.lista.foto;
       this.canciones = this.lista.canciones;
     });
-
-    // for (let i = 1; i <= 5; i++) {
-    //   this.prueba.push(i)
-    // }
-
   }
 
   ngOnDestroy(): void {
@@ -87,16 +80,8 @@ export class VistaListaComponent implements OnInit {
     this.router.navigate([url]);
   }
 
-  async logout() {
-    await this.authSrv.logout().then(() => {
-      console.log(this.authSrv.getUsuario());
-    }
-    );
-    this.router.navigate(['/login']);
-  }
-
   back() {
-    this.router.navigate(['/biblioteca/' ]);
+    this.router.navigate(['/biblioteca/']);
   }
 
   play() {
@@ -113,5 +98,5 @@ export class VistaListaComponent implements OnInit {
     }
 
     this.opt = op;
-  }  
+  }
 }

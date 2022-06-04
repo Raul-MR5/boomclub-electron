@@ -29,13 +29,6 @@ export class CommentService {
 
     async create(payload: Comment): Promise<any> {
         try {
-            // const id = this.firestore.createId();
-            // const data = {id, ...payload};
-
-            console.log(payload);
-            
-
-            // const res = await this.firestore.collection('comments').add({ ...payload });
             const res = await this.firestore.collection('comments').doc(payload.id).set(payload);
             return res;
         } catch (err) {

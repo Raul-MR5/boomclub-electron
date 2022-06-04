@@ -42,13 +42,6 @@ export class ListaService {
 
     async create(payload: Lista): Promise<any> {
         try {
-            // const id = this.firestore.createId();
-            // const data = {id, ...payload};
-
-            console.log(payload);
-            
-
-            // const res = await this.firestore.collection('lista').add({ ...payload });
             const res = await this.firestore.collection('lista').doc(payload.id).set(payload);
             return res;
         } catch (err) {

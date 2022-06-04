@@ -88,8 +88,6 @@ export class CancionComponent implements OnInit {
   onUpload(event) {
     let music = event.target.files[0];
 
-    console.log(music);
-
     this.storageSrv.uploadMusic(this.name, this.name, music).then(url => {
       console.log(url);
     });

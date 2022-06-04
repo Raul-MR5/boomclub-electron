@@ -22,14 +22,6 @@ export class HeaderComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    // this.user = this.authSrv.usuarioValue.username;
-    // this.authSrv.usuario.subscribe((usuario)=>{
-    //   this.photo = usuario.foto
-    //   console.log("usuario");
-    //   console.log("-------------");
-    //   console.log(usuario);
-    // })
-
     this.authSrv.authenticated().subscribe(bool => {
       if (bool) {
         this.authSrv.getUsuario().subscribe(user => {
@@ -47,33 +39,7 @@ export class HeaderComponent implements OnInit {
           })
         });
       }
-    })
-
-    // this.user = this.usuarioSrv.getUsuario();
-    // this.photo = this.user.foto;
-    // this.name = this.user.username;
-
-    // this.user = this.authSrv.getUsuario()
-    // this.user.subscribe(user => {
-    //   this.name = user.displayName;   
-    //   console.log("header ---- ");
-    //   console.log(" ---- ");
-         
-    //   console.log(this.usuarioSrv.getUsuario());
-    //   console.log(" ---- ");
-      
-    //   // this.photo = this.usuarioSrv.getUsuario().foto
-
-    //   if (!this.photo) {
-    //     this.photo = "https://firebasestorage.googleapis.com/v0/b/boomclub-tfg.appspot.com/o/user-photo.png?alt=media&token=c9588aa9-1450-4932-86cd-d480853474d1"
-    //   } else {
-    //     // this.usuarioSrv.getUsuario().foto = user.photo
-    //     // this.photo = this.usuarioSrv.getUsuario().foto
-    //   }
-      
-    //   console.log(this.photo);
-    // });
-    
+    })    
   }
 
   goTo(url: string) {

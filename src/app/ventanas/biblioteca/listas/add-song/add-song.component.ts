@@ -58,7 +58,7 @@ export class AddSongComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.activatedRoute.params.subscribe((params: Params) => { this.id = params['id']; console.log(this.id) });
+    this.activatedRoute.params.subscribe((params: Params) => { this.id = params['id']; });
 
     this.form = this.formBuilder.group({
       search: ['']
@@ -103,9 +103,6 @@ export class AddSongComponent implements OnInit {
 
   add(songId: string) {
     this.cancionSrv.getOne(songId).subscribe(song => {
-      console.log(song);
-
-
       let cancion: Cancion
 
       if (this.lista.canciones) {
@@ -122,7 +119,6 @@ export class AddSongComponent implements OnInit {
 
       if (this.cont == 0) {
         this.listaSrv.addSong(this.id, cancion).then(() => {
-          console.log("1");
           this.router.navigate(['/lista/' + this.id]);
         });
         this.cont++;

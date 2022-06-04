@@ -30,7 +30,6 @@ export class AuthService {
     this.usuarioSubject = new BehaviorSubject<Usuario>(null);
     this.usuario = this.usuarioSubject.asObservable();
     this.auth.authState.subscribe((user:any) => {
-      console.log(user);
       this.usuarioSrv.getOne(user.uid).subscribe(user => {
         this.usuarioSubject.next(user);
       })
@@ -43,8 +42,6 @@ export class AuthService {
   }
 
   login(email: string, password: string) {
-    console.log(this.auth.name);
-
     return this.auth.signInWithEmailAndPassword(email, password);
   }
 

@@ -38,12 +38,7 @@ export class EditProfileComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    // this.user = this.authSrv.usuarioValue.username;
-    console.log("hola");
-
     this.user = this.usuarioSrv.getUsuario();
-
-    // document.getElementById("canciones").className += " active"
 
     this.form = this.formBuilder.group({
       foto: [''],
@@ -53,12 +48,10 @@ export class EditProfileComponent implements OnInit {
       email: [{ value: this.user.email, disabled: true }, [Validators.required]]
     });
 
-    // this.foto = "https://firebasestorage.googleapis.com/v0/b/boomclub-tfg.appspot.com/o/portadas%2Fdefault-cover-art.png?alt=media&token=39a74894-86e2-4413-81f0-b8584a500b36";
     this.foto = this.user.foto;
   }
 
   ngOnDestroy(): void {
-    // document.getElementById("canciones").classList.remove("active")
   }
 
 
@@ -85,27 +78,13 @@ export class EditProfileComponent implements OnInit {
     let reader = new FileReader();
     reader.readAsDataURL(cover);
     reader.onloadend = () => {
-      console.log(reader.result);
       this.foto = reader.result;
-      console.log(this.foto);
     }
-
-
-    // this.storageSrv.uploadImg(this.name, this.name, cover).then(url => {
-    //   console.log(url);
-    // });
   }
 
   async submit() {
     try {
-      console.log(this.form.value);
-
-
       this.storageSrv.uploadImg("avatar/", this.user.email, this.foto).then(async urlImagen => {
-        console.log(this.foto);
-
-
-        console.log(urlImagen);
 
         let usuario: Usuario;
         if (urlImagen) {
@@ -132,11 +111,6 @@ export class EditProfileComponent implements OnInit {
         await this.usuarioSrv.update(usuario);
 
         this.router.navigate(['/profile/' + this.user.id]);
-
-        // let h = await this.usuarioSrv.create(usuario);
-        // console.log("re: ");
-        // console.log(h);
-
       });
 
     } catch (e: any) {

@@ -19,7 +19,6 @@ export class StorageService {
       let respuesta = await this.storareRef.child(carpeta + "/" + nombre + ".png").putString(imgBase64, 'data_url');
       return await respuesta.ref.getDownloadURL();
     } catch (err) {
-      console.log(err);
       return null;
     }
 
@@ -30,7 +29,6 @@ export class StorageService {
       let respuesta = await this.storareRef.child("canciones/" + user + "/" + nombre + ".mp3").put(file);
       return await respuesta.ref.getDownloadURL();
     } catch (err) {
-      console.log(err);
       return null;
     }
   }

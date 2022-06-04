@@ -39,27 +39,13 @@ export class LoginComponent implements OnInit {
   }
 
   async submit() {
-    //this.firebase.collection('Usuarios').get();
-
-    // this.authSrv.login(this.form.value.user, this.form.value.password)
-    // .subscribe(
-    //   () => {
-    //     this.router.navigate(['/']);
-    //   }
-    // );
-
     try {
-      console.log(this.form.value.user, this.form.value.password);
-
-
-
       await this.authSrv.login(this.form.value.user, this.form.value.password).then(user => {
         if (user) {
           this.authSrv.getUsuario().subscribe(user => {
             if (user.emailVerified) {
               this.router.navigate(['/']);
             } else {
-              // alert("Verifique su email");
               this.authSrv.logout();
             }
           })
@@ -67,10 +53,6 @@ export class LoginComponent implements OnInit {
       })
 
     } catch (e: any) {
-      console.log(e.message);
-
-      // this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Message Content' });
-
       if (e.message == 'Firebase: The password is invalid or the user does not have a password. (auth/wrong-password).') {
         Swal.fire({
           icon: 'error',
@@ -82,28 +64,18 @@ export class LoginComponent implements OnInit {
           title: 'Correo incorrecto'
         })
       }
-      
-
-      // document.getElementById("toast").setAttribute('data-bs-autohide', "false")
-      // alert(e.message)
     }
   }
 
   async google() {
     try {
-      console.log(this.form.value.user, this.form.value.password);
-
       await this.authSrv.googleAuth().then(user => {
         if (user) {
-          console.log("entras");
           this.router.navigate(['/']);
         }
       })
 
     } catch (e: any) {
-      console.log("hola");
-
-      // alert(e.message)
     }
   }
 

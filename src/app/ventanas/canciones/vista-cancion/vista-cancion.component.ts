@@ -64,20 +64,11 @@ export class VistaCancionComponent implements OnInit {
       this.likes = this.usuarioSrv.followed(this.user);
 
       this.commentSrv.getSongComments(this.song.id).subscribe(comments => {
-        this.comentarios = comments;
-        console.log(this.song.id);
-        
-
-        console.log(this.comentarios);
-        
+        this.comentarios = comments;        
       })
-
-      console.log(this.song);
 
       this.foto = this.song.foto;
       this.lyrics = this.song.lyrics;
-
-      console.log(this.lyrics);
 
       let cont = 0;
       let aux = -1;
@@ -87,17 +78,14 @@ export class VistaCancionComponent implements OnInit {
 
         if (c.charCodeAt(0) == 10) {
           cont++;
-          // console.log(cont);
 
         } else {
           if (aux != cont) {
             aux = cont;
             this.letra.push(c);
-            // console.log(this.letra);
 
           } else {
             this.letra[aux] += c;
-            // console.log(this.letra);
 
           }
 
@@ -105,11 +93,6 @@ export class VistaCancionComponent implements OnInit {
 
       }
     });
-
-    // for (let i = 1; i <= 5; i++) {
-    //   this.prueba.push(i)
-    // }
-
   }
 
   ngOnDestroy(): void {
@@ -166,18 +149,14 @@ export class VistaCancionComponent implements OnInit {
   liked() {
     if (this.song.id != this.user.id) {
       if (this.song.likes) {
-        console.log("entra");
 
         for (let i = 0; i < this.song.likes.length; i++) {
-          console.log(this.song.likes[i], this.user.id);
 
           if (this.song.likes[i] == this.user.id) {
             this.likes = true;
           } else {
             this.likes = false;
           }
-
-          console.log(this.likes);
 
         }
       }
@@ -195,14 +174,4 @@ export class VistaCancionComponent implements OnInit {
       this.likes = false;
     })
   }
-
-  // onUpload(event) {
-  //   let music = event.target.files[0];
-
-  //   console.log(music);
-
-  //   this.storageSrv.uploadMusic(this.name, music).then(url => {
-  //     console.log(url);
-  //   });
-  // }
 }

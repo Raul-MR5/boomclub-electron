@@ -97,18 +97,13 @@ export class RegisterComponent implements OnInit {
     //this.firebase.collection('Usuarios').get();
 
     try {
-      console.log(this.form.value.email, this.form.value.password);
-
       await this.authSrv.register(this.form.value.email, this.form.value.password).then(async user => {
         if (user) {
           user.user.updateProfile({
             displayName: this.form.value.username
           })
 
-          console.log(user.user.displayName);
-
           this.storageSrv.uploadImg("avatar", this.form.value.email, this.avatar).then(async urlImagen => {
-            console.log(this.form.value.username);
 
             if (!urlImagen) {
               urlImagen = "https://firebasestorage.googleapis.com/v0/b/boomclub-tfg.appspot.com/o/user-photo.png?alt=media&token=c9588aa9-1450-4932-86cd-d480853474d1"
@@ -123,11 +118,7 @@ export class RegisterComponent implements OnInit {
               foto: urlImagen
             }
 
-            console.log(urlImagen);
-
             let h = await this.usuarioSrv.create(usuario);
-            console.log("re: ");
-            console.log(h);
 
             this.authSrv.emailVerified();
             this.authSrv.logout();

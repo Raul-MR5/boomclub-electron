@@ -142,21 +142,11 @@ export class CancionService {
         this.setSong(this.cancion);
     }
 
-    previousSong() {
-        console.log("1");
-        console.log(this.cancion);
-        console.log("2");
-        
-        if (this.cancion.position) {
-            console.log("3");
-            
+    previousSong() {        
+        if (this.cancion.position) {            
             if (this.cancion.position > 1) {
-                console.log("4");
                 this.setSong(this.canciones[this.cancion.position - 2]);
             } else {
-                console.log("5");
-                console.log(this.canciones.length);
-                
                 this.setSong(this.canciones[this.canciones.length - 1]);
             }
         } else {

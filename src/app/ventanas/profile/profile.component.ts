@@ -49,24 +49,12 @@ export class ProfileComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     const paramsSubscription: Subscription = this.activatedRoute.params.subscribe((params: Params) => { this.id = params['id']; console.log(this.id, "hola"); /* let p = this.prueba(); console.log(p) */ });
 
-    // console.log(this.id);
-
-
     this.suscriptions.push(paramsSubscription);
 
-
-    // this.user = this.authSrv.usuarioValue.username;
     this.userLogged = this.usuarioSrv.getUsuario();
-
-    // console.log("pepe");
-    // console.log(this.id);
-
 
     this.usuarioSrv.getOne(this.id).subscribe(usuario => {
       this.user = usuario;
-
-      // console.log(this.user);
-
 
       this.foto = this.user.foto;
       this.nombre = this.user.username;
@@ -78,15 +66,8 @@ export class ProfileComponent implements OnInit, OnDestroy {
       this.cancionSrv.getUserMusic(this.user).subscribe((music) => {
         this.music = music;
 
-        // console.log(music);
-
-        // console.log("-");
-
-
         if (this.music.length == 0) {
           this.bool = true;
-          // console.log(this.bool);
-
         }
 
         this.totalMusic = this.music.length;
@@ -99,8 +80,6 @@ export class ProfileComponent implements OnInit, OnDestroy {
   }
 
   goTo(url: string) {
-    console.log(url);
-
     this.router.navigate([url]);
   }
 
@@ -117,17 +96,12 @@ export class ProfileComponent implements OnInit, OnDestroy {
     this.usuarioSrv.followers(this.user.id).subscribe(users => {
       this.followers = 0;
       this.usuarios = users;
-      console.log(this.usuarios);
 
-      for (let i = 0; i < this.usuarios.length; i++) {
-        console.log(this.user.id);
-        
+      for (let i = 0; i < this.usuarios.length; i++) {        
         if (this.usuarios[i].seguidos.includes(this.user.id)) {
           this.followers++;
         }
       }
-  
-      console.log(this.followers);
     });
   }
 
@@ -142,18 +116,14 @@ export class ProfileComponent implements OnInit, OnDestroy {
   seguido() {
     if (this.userLogged.id != this.user.id) {
       if (this.userLogged.seguidos) {
-        console.log("entra");
 
         for (let i = 0; i < this.userLogged.seguidos.length; i++) {
-          console.log(this.userLogged.seguidos[i], this.user.id);
-
+          
           if (this.userLogged.seguidos[i] == this.user.id) {
             this.followed = true;
           } else {
             this.followed = false;
           }
-
-          console.log(this.followed);
 
         }
       }
@@ -196,14 +166,4 @@ export class ProfileComponent implements OnInit, OnDestroy {
 
     this.opt = op;
   }
-
-  // onUpload(event) {
-  //   let music = event.target.files[0];
-
-  //   console.log(music);
-
-  //   this.storageSrv.uploadMusic(this.name, music).then(url => {
-  //     console.log(url);
-  //   });
-  // }
 }
