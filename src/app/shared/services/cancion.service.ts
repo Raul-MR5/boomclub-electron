@@ -13,7 +13,8 @@ import { arrayRemove, arrayUnion } from '@angular/fire/firestore'
 })
 export class CancionService {
 
-    canciones: Observable<Cancion[]>;
+    cancion: Cancion;
+    canciones: Cancion[];
     private cancionSubject: BehaviorSubject<Cancion> = new BehaviorSubject(null);
     public readonly cancionActual: Observable<Cancion> = this.cancionSubject.asObservable();
 
@@ -43,22 +44,22 @@ export class CancionService {
 
         if (user.seguidos && user.seguidos.length > 0) {
             console.log("friends");
-            
-            return this.firestore.collection<Cancion>('cancion', ref => ref.where('usuario.id', 'in', user.seguidos).orderBy('usuario.id').orderBy('fecha', 'desc').limit(4)).valueChanges();
-        } 
 
-        return new Observable(()=>null)
+            return this.firestore.collection<Cancion>('cancion', ref => ref.where('usuario.id', 'in', user.seguidos).orderBy('usuario.id').orderBy('fecha', 'desc').limit(4)).valueChanges();
+        }
+
+        return new Observable(() => null)
     }
 
     getNewsMusic(): Observable<Cancion[]> {
         let user = this.usuarioSrv.getUsuario();
 
         console.log(user.seguidos, user.seguidos.length);
-        
+
 
         if (user.seguidos && user.seguidos.length > 0) {
             console.log("entra");
-            
+
             return this.firestore.collection<Cancion>('cancion', ref => ref.where('usuario.id', 'not-in', user.id).where('usuario.id', 'not-in', user.seguidos).orderBy('usuario.id').orderBy('fecha', 'desc').limit(4)).valueChanges();
         } else {
             return this.firestore.collection<Cancion>('cancion', ref => ref.where('usuario.id', '!=', user.id).orderBy('usuario.id').orderBy('fecha', 'desc').limit(4)).valueChanges();
@@ -76,22 +77,30 @@ export class CancionService {
     }
 
     setSong(cancionActual: Cancion): void {
+        this.cancion = cancionActual;
+        console.log(this.cancion);
+        
         this.cancionSubject.next(cancionActual);
+    }
+
+    setPlaylist(canciones: Cancion[]): void {
+        this.canciones = canciones;
+        this.setSong(this.canciones[0]);
     }
 
     liked(song: Cancion): boolean {
         let usuario = this.usuarioSrv.getUsuario()
-            if (song.likes) {
-                console.log("entra");
+        if (song.likes) {
+            console.log("entra");
 
-                for (let i = 0; i < song.likes.length; i++) {
-                    console.log(song.likes[i], song.id);
+            for (let i = 0; i < song.likes.length; i++) {
+                console.log(song.likes[i], song.id);
 
-                    if (song.likes[i] == usuario.id) {
-                        return true;
-                    }
+                if (song.likes[i] == usuario.id) {
+                    return true;
                 }
             }
+        }
 
         return false;
     }
@@ -130,16 +139,41 @@ export class CancionService {
     }
 
     resetSong() {
-        this.cancionSubject = new BehaviorSubject(null);
-        this.audio = null;
+        this.setSong(this.cancion);
     }
 
     previousSong() {
+        console.log("1");
+        console.log(this.cancion);
+        console.log("2");
         
+        if (this.cancion.position) {
+            console.log("3");
+            
+            if (this.cancion.position > 1) {
+                console.log("4");
+                this.setSong(this.canciones[this.cancion.position - 2]);
+            } else {
+                console.log("5");
+                console.log(this.canciones.length);
+                
+                this.setSong(this.canciones[this.canciones.length - 1]);
+            }
+        } else {
+            this.setSong(this.cancion);
+        }
     }
 
     nextSong() {
-
+        if (this.cancion.position) {
+            if (this.cancion.position < this.canciones.length) {
+                this.setSong(this.canciones[this.cancion.position]);
+            } else {
+                this.setSong(this.canciones[0]);
+            }
+        } else {
+            this.setSong(this.cancion);
+        }
     }
 
     async create(payload: Cancion): Promise<any> {

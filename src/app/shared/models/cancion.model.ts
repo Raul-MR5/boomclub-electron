@@ -9,4 +9,5 @@ export interface Cancion {
     cancion: string;
     likes?: string[];
     fecha?: Date;
+    position?: number;
 }

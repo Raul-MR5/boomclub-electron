@@ -66,7 +66,7 @@ export class FooterComponent implements OnInit {
   }
 
   before() {
-    if (this.audio.currentTime > 0) {
+    if (this.audio.currentTime > 5) {
       this.cancionSrv.resetSong();      
     } else {
       this.cancionSrv.previousSong();      

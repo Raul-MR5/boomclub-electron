@@ -23,7 +23,7 @@ export class AddSongComponent implements OnInit {
   name;
   photo;
   foto;
-  
+
   prueba;
   form: FormGroup;
 
@@ -40,9 +40,11 @@ export class AddSongComponent implements OnInit {
 
   lyrics: string;
   letra: string[] = [];
-  
+
   busqueda: boolean = false;
   cancionesSearch: Cancion[];
+
+  cont = 0;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -67,105 +69,26 @@ export class AddSongComponent implements OnInit {
 
     this.cancionSrv.getAllByDate().subscribe(canciones => {
       this.canciones = canciones
-      console.log(this.canciones);
-      
     });
 
-    // for (let i = 1; i <= 5; i++) {
-    //   this.prueba.push(i)
-    // }
+    this.listaSrv.getOne(this.id).subscribe(lista => {
+      this.lista = lista;
+    });
 
   }
 
   ngOnDestroy(): void {
   }
 
-
   goTo(url: string) {
     this.router.navigate([url]);
-  }
-
-  async logout() {
-    await this.authSrv.logout().then(() => {
-      console.log(this.authSrv.getUsuario());
-    }
-    );
-    this.router.navigate(['/login']);
   }
 
   back() {
     this.router.navigate(['/lista/' + this.id]);
   }
 
-  play() {
-    this.cancionSrv.setSong(this.song);
-  }
-
-  sendComment() {
-    let myuuid = uuidv4();
-    console.log("heyo");
-    
-    let comentario: Comment = {
-      id: myuuid,
-      usuario: this.user,
-      cancion: this.song,
-      texto: this.form.value.texto
-    }
-
-    console.log(comentario);
-    
-    this.commentSrv.create(comentario);
-    this.form.reset();
-  }
-
-  menu(op: boolean) {
-    if (op) {
-      document.getElementById("comentarios").className += " active";
-      document.getElementById("lyrics").classList.remove("active");
-    } else {
-      document.getElementById("lyrics").className += " active";
-      document.getElementById("comentarios").classList.remove("active");
-    }
-
-    this.opt = op;
-  }
-
-  liked() {
-    if (this.song.id != this.user.id) {
-      if (this.song.likes) {
-        console.log("entra");
-
-        for (let i = 0; i < this.song.likes.length; i++) {
-          console.log(this.song.likes[i], this.user.id);
-
-          if (this.song.likes[i] == this.user.id) {
-            this.likes = true;
-          } else {
-            this.likes = false;
-          }
-
-          console.log(this.likes);
-
-        }
-      }
-    }
-  }
-
-  like() {
-    this.cancionSrv.newLike(this.song.id, this.song).then(() => {
-      this.likes = true;
-    })
-  }
-
-  dislike() {
-    this.cancionSrv.removeLike(this.song.id, this.song).then(() => {
-      this.likes = false;
-    })
-  }
-
   search() {
-    console.log(this.form.value.search);
-
     if (this.form.value.search.length > 0) {
       this.busqueda = true;
 
@@ -180,10 +103,30 @@ export class AddSongComponent implements OnInit {
 
   add(songId: string) {
     this.cancionSrv.getOne(songId).subscribe(song => {
-      this.listaSrv.addSong(this.id, song).then(() => {
-        this.router.navigate(['/lista/' + this.id]);
-      })
+      console.log(song);
+
+
+      let cancion: Cancion
+
+      if (this.lista.canciones) {
+        cancion = {
+          ...song,
+          position: (this.lista.canciones.length + 1)
+        }
+      } else {
+        cancion = {
+          ...song,
+          position: 1
+        }
+      }
+
+      if (this.cont == 0) {
+        this.listaSrv.addSong(this.id, cancion).then(() => {
+          console.log("1");
+          this.router.navigate(['/lista/' + this.id]);
+        });
+        this.cont++;
+      }
     });
-    
   }
 }

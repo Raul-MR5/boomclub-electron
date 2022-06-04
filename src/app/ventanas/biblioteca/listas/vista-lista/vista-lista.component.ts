@@ -96,32 +96,11 @@ export class VistaListaComponent implements OnInit {
   }
 
   back() {
-    // console.log(this.url);
-    // let ur = this.url.replace(/-/g, '/')
-    // console.log(ur);
-
-    // this.router.navigate(['/' + ur]);
+    this.router.navigate(['/biblioteca/' ]);
   }
 
   play() {
-    this.cancionSrv.setSong(this.song);
-  }
-
-  sendComment() {
-    let myuuid = uuidv4();
-    console.log("heyo");
-    
-    let comentario: Comment = {
-      id: myuuid,
-      usuario: this.user,
-      cancion: this.song,
-      texto: this.form.value.texto
-    }
-
-    console.log(comentario);
-    
-    this.commentSrv.create(comentario);
-    this.form.reset();
+    this.cancionSrv.setPlaylist(this.canciones);
   }
 
   menu(op: boolean) {
@@ -134,40 +113,5 @@ export class VistaListaComponent implements OnInit {
     }
 
     this.opt = op;
-  }
-
-  liked() {
-    if (this.song.id != this.user.id) {
-      if (this.song.likes) {
-        console.log("entra");
-
-        for (let i = 0; i < this.song.likes.length; i++) {
-          console.log(this.song.likes[i], this.user.id);
-
-          if (this.song.likes[i] == this.user.id) {
-            this.likes = true;
-          } else {
-            this.likes = false;
-          }
-
-          console.log(this.likes);
-
-        }
-      }
-    }
-  }
-
-  like() {
-    this.cancionSrv.newLike(this.song.id, this.song).then(() => {
-      this.likes = true;
-    })
-  }
-
-  dislike() {
-    this.cancionSrv.removeLike(this.song.id, this.song).then(() => {
-      this.likes = false;
-    })
-  }
-
-  
+  }  
 }
