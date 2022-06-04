@@ -99,4 +99,8 @@ export class VistaListaComponent implements OnInit {
 
     this.opt = op;
   }
+  
+  playSong(song: Cancion) {
+    this.cancionSrv.setSong(song);
+  }
 }

@@ -80,7 +80,7 @@
                                     <img class="music-cover me-2" src="{{c.foto}}" width="50px" height="50px">
                                 </div>
 
-                                <div class="col-lg-5 d-flex align-items-center">
+                                <div class="col-lg-4 d-flex align-items-center">
                                     <strong class="text-pink">{{c.titulo}}</strong>
                                     <!-- 
                                     <span class="text-pink">Single</span>
@@ -104,6 +104,14 @@
                                             d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z" />
                                     </svg>
                                 </div> -->
+                                <div class="col-lg-1 d-flex align-items-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="#ab6c6c"
+                                        class="bi bi-play-circle-fill song-selector" (click)="playSong(c)"
+                                        viewBox="0 0 16 16">
+                                        <path
+                                            d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM6.79 5.093A.5.5 0 0 0 6 5.5v5a.5.5 0 0 0 .79.407l3.5-2.5a.5.5 0 0 0 0-.814l-3.5-2.5z" />
+                                    </svg>
+                                </div>
                             </div>
                         </div>
                     </div>

@@ -166,4 +166,8 @@ export class ProfileComponent implements OnInit, OnDestroy {
 
     this.opt = op;
   }
+
+  play(song: Cancion) {
+    this.cancionSrv.setSong(song);
+  }
 }

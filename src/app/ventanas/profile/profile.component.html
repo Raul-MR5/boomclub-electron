@@ -115,37 +115,49 @@
                             <div class="col mt-music-panel" *ngFor="let c of music">
                                 <div class="shadow-sm">
                                     <div class="card-body card-back padding-btw-col border-music-panel">
-                                        <div class="row row-cols-1 row-cols-sm-5 row-cols-md-5 g-3 song-selector"
-                                            (click)="goTo('/cancion/' + c.id + '/profile%' + user.id)">
-                                            <div class="col-lg-1">
+                                        <div class="row row-cols-1 row-cols-sm-5 row-cols-md-5 g-3 song-selector">
+                                            <div class="col-lg-1"
+                                                (click)="goTo('/cancion/' + c.id + '/profile%' + user.id)">
                                                 <img class="music-cover me-2" src="{{c.foto}}" width="50px"
                                                     height="50px">
                                             </div>
 
-                                            <div class="col-lg-4 d-flex align-items-center">
+                                            <div class="col-lg-4 d-flex align-items-center"
+                                                (click)="goTo('/cancion/' + c.id + '/profile%' + user.id)">
                                                 <strong class="text-pink">{{c.titulo}}</strong>
                                                 <!-- 
                                                 <span class="text-pink">Single</span>
             
                                                 <small class="text-muted">9 mins</small> -->
                                             </div>
-                                            <div class="col-lg-3 d-flex align-items-center">
+                                            <div class="col-lg-3 d-flex align-items-center"
+                                                (click)="goTo('/cancion/' + c.id + '/profile%' + user.id)">
                                                 <span class="text-pink">{{user.username}}</span>
                                             </div>
-                                            <div class="col-lg-3 d-flex align-items-center">
+                                            <div class="col-lg-3 d-flex align-items-center"
+                                                (click)="goTo('/cancion/' + c.id + '/profile%' + user.id)">
                                                 <span class="text-pink">Single</span>
                                             </div>
                                             <!-- <div class="col-lg-1 d-flex align-items-center">
                                                 <small class="text-muted"></small>
                                             </div> -->
 
-                                            <div class="col-lg-1 d-flex align-items-center">
+                                            <!-- <div class="col-lg-1 d-flex align-items-center">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                                     fill="grey" class="bi bi-three-dots-vertical" viewBox="0 0 16 16">
                                                     <path
                                                         d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z" />
                                                 </svg>
+                                            </div> -->
+                                            <div class="col-lg-1 d-flex align-items-center">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25"
+                                                    fill="#ab6c6c" class="bi bi-play-circle-fill song-selector"
+                                                    (click)="play(c)" viewBox="0 0 16 16">
+                                                    <path
+                                                        d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM6.79 5.093A.5.5 0 0 0 6 5.5v5a.5.5 0 0 0 .79.407l3.5-2.5a.5.5 0 0 0 0-.814l-3.5-2.5z" />
+                                                </svg>
                                             </div>
+
                                         </div>
                                     </div>
                                 </div>
