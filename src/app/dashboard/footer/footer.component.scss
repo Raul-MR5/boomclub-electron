@@ -66,6 +66,12 @@ progress::-moz-progress-bar {
     background-color: rgb(215, 215, 215);
 }
 
+.no-salir {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
 @media screen and (max-width: 767px) {
     .ocultar {
         display: none;
