@@ -53,17 +53,10 @@ export class LoginComponent implements OnInit {
       })
 
     } catch (e: any) {
-      if (e.message == 'Firebase: The password is invalid or the user does not have a password. (auth/wrong-password).') {
-        Swal.fire({
-          icon: 'error',
-          title: 'Contraseña incorrecta'
-        })
-      } else{
-        Swal.fire({
-          icon: 'error',
-          title: 'Correo incorrecto'
-        })
-      }
+      Swal.fire({
+        icon: 'error',
+        title: 'Correo o contraseña incorrecto'
+      })
     }
   }
 

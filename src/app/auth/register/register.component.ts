@@ -6,6 +6,7 @@ import { Usuario } from 'src/app/shared/models/usuario.model';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { StorageService } from 'src/app/shared/services/storage.service';
 import { UsuarioService } from 'src/app/shared/services/usuario.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-register',
@@ -128,7 +129,10 @@ export class RegisterComponent implements OnInit {
         }
       })
     } catch (e: any) {
-      // alert(e.message)
+      Swal.fire({
+        icon: 'error',
+        title: 'El correo ya está en uso'
+      })      
     }
   }
 
