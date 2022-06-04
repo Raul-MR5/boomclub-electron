@@ -75,6 +75,12 @@ small {
     flex-wrap: wrap;
 }
 
+.no-salir {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
 @media screen and (max-width: 767px) {
     .ocultar {
         display: none;

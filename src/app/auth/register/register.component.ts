@@ -124,7 +124,28 @@ export class RegisterComponent implements OnInit {
             this.authSrv.emailVerified();
             this.authSrv.logout();
 
-            this.router.navigate(['/login']);
+            let timerInterval
+            Swal.fire({
+              title: 'Verifique su correo',
+              html: 'Compruebe su bandeja de entrada o bandeja de spam y verifique el correo.',
+              timer: 3000,
+              timerProgressBar: true,
+              didOpen: () => {
+                Swal.showLoading()
+              },
+              willClose: () => {
+                clearInterval(timerInterval)
+              }
+            }).then((result) => {
+              /* Read more about handling dismissals below */
+              if (result.dismiss === Swal.DismissReason.timer) {
+                this.router.navigate(['/login']);
+              }
+            })
+
+            // setTimeout(function () {
+            //   this.router.navigate(['/login']);
+            // }, 5000);
           });
         }
       })
@@ -132,7 +153,7 @@ export class RegisterComponent implements OnInit {
       Swal.fire({
         icon: 'error',
         title: 'El correo ya está en uso'
-      })      
+      })
     }
   }
 

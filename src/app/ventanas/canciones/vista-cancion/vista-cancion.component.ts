@@ -18,16 +18,15 @@ import { v4 as uuidv4 } from 'uuid';
 })
 export class VistaCancionComponent implements OnInit {
   user: Usuario;
-  name;
-  photo;
-  foto;
+  foto: string;
 
-  prueba;
   form: FormGroup;
 
   id: string;
   url: string;
   song: Cancion;
+
+  mg: number;
 
   likes: boolean = false;
   opt: boolean = true;
@@ -63,6 +62,12 @@ export class VistaCancionComponent implements OnInit {
 
       // this.likes = this.cancionSrv.liked(this.song);
       this.liked();
+
+      if (this.song.likes) {
+        this.mg = this.song.likes.length;
+      } else {
+        this.mg = 0;
+      }
 
       this.commentSrv.getSongComments(this.song.id).subscribe(comments => {
         this.comentarios = comments;

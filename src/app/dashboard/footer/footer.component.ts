@@ -18,6 +18,7 @@ export class FooterComponent implements OnInit {
 
   time;
   playB: boolean = false;
+  mute: boolean = false;
 
   constructor(
     private authSrv: AuthService,
@@ -101,6 +102,16 @@ export class FooterComponent implements OnInit {
     }else{
       return '0:00'
     }
+  }
+
+  muted(){
+    this.audio.volume= 0;
+    this.mute = true;
+  }
+
+  unmuted(){
+    this.audio.volume = 1;
+    this.mute = false;
   }
   
   goTo(url: string) {

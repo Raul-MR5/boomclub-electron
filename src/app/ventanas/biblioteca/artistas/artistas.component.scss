@@ -20,6 +20,12 @@
     
 // }
 
+.no-salir {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
 .div-pointer {
     cursor: pointer
 }
