@@ -74,23 +74,22 @@
                 <div class="col mt-music-panel mb-2" *ngFor="let c of canciones">
                     <div class="shadow-sm">
                         <div class="card-body card-back padding-btw-col border-music-panel">
-                            <div class="row row-cols-1 row-cols-sm-4 row-cols-md-4 g-3 song-selector"
-                                (click)="goTo('/cancion/' + c.id + '/lista%' + lista.id)">
-                                <div class="col-lg-1">
+                            <div class="row row-cols-1 row-cols-sm-4 row-cols-md-4 g-3 song-selector">
+                                <div class="col-lg-1" (click)="goTo('/cancion/' + c.id + '/lista%' + lista.id)">
                                     <img class="music-cover me-2" src="{{c.foto}}" width="50px" height="50px">
                                 </div>
 
-                                <div class="col-lg-4 d-flex align-items-center">
+                                <div class="col-lg-4 d-flex align-items-center" (click)="goTo('/cancion/' + c.id + '/lista%' + lista.id)">
                                     <strong class="text-pink no-salir">{{c.titulo}}</strong>
                                     <!-- 
                                     <span class="text-pink">Single</span>
 
                                     <small class="text-muted">9 mins</small> -->
                                 </div>
-                                <div class="col-lg-3 d-flex align-items-center">
+                                <div class="col-lg-3 d-flex align-items-center" (click)="goTo('/cancion/' + c.id + '/lista%' + lista.id)">
                                     <span class="text-pink no-salir">{{user.username}}</span>
                                 </div>
-                                <div class="col-lg-3 d-flex align-items-center">
+                                <div class="col-lg-3 d-flex align-items-center" (click)="goTo('/cancion/' + c.id + '/lista%' + lista.id)">
                                     <span class="text-pink">Single</span>
                                 </div>
                                 <!-- <div class="col-lg-1 d-flex align-items-center">
